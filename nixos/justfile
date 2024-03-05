@@ -1,0 +1,3 @@
+switch target:
+    sudo nixos-rebuild --flake .#{{target}} switch
+
