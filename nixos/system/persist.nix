@@ -26,9 +26,6 @@
         ".ssh"
         ".local/share/keyrings"
       ];
-      files = [
-        ".zsh_history"
-      ];
     };
   };
 }
