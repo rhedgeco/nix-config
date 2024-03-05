@@ -15,6 +15,15 @@
     ];
   };
 
+  # persist some editor data
+  home.persistence."/persist/home/ryan" = {
+    allowOther = true;
+    directories = [
+      ".config/Code/User/globalStorage"
+      ".config/Code/User/workspaceStorage"
+    ];
+  };
+
   # set up dotfiles
   home.persistence."/persist/home/ryan/dotfiles" = {
     allowOther = true;
