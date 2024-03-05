@@ -48,6 +48,7 @@
       pciutils
       inotify-tools
       firefox
+      rustup
 
       # add some gnome apps
       gnome.gnome-tweaks
