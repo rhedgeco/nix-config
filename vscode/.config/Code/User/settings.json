@@ -9,5 +9,6 @@
   "[css]": {
     "editor.defaultFormatter": "michelemelluso.code-beautifier"
   },
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "git.autofetch": true
 }
