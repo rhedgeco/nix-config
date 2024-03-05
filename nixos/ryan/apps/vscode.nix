@@ -10,6 +10,7 @@
       kamadorueda.alejandra
       jnoortheen.nix-ide
       rust-lang.rust-analyzer
+      michelemelluso.code-beautifier
     ];
   };
 
