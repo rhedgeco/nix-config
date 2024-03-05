@@ -11,6 +11,7 @@
       jnoortheen.nix-ide
       rust-lang.rust-analyzer
       michelemelluso.code-beautifier
+      github.vscode-github-actions
     ];
   };
 
