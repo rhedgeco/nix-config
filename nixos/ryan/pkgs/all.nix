@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   # apps with config
   imports = [
+    ./gnome.nix
     ./paperwm.nix
     ./ulauncher.nix
     ./firefox.nix
@@ -13,5 +14,7 @@
     alejandra
     nil
     zoom-us
+    rustup
+    rust-analyzer
   ];
 }
