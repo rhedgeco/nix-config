@@ -5,9 +5,6 @@
 }: {
   programs.vscode = {
     enable = true;
-    enableUpdateCheck = false;
-    enableExtensionUpdateCheck = false;
-
     extensions = with inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace; [
       kokakiwi.vscode-just
       kamadorueda.alejandra
