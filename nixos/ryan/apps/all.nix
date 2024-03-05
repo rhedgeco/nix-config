@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   # apps with config
   imports = [
+    ./paperwm.nix
     ./ulauncher.nix
     ./firefox.nix
     ./vscode.nix
