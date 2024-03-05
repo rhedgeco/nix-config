@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./dconf/load.nix
     ./apps/all.nix
     ./persist.nix
     ./gnome.nix
