@@ -1,8 +1,8 @@
-{...}: {
+{inputs, ...}: {
   imports = [
+    "${inputs.impermanence}/home-manager.nix"
     ./dconf/load.nix
     ./apps/all.nix
-    ./persist.nix
     ./gnome.nix
     ./git.nix
   ];

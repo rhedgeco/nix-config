@@ -1,13 +1,14 @@
 {pkgs, ...}: {
   # apps with config
   imports = [
+    ./ulauncher.nix
     ./firefox.nix
     ./vscode.nix
+    ./zsh.nix
   ];
 
   # standalone packages
   home.packages = with pkgs; [
-    ulauncher
     alejandra
     nil
     zoom-us

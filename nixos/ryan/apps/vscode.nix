@@ -14,16 +14,14 @@
       jnoortheen.nix-ide
       rust-lang.rust-analyzer
     ];
+  };
 
-    userSettings = {
-      # editor setup
-      "window.titleBarStyle" = "native";
-      "window.commandCenter" = false;
-      "editor.fontFamily" = "'Jetbrains Mono', 'monospace', monospace";
-
-      # nix lsp setup
-      "nix.enableLanguageServer" = true;
-      "nix.serverPath" = "nil";
-    };
+  # set up dotfiles
+  home.persistence."/persist/home/ryan/dotfiles" = {
+    allowOther = true;
+    removePrefixDirectory = true;
+    files = [
+      "vscode/.config/Code/User/settings.json"
+    ];
   };
 }
