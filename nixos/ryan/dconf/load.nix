@@ -3,10 +3,13 @@
   pkgs,
   ...
 }: let
-  dconf_db = "${config.home.homeDirectory}/.config/dconf/user";
+  dconf_dir = "${config.home.homeDirectory}/.config/dconf";
 in {
   home.activation = {
     # compiles all keyfiles into the user database
-    loadDconf = "${pkgs.dconf}/bin/dconf compile ${dconf_db} ${./keyfiles}";
+    loadDconf = ''
+      mkdir -p ${dconf_dir}
+      ${pkgs.dconf}/bin/dconf compile ${dconf_dir}/user ${./keyfiles}
+    '';
   };
 }
