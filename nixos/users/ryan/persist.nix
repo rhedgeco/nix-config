@@ -6,8 +6,10 @@
     removePrefixDirectory = true;
     files = [
       "zsh/.zshrc"
+      "ulauncher/.config/autostart/ulauncher.desktop"
     ];
     directories = [
+      "ulauncher/.config/ulauncher"
     ];
   };
 }

@@ -7,8 +7,9 @@
 
   # standalone packages
   home.packages = with pkgs; [
-    zoom-us
+    ulauncher
     alejandra
     nil
+    zoom-us
   ];
 }

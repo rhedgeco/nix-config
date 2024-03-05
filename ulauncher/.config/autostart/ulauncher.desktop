@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=ULauncher
+Exec=env GDK_BACKEND=x11 ulauncher --hide-window
