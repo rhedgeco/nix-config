@@ -1,12 +1,13 @@
-{inputs, ...}: {
-  imports = ["${inputs.impermanence}/home-manager.nix"];
+{pkgs, ...}: {
+  home.packages = with pkgs; [
+    ulauncher
+  ];
 
   # set up dotfiles
   home.persistence."/persist/home/ryan/dotfiles" = {
     allowOther = true;
     removePrefixDirectory = true;
     files = [
-      "zsh/.zshrc"
       "ulauncher/.config/autostart/ulauncher.desktop"
     ];
     directories = [
