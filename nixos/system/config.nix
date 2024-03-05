@@ -48,8 +48,6 @@
       pciutils
       inotify-tools
       firefox
-      rustup
-      rust-analyzer
 
       # add some gnome apps
       gnome.gnome-tweaks
