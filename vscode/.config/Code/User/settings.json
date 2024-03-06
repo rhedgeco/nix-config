@@ -10,5 +10,6 @@
     "editor.defaultFormatter": "michelemelluso.code-beautifier"
   },
   "editor.formatOnSave": true,
-  "git.autofetch": true
+  "explorer.confirmDelete": false,
+  "git.autofetch": true,
 }
