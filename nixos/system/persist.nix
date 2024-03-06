@@ -22,7 +22,6 @@
         "Documents"
         "Videos"
         ".mozilla"
-        ".rustup"
         ".gnupg"
         ".ssh"
         ".local/share/keyrings"

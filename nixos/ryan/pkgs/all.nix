@@ -14,7 +14,5 @@
     alejandra
     nil
     zoom-us
-    rustup
-    rust-analyzer
   ];
 }
