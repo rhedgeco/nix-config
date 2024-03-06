@@ -7,6 +7,7 @@
     ./firefox.nix
     ./vscode.nix
     ./zsh.nix
+    ./rust.nix
   ];
 
   # standalone packages
