@@ -12,4 +12,5 @@
   "editor.formatOnSave": true,
   "explorer.confirmDelete": false,
   "git.autofetch": true,
+  "rust-analyzer.server.path": "rust-analyzer",
 }
