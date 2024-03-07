@@ -26,6 +26,10 @@
         ".ssh"
         ".local/share/keyrings"
       ];
+      files = [
+        # keep monitor configs
+        ".config/monitors.xml"
+      ];
     };
   };
 }
