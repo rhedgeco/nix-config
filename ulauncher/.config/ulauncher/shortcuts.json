@@ -12,7 +12,7 @@
     "01eaf1a6-a07a-4d3c-911f-b316b0b141af": {
         "id": "01eaf1a6-a07a-4d3c-911f-b316b0b141af",
         "name": "Nix Package Search",
-        "keyword": "n",
+        "keyword": "np",
         "cmd": "https://search.nixos.org/packages?query=%s",
         "icon": "~/dotfiles/assets/nixos-icon.png",
         "is_default_search": false,
