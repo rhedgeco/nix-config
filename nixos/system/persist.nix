@@ -8,7 +8,7 @@
     directories = [
       "/var/log"
       "/var/lib/nixos"
-      "/var/lib/asla"
+      "/var/lib/alsa"
       "/var/lib/bluetooth"
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
