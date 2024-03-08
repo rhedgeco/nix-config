@@ -15,10 +15,6 @@
       ms-python.python
       ms-python.black-formatter
     ];
-
-    package = pkgs.vscode.override {
-      commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
-    };
   };
 
   # persist some editor data

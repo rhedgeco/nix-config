@@ -5,7 +5,7 @@
   "nix.serverPath": "nil",
   "update.mode": "none",
   "window.commandCenter": false,
-  "window.titleBarStyle": "custom",
+  "window.titleBarStyle": "native",
   "[css]": {
     "editor.defaultFormatter": "michelemelluso.code-beautifier"
   },
