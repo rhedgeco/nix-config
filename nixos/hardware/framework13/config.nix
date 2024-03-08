@@ -130,6 +130,7 @@
 
   services.logind.lidSwitchDocked = "ignore";
   services.logind.lidSwitchExternalPower = "ignore";
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
   services.udev.extraRules = ''
     ENV{DEVNAME}=="/dev/dri/card0", TAG+="mutter-device-preferred-primary"
   '';

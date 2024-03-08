@@ -7,8 +7,9 @@
     hideMounts = true;
     directories = [
       "/var/log"
-      "/var/lib/bluetooth"
       "/var/lib/nixos"
+      "/var/lib/asla"
+      "/var/lib/bluetooth"
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
     ];

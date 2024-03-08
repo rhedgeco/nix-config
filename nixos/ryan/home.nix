@@ -3,7 +3,6 @@
     "${inputs.impermanence}/home-manager.nix"
     ./dconf/load.nix
     ./pkgs/all.nix
-    ./git.nix
   ];
 
   nixpkgs = {
