@@ -14,6 +14,7 @@
 
   # standalone packages
   home.packages = with pkgs; [
+    blender
     alejandra
     nil
   ];
