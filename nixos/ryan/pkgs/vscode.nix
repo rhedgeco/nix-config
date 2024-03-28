@@ -14,6 +14,7 @@
       github.vscode-github-actions
       ms-python.python
       ms-python.black-formatter
+      tamasfe.even-better-toml
     ];
   };
 
