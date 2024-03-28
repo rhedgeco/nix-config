@@ -15,6 +15,7 @@
       ms-python.python
       ms-python.black-formatter
       tamasfe.even-better-toml
+      serayuzgur.crates
     ];
   };
 
