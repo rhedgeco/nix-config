@@ -1,6 +1,7 @@
 {...}: {
   # import packages
   imports = [
+    "${inputs.impermanence}/home-manager.nix"
     ./packages
   ];
 
