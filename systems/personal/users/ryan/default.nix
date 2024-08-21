@@ -38,8 +38,7 @@
         mode = "0700";
       }
 
-      # persist dconf for now
-      # until i develop a better dconf solution
+      # persist certain folders until dotfiles are set up
       ".config/dconf"
     ];
     files = [
