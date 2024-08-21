@@ -24,6 +24,7 @@
       "Documents"
       "Videos"
       ".mozilla"
+      ".rustup"
       {
         directory = ".gnupg";
         mode = "0700";
