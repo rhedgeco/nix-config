@@ -11,6 +11,7 @@
     ./fonts.nix
     ./git.nix
     ./gnome.nix
+    ./gnupg.nix
     ./grub.nix
     ./zsh.nix
   ];
