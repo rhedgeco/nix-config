@@ -1,8 +1,0 @@
-[package]
-name = "dconf-sync"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-gvdb = "0.6.1"
-toml = "0.8.12"
