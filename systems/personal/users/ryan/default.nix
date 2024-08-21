@@ -36,6 +36,10 @@
         directory = ".local/share/keyrings";
         mode = "0700";
       }
+
+      # persist dconf for now
+      # until i develop a better dconf solution
+      ".config/dconf"
     ];
     files = [
       ".config/monitors.xml"
