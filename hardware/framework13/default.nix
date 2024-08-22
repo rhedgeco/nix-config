@@ -17,6 +17,13 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
+  # auto scrub btrfs filesystem
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+    fileSystems = ["/"];
+  };
+
   # mount filesystem
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
