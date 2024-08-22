@@ -43,7 +43,6 @@
     ];
     files = [
       ".config/monitors.xml"
-      ".zsh_history"
     ];
   };
 }
