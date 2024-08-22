@@ -8,7 +8,6 @@
   # system stuff
   sound.enable = true;
   xdg.mime.enable = true;
-  hardware.pulseaudio.enable = true;
   networking.networkmanager.enable = true;
   programs.fuse.userAllowOther = true;
   nixpkgs.config.allowUnfree = true;
