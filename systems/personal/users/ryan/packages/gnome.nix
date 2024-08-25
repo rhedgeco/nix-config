@@ -7,5 +7,15 @@
     gnomeExtensions.just-perfection
     gnomeExtensions.user-themes
     gnomeExtensions.paperwm
+
+    (vimix-icon-theme.override {
+      colorVariants = ["Beryl"];
+    })
+
+    (orchis-theme.override
+      {
+        border-radius = 6;
+        tweaks = ["macos" "submenu"];
+      })
   ];
 }
