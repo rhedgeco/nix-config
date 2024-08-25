@@ -35,6 +35,11 @@
     fsType = "btrfs";
     options = ["subvol=nix" "compress=zstd" "noatime"];
   };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-label/NIXOS";
+    fsType = "btrfs";
+    options = ["subvol=home" "compress=zstd"];
+  };
   fileSystems."/persist" = {
     device = "/dev/disk/by-label/NIXOS";
     neededForBoot = true;
