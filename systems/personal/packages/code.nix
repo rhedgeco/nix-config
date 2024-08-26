@@ -6,6 +6,7 @@
   environment.systemPackages = with pkgs; [
     nil
     alejandra
+    gcc
     rustup
     python3
     just
