@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./davinci.nix
     ./discord.nix
     ./git.nix
     ./gnome.nix
