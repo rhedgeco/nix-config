@@ -10,6 +10,7 @@
     rustup
     python3
     just
+    poetry
 
     (vscode-with-extensions.override {
       vscodeExtensions = with inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace; [
