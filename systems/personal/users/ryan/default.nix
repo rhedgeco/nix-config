@@ -5,7 +5,7 @@
       isNormalUser = true;
       useDefaultShell = true;
       initialPassword = "ryan";
-      extraGroups = ["wheel" "networkmanager"];
+      extraGroups = ["wheel" "networkmanager" "dialout"];
     };
   };
 
