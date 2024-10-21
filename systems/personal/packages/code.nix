@@ -16,6 +16,7 @@
         kokakiwi.vscode-just
         ms-vscode-remote.remote-containers
         ms-azuretools.vscode-docker
+        tomoki1207.pdf
       ];
     })
   ];
