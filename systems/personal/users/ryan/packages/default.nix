@@ -7,5 +7,6 @@
     ./gnome.nix
     ./ulauncher.nix
     ./zsh.nix
+    ./videocall.nix
   ];
 }
