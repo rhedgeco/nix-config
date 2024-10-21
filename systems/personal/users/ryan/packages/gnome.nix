@@ -7,6 +7,7 @@
     gnomeExtensions.just-perfection
     gnomeExtensions.user-themes
     gnomeExtensions.paperwm
+    gnomeExtensions.color-picker
 
     (vimix-icon-theme.override {
       colorVariants = ["Beryl"];
