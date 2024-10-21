@@ -7,6 +7,7 @@
     # import all other packages
     ./code.nix
     ./core.nix
+    ./docker.nix
     ./firefox.nix
     ./fonts.nix
     ./git.nix
