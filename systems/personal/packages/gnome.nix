@@ -18,6 +18,7 @@
   environment.systemPackages = with pkgs; [
     gedit # text editor
     loupe # image viewer
+    contrast # color picker
     gnome.nautilus # files
     gnome.baobab # disk usage analyzer
     gnome.gnome-tweaks
