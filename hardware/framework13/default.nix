@@ -63,6 +63,7 @@
   networking.useDHCP = lib.mkDefault true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  virtualisation.docker.storageDriver = "btrfs";
 
   # create a root history on boot
   boot.initrd.postDeviceCommands = lib.mkAfter ''
@@ -143,7 +144,7 @@
         nvidiaSettings = true;
 
         # Optionally, you may need to select the appropriate driver version for your specific GPU.
-        package = config.boot.kernelPackages.nvidiaPackages.stable;
+        package = config.boot.kernelPackages.nvidiaPackages.beta;
       };
 
       # ignore lid switches
