@@ -6,7 +6,8 @@
     ./git.nix
     ./gnome.nix
     ./ulauncher.nix
-    ./zsh.nix
     ./videocall.nix
+    ./work.nix
+    ./zsh.nix
   ];
 }
