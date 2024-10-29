@@ -14,6 +14,7 @@
     ./gnome.nix
     ./gnupg.nix
     ./grub.nix
+    ./printer.nix
     ./zsh.nix
   ];
 }
