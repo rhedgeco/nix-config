@@ -4,7 +4,10 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.impermanence.nixosModules.impermanence
 
-    # import all other packages
+    # import complex modules
+    ./printers
+
+    # import all other modules
     ./code.nix
     ./core.nix
     ./docker.nix
@@ -14,7 +17,6 @@
     ./gnome.nix
     ./gnupg.nix
     ./grub.nix
-    ./printer.nix
     ./zsh.nix
   ];
 }
