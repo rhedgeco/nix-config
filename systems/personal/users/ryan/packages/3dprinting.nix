@@ -1,6 +1,7 @@
 {pkgs, ...}: {
-  home.packages = [
-    pkgs.prusa-slicer
-    pkgs.printrun
+  home.packages = with pkgs; [
+    blender
+    prusa-slicer
+    printrun
   ];
 }
