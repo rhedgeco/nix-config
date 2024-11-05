@@ -8,10 +8,10 @@
     ./printers
 
     # import all other modules
+    ./browser.nix
     ./code.nix
     ./core.nix
     ./docker.nix
-    ./firefox.nix
     ./fonts.nix
     ./git.nix
     ./gnome.nix
