@@ -148,8 +148,7 @@
       };
 
       # ignore lid switches
-      services.logind.lidSwitchDocked = "ignore";
-      services.logind.lidSwitchExternalPower = "ignore";
+      services.logind.lidSwitch = "ignore";
     };
   };
 }
