@@ -10,7 +10,7 @@
   services.xserver.excludePackages = [pkgs.xterm];
   services.gnome.core-utilities.enable = false;
   environment.gnome.excludePackages = with pkgs; [
-    gnome.gnome-shell-extensions
+    gnome-shell-extensions
     gnome-tour
   ];
 
@@ -19,12 +19,12 @@
     gedit # text editor
     loupe # image viewer
     contrast # color picker
-    gnome.nautilus # files
-    gnome.baobab # disk usage analyzer
-    gnome.gnome-tweaks
-    gnome.gnome-terminal
-    gnome.gnome-calculator
-    gnome.gnome-screenshot
-    gnome.gnome-system-monitor
+    nautilus # files
+    baobab # disk usage analyzer
+    gnome-tweaks
+    gnome-terminal
+    gnome-calculator
+    gnome-screenshot
+    gnome-system-monitor
   ];
 }
