@@ -14,9 +14,9 @@
     ./docker.nix
     ./fonts.nix
     ./git.nix
-    ./gnome.nix
     ./gnupg.nix
     ./grub.nix
+    ./ly.nix
     ./zsh.nix
   ];
 }

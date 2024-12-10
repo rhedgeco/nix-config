@@ -147,9 +147,8 @@
         package = config.boot.kernelPackages.nvidiaPackages.beta;
       };
 
-      # ignore lid switches
-      services.logind.lidSwitchDocked = "ignore";
-      services.logind.lidSwitchExternalPower = "ignore";
+      # ignore lid switch when in eGPU mode
+      services.logind.lidSwitch = "ignore";
     };
   };
 }
