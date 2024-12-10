@@ -109,10 +109,9 @@
       services.xserver.videoDrivers = ["nvidia"];
 
       # Enable OpenGL
-      hardware.opengl = {
+      hardware.graphics = {
         enable = true;
-        driSupport = true;
-        driSupport32Bit = true;
+        enable32Bit = true;
       };
 
       # set up nvidia hardware

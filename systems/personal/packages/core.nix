@@ -6,9 +6,9 @@
     gedit # text editor
     loupe # image viewer
     alacritty # terminal
-    gnome.nautilus # files
-    gnome.baobab # disk usage analyzer
-    gnome.gnome-calculator
-    gnome.gnome-system-monitor
+    nautilus # files
+    baobab # disk usage analyzer
+    gnome-calculator
+    gnome-system-monitor
   ];
 }
