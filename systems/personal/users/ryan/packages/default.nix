@@ -4,9 +4,9 @@
     ./discord.nix
     ./git.nix
     ./gnome.nix
+    ./shell.nix
     ./ulauncher.nix
     ./videocall.nix
     ./work.nix
-    ./zsh.nix
   ];
 }
