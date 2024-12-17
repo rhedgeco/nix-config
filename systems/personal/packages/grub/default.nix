@@ -12,11 +12,11 @@
       device = "nodev";
 
       # theming
-      splashImage = ./modern-grub/background.png;
+      splashImage = ./splash.png;
       theme = pkgs.stdenv.mkDerivation {
-        pname = "modern-grub";
+        pname = "grub-solstice";
         version = "0.1.0";
-        src = ./modern-grub;
+        src = ./grub-solstice;
         installPhase = ''
           runHook preInstall
 
