@@ -4,7 +4,7 @@
     inputs.impermanence.homeManagerModules.impermanence
 
     # import all other modules
-    ./packages
+    ./modules
   ];
 
   # set home data
