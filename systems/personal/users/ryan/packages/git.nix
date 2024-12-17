@@ -8,5 +8,10 @@
       signByDefault = true;
       key = null;
     };
+
+    # mark the nix-config as safe
+    extraConfig = {
+      safe.directory = "/home/ryan/nix-config";
+    };
   };
 }
