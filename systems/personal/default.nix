@@ -1,7 +1,7 @@
 {...}: {
   # import all packages and users
   imports = [
-    ./packages
+    ./modules
     ./users
   ];
 
