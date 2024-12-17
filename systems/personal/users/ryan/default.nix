@@ -5,7 +5,7 @@
       isNormalUser = true;
       useDefaultShell = true;
       initialPassword = "ryan";
-      extraGroups = ["wheel" "docker" "networkmanager" "dialout"];
+      extraGroups = ["wheel" "docker" "networkmanager" "dialout" "nixconfig"];
     };
   };
 
