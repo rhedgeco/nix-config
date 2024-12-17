@@ -12,7 +12,7 @@
       device = "nodev";
 
       # theming
-      splashImage = ./splash.png;
+      splashImage = ./modern-grub/background.png;
       theme = pkgs.stdenv.mkDerivation {
         pname = "modern-grub";
         version = "0.1.0";
