@@ -6,7 +6,6 @@
     ./gnome.nix
     ./shell.nix
     ./ulauncher.nix
-    ./videocall.nix
     ./work.nix
   ];
 }
