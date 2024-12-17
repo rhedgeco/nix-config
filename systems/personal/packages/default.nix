@@ -6,6 +6,7 @@
 
     # import complex modules
     ./printers
+    ./grub
 
     # import all other modules
     ./browser.nix
@@ -16,7 +17,6 @@
     ./git.nix
     ./gnome.nix
     ./gnupg.nix
-    ./grub.nix
     ./shell.nix
   ];
 }
