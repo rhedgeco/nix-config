@@ -15,11 +15,7 @@
   programs.starship = {
     enable = true;
     settings = {
-      format = ''
-        [╭─](bold green) $directory$git_branch$rust
-        [╰](bold green)$character
-      '';
-
+      # disable package display
       package.disabled = true;
     };
   };
