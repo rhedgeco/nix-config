@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   # import all packages and users
   imports = [
     ./modules
