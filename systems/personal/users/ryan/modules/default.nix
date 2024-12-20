@@ -4,8 +4,8 @@
     ./discord.nix
     ./git.nix
     ./gnome.nix
+    ./rofi.nix
     ./shell.nix
-    ./ulauncher.nix
     ./work.nix
   ];
 }
