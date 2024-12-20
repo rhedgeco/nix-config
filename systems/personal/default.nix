@@ -34,7 +34,7 @@
 
   system.activationScripts = {
     ensure-persist-config = ''
-      if [ -d "/persist/nix-config" ]; then
+      if [ ! -d "/persist/nix-config" ]; then
         cp -rf ${../../.} /persist/nix-config
         chown -R root:nixconfig /persist/nix-config
         chmod -R 775 /persist/nix-config
