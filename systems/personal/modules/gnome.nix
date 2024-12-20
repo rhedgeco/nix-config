@@ -16,6 +16,7 @@
 
   # add back in some gnome packages
   environment.systemPackages = with pkgs; [
+    mpv # video player
     gedit # text editor
     loupe # image viewer
     contrast # color picker
