@@ -32,6 +32,18 @@
     ];
   };
 
+  system.activationScripts = {
+    ensure-persist-config = ''
+      if [ -d "/persist/nix-config" ]; then
+        cp -rf ${../../.} /persist/nix-config
+        chown -R root:nixconfig /persist/nix-config
+        chmod -R 775 /persist/nix-config
+        ${pkgs.git}/bin/git init --initial-branch=main
+        ${pkgs.git}/bin/git remote add origin git@github.com:rhedgeco/nix-config.git
+      fi
+    '';
+  };
+
   # system state
   system.stateVersion = "24.05";
 }
