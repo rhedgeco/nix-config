@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     niri = {
-      url = "path:packages/niri";
+      url = "github:YaLTeR/niri/floating";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
