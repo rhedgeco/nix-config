@@ -37,11 +37,16 @@
     ensure-persist-config = ''
       echo "ensuring /persist/nix-config exists..."
       if [ ! -d "/persist/nix-config" ]; then
-        echo "persistent config not found, copying data from store..."
+        echo "/persist/nix-config not found, copying from store..."
         cp -rf ${../../.} /persist/nix-config
-        chown -R root:nixconfig /persist/nix-config
-        chmod -R 775 /persist/nix-config
       fi
+
+      echo "ensuring correct permissions for config files..."
+      chgrp -R nixconfig /persist/nix-config
+      find /persist/nix-config -type d -exec chmod ug+rws {} \;
+      find /persist/nix-config -type f -exec chmod ug+rw {} \;
+      find /persist/nix-config -type d -exec ${pkgs.acl}/bin/setfacl -m "default:user::rwx" {} +
+      find /persist/nix-config -type d -exec ${pkgs.acl}/bin/setfacl -m "default:group::rwx" {} +
     '';
   };
 
