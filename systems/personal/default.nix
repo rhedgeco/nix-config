@@ -38,6 +38,8 @@
         cp -rf ${../../.} /persist/nix-config
         chown -R root:nixconfig /persist/nix-config
         chmod -R 775 /persist/nix-config
+
+        cd /persist/nix-config
         ${pkgs.git}/bin/git init --initial-branch=main
         ${pkgs.git}/bin/git remote add origin git@github.com:rhedgeco/nix-config.git
       fi
