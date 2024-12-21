@@ -1,5 +1,9 @@
-{inputs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   home.packages = [
-    inputs.niri.niri-package
+    inputs.niri.packages.${pkgs.system}.default
   ];
 }

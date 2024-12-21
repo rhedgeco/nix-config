@@ -3,6 +3,11 @@
   pkgs,
   ...
 }: {
+  home.packages = [
+    # use alacritty terminal
+    pkgs.alacritty
+  ];
+
   # configure fish shell
   programs.fish = {
     enable = true;
