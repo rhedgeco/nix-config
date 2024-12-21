@@ -3,7 +3,7 @@
     ./3dprinting.nix
     ./discord.nix
     ./git.nix
-    ./gnome.nix
+    ./niri.nix
     ./rofi.nix
     ./shell.nix
     ./work.nix

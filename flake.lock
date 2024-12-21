@@ -70,6 +70,44 @@
         "type": "github"
       }
     },
+    "niri": {
+      "inputs": {
+        "nix-filter": "nix-filter",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1734774399,
+        "narHash": "sha256-iO9P5hoamyX/kzgnLJuwj3Lol9tQ1wtUah0euO8hgv0=",
+        "owner": "YaLTeR",
+        "repo": "niri",
+        "rev": "8459e5394ad9a7714ef9889cf259042e845a7469",
+        "type": "github"
+      },
+      "original": {
+        "owner": "YaLTeR",
+        "ref": "floating",
+        "repo": "niri",
+        "type": "github"
+      }
+    },
+    "nix-filter": {
+      "locked": {
+        "lastModified": 1731533336,
+        "narHash": "sha256-oRam5PS1vcrr5UPgALW0eo1m/5/pls27Z/pabHNy2Ms=",
+        "owner": "numtide",
+        "repo": "nix-filter",
+        "rev": "f7653272fd234696ae94229839a99b73c9ab7de0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "nix-filter",
+        "type": "github"
+      }
+    },
     "nix-vscode-extensions": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -126,8 +164,30 @@
       "inputs": {
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "niri": "niri",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_2"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "niri",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733106880,
+        "narHash": "sha256-aJmAIjZfWfPSWSExwrYBLRgXVvgF5LP1vaeUGOOIQ98=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "e66c0d43abf5bdefb664c3583ca8994983c332ae",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "systems": {
