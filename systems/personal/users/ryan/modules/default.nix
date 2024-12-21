@@ -6,6 +6,5 @@
     ./niri.nix
     ./rofi.nix
     ./shell.nix
-    ./work.nix
   ];
 }
