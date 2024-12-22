@@ -14,9 +14,9 @@
     ./core.nix
     ./docker.nix
     ./fonts.nix
-    ./gdm.nix
     ./git.nix
     ./gnupg.nix
+    ./greeter.nix
     ./shell.nix
   ];
 }
