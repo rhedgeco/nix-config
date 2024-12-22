@@ -3,6 +3,7 @@
   inputs,
   ...
 }: {
+  # use regreet with custom theme
   programs.regreet = {
     enable = true;
     theme = {
