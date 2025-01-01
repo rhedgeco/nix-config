@@ -4,7 +4,7 @@
     ./discord.nix
     ./git.nix
     ./gnome.nix
-    ./rofi.nix
+    ./launcher.nix
     ./shell.nix
     ./work.nix
   ];
