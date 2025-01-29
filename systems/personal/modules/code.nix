@@ -3,12 +3,13 @@
   pkgs,
   ...
 }: {
-  # only include base tools for editing nix
   environment.systemPackages = with pkgs; [
-    nil
+    # only include base tools for editing nix files
     alejandra
     just
+    nil
 
+    # add vscode with base useful extensions
     (vscode-with-extensions.override {
       vscodeExtensions = with inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace; [
         jnoortheen.nix-ide
@@ -16,6 +17,7 @@
         kokakiwi.vscode-just
         ms-vscode-remote.remote-containers
         ms-azuretools.vscode-docker
+        mkhl.direnv
         tomoki1207.pdf
       ];
     })
