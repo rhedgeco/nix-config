@@ -3,5 +3,6 @@
     vim
     wget
     curl
+    direnv
   ];
 }
