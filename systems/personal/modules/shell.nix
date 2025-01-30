@@ -4,7 +4,7 @@
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
-      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+      set fish_greeting # Disable greeting
     '';
   };
 
