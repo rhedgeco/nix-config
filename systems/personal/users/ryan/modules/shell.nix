@@ -3,6 +3,9 @@
   pkgs,
   ...
 }: {
+  # diable command not found
+  programs.command-not-found.enable = false;
+
   # configure fish shell
   programs.fish = {
     enable = true;
