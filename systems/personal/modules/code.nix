@@ -20,7 +20,6 @@
         ms-vscode-remote.remote-ssh
         ms-vscode.remote-server
         mkhl.direnv
-        tomoki1207.pdf
       ];
     })
   ];
