@@ -15,8 +15,10 @@
         jnoortheen.nix-ide
         kamadorueda.alejandra
         kokakiwi.vscode-just
-        ms-vscode-remote.remote-containers
         ms-azuretools.vscode-docker
+        ms-vscode-remote.remote-containers
+        ms-vscode-remote.remote-ssh
+        ms-vscode.remote-server
         mkhl.direnv
         tomoki1207.pdf
       ];
