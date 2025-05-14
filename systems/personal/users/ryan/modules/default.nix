@@ -6,7 +6,7 @@
     ./gnome.nix
     ./insomnia.nix
     ./launcher.nix
+    ./minecraft.nix
     ./shell.nix
-    ./work.nix
   ];
 }
