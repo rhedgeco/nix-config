@@ -11,6 +11,7 @@
 
   # set up home manager
   home-manager = {
+    useGlobalPkgs = true;
     extraSpecialArgs = {inherit inputs;};
     users.ryan = import ./home.nix;
   };

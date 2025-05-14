@@ -13,14 +13,6 @@
     homeDirectory = "/home/ryan";
   };
 
-  # allow unfree packages
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
-  };
-
   # enable home-manager
   programs.home-manager.enable = true;
 
