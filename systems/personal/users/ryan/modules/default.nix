@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./3dprinting.nix
+    ./bitwig.nix
     ./discord.nix
     ./git.nix
     ./gnome.nix
