@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   # auto scrub btrfs filesystem
   services.btrfs.autoScrub = {
     enable = true;
