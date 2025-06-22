@@ -20,7 +20,7 @@
   home.persistence."/persist" = {
     allowOther = true;
     directories = [
-      "nix-config"
+      # "nix-config"
     ];
   };
 
