@@ -4,10 +4,10 @@
     lfs.enable = true;
     userName = "Ryan Hedgecock";
     userEmail = "rhedgeco@gmail.com";
-    signing = {
-      signByDefault = true;
-      key = null;
-    };
+    # signing = {
+    #   signByDefault = true;
+    #   key = null;
+    # };
 
     # mark the nix-config as safe
     extraConfig = {
