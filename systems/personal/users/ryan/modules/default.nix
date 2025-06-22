@@ -9,5 +9,6 @@
     ./launcher.nix
     ./minecraft.nix
     ./shell.nix
+    ./zed.nix
   ];
 }
