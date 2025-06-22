@@ -22,6 +22,7 @@
       jetpack = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
+          ./filesystems/btrfs.nix
           {networking.hostName = "jetpack";}
           ./hardware/framework13/amd-7040
           ./systems/personal
