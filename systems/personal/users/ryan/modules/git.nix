@@ -11,7 +11,7 @@
 
     # mark the nix-config as safe
     extraConfig = {
-      safe.directory = "/home/ryan/nix-config";
+      # safe.directory = "/home/ryan/nix-config";
     };
   };
 }

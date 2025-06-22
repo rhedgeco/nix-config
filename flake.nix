@@ -2,6 +2,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     impermanence.url = "github:nix-community/impermanence";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,8 +22,9 @@
       jetpack = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
+          ./filesystems/btrfs.nix
           {networking.hostName = "jetpack";}
-          ./hardware/framework13
+          ./hardware/framework13/amd-7040
           ./systems/personal
         ];
       };
