@@ -18,5 +18,6 @@
     ./gnome.nix
     ./gnupg.nix
     ./shell.nix
+    ./stlink.nix
   ];
 }
