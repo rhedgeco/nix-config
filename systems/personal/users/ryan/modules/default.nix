@@ -9,6 +9,7 @@
     ./launcher.nix
     ./minecraft.nix
     ./shell.nix
+    ./spotify.nix
     ./zed.nix
   ];
 }
