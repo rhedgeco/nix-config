@@ -10,13 +10,12 @@
     gnomeExtensions.color-picker
 
     (vimix-icon-theme.override {
-      colorVariants = ["Beryl"];
+      colorVariants = ["standard"];
     })
 
-    (orchis-theme.override
-      {
-        border-radius = 6;
-        tweaks = ["macos" "submenu"];
-      })
+    (orchis-theme.override {
+      border-radius = 6;
+      tweaks = ["macos" "submenu"];
+    })
   ];
 }
