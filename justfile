@@ -1,8 +1,13 @@
-default_target := `hostname`
+system := `hostname`
 
-switch target=(default_target):
-    sudo nixos-rebuild --flake .#{{target}} switch
+default:
+    @just --list
 
-upgrade target=(default_target):
-    nix flake update
-    sudo nixos-rebuild --flake .#{{target}} switch --upgrade
+switch specialisation="" system=(system):
+    @if [ -n '{{specialisation}}' ]; then \
+        echo "Rebuilding '{{system}}' with specialization: {{specialisation}}"; \
+        sudo nixos-rebuild --flake .#{{system}} switch --specialisation '{{specialisation}}'; \
+    else \
+        echo "Rebuilding '{{system}}' with base specialization"; \
+        sudo nixos-rebuild --flake .#{{system}} switch; \
+    fi
