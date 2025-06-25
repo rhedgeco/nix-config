@@ -8,7 +8,7 @@
 
   # disable all gnome packages
   services.xserver.excludePackages = [pkgs.xterm];
-  services.gnome.core-utilities.enable = false;
+  services.gnome.core-apps.enable = false;
   environment.gnome.excludePackages = with pkgs; [
     gnome-shell-extensions
     gnome-tour
