@@ -1,7 +1,10 @@
 {pkgs, ...}: {
-  # set the default user shell to fish
-  users.defaultUserShell = pkgs.fish;
+  environment.systemPackages = with pkgs; [
+    vim
+  ];
 
+  users.defaultUserShell = pkgs.fish;
+  programs.command-not-found.enable = false;
   programs.fish = {
     enable = true;
     interactiveShellInit = ''

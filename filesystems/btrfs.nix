@@ -22,12 +22,6 @@
       options = ["subvol=nix" "compress=zstd" "noatime"];
     };
 
-    "/home" = {
-      device = "/dev/disk/by-label/MAIN";
-      fsType = "btrfs";
-      options = ["subvol=home" "compress=zstd"];
-    };
-
     "/persist" = {
       device = "/dev/disk/by-label/MAIN";
       fsType = "btrfs";
@@ -51,29 +45,33 @@
   # no swap devices for now
   swapDevices = [];
 
-  # create a root history on boot
+  # backup any old root directories on boot
   boot.initrd.postDeviceCommands = lib.mkAfter ''
-    mkdir /btrfs_tmp
-    mount /dev/disk/by-label/NIXOS /btrfs_tmp
-    if [[ -e /btrfs_tmp/root ]]; then
-        mkdir -p /btrfs_tmp/root_history
-        timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
-        mv /btrfs_tmp/root "/btrfs_tmp/root_history/$timestamp"
+    mkdir /btrfs
+    mount -o compress=zstd /dev/disk/by-label/MAIN /btrfs
+    if [[ -e /btrfs/root ]]; then
+        echo "Found old root directory, creating backup..."
+        mkdir -p /btrfs/backup/root
+        timestamp=$(date --date="@$(stat -c %Y /btrfs/root)" "+%Y-%m-%-d_%H:%M:%S")
+        mv /btrfs/root "/btrfs/backup/root/$timestamp"
     fi
 
     delete_subvolume_recursively() {
         IFS=$'\n'
         for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-            delete_subvolume_recursively "/btrfs_tmp/$i"
+            delete_subvolume_recursively "/btrfs/$i"
         done
+        echo "Found old backup at $1, deleting..."
         btrfs subvolume delete "$1"
     }
 
-    for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
+    echo "Scanning root backups for roots older than 30 days..."
+    for i in $(find /btrfs/backup/root/* -maxdepth 0 -mtime +30); do
         delete_subvolume_recursively "$i"
     done
 
-    btrfs subvolume create /btrfs_tmp/root
-    umount /btrfs_tmp
+    echo "Building fresh root directory..."
+    btrfs subvolume create /btrfs/root
+    umount /btrfs
   '';
 }

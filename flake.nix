@@ -13,19 +13,15 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: {
+  outputs = {...} @ inputs: {
     nixosConfigurations = {
-      jetpack = nixpkgs.lib.nixosSystem {
+      jetpack = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
           ./filesystems/btrfs.nix
           {networking.hostName = "jetpack";}
           ./hardware/framework13/amd-7040
-          ./systems/personal
+          ./systems/personal2
         ];
       };
     };
