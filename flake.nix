@@ -7,22 +7,17 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+    yoink = {
+      url = "github:rhedgeco/yoink";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: {
+  outputs = {...} @ inputs: {
     nixosConfigurations = {
-      jetpack = nixpkgs.lib.nixosSystem {
+      jetpack = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
-          ./filesystems/btrfs.nix
           {networking.hostName = "jetpack";}
           ./hardware/framework13/amd-7040
           ./systems/personal
