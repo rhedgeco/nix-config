@@ -1,0 +1,257 @@
+input {
+    touchpad {
+        // allow tapping touchpad to click
+        tap
+
+        // use natural touchpad scrolling
+        natural-scroll
+    }
+}
+
+// disable middle click paste
+clipboard {
+    disable-primary
+}
+
+// set main display to 1.8 pixel scale
+output "eDP-1" {
+    scale 1.8
+}
+
+layout {
+    // Set gap between windows and borders to be 20 logical pixels
+    gaps 8
+
+    // set column width presets
+    // this allows windows to automatically fit together in various configuratons
+    preset-column-widths {
+        proportion 0.25
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 0.75
+    }
+
+    // make new windows default to 50% screen width
+    default-column-width { proportion 0.5; }
+
+    // make larger focus ring around window
+    focus-ring {
+        width 3
+        active-color "#ff8000e0"
+    }
+
+    // add 1 pixel border for style
+    border {
+        width 1
+        active-color "#ffcfa0e0"
+        inactive-color "#202020ff"
+        urgent-color "#9b0000"
+    }
+
+    // Window drop shadows
+    shadow {
+        on
+        softness 10
+        spread 0
+        offset x=0 y=0
+    }
+
+    // No struts for now
+    // this is the gaps from the sides of the windows
+    struts {
+        // left 64
+        // right 64
+        // top 64
+        // bottom 64
+    }
+}
+
+// start useful processes
+spawn-at-startup "waybar"
+spawn-at-startup "xwayland-satellite" ":27"
+spawn-at-startup "nm-applet"
+spawn-at-startup "hyprpaper"
+spawn-at-startup "blueman-applet"
+
+environment {
+    // set xwayland environment display variable
+    DISPLAY ":27"
+}
+
+// Ask windows to not draw decorations
+prefer-no-csd
+
+// Set screenshot location
+screenshot-path "~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H-%M-%S.png"
+
+animations {
+    // Speed up animations slightly
+    // 'slowdown' is a scaling value,
+    // so values less than 1 actually speed animations up
+    slowdown 0.75
+}
+
+// Open the Firefox picture-in-picture player as floating by default.
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+// Make windows with no title and null app-id float
+// this happens with vscode when dragging/dropping items in xwayland-satellite
+window-rule {
+    match title="^$"
+    open-floating true
+    focus-ring {
+        off
+    }
+}
+
+// Force all window corners to be rounded
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
+
+// Dont show hotkey overlay at startup
+hotkey-overlay {
+    skip-at-startup
+}
+
+gestures {
+    // turn off hot corners
+    hot-corners {
+        off
+    }
+}
+
+binds {
+    // App launch shortcuts
+    Mod+T { spawn "alacritty"; }
+    Mod+Space { spawn "fuzzel"; }
+    Super+L { spawn "hyprlock"; }
+
+    // Volume controls
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    // Brightness controls
+    XF86MonBrightnessUp allow-when-locked=true { spawn "light" "-A" "5"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "light" "-U" "5"; }
+
+    // Close windows quickly with Mod+Q
+    Mod+Q { close-window; }
+
+    // Window movement and navigation
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
+    Mod+Ctrl+Left  { move-column-left; }
+    Mod+Ctrl+Down  { move-window-down; }
+    Mod+Ctrl+Up    { move-window-up; }
+    Mod+Ctrl+Right { move-column-right; }
+
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+End  { move-column-to-last; }
+
+    Mod+Shift+Left  { focus-monitor-left; }
+    Mod+Shift+Down  { focus-monitor-down; }
+    Mod+Shift+Up    { focus-monitor-up; }
+    Mod+Shift+Right { focus-monitor-right; }
+    Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+
+    Mod+Page_Down      { focus-workspace-down; }
+    Mod+Page_Up        { focus-workspace-up; }
+    Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
+    Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
+
+    Mod+Shift+Page_Down { move-workspace-down; }
+    Mod+Shift+Page_Up   { move-workspace-up; }
+
+    // Absolute workspace navigation
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+Ctrl+1 { move-column-to-workspace 1; }
+    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+3 { move-column-to-workspace 3; }
+    Mod+Ctrl+4 { move-column-to-workspace 4; }
+    Mod+Ctrl+5 { move-column-to-workspace 5; }
+    Mod+Ctrl+6 { move-column-to-workspace 6; }
+    Mod+Ctrl+7 { move-column-to-workspace 7; }
+    Mod+Ctrl+8 { move-column-to-workspace 8; }
+    Mod+Ctrl+9 { move-column-to-workspace 9; }
+
+    // Use this to move windows instead of columns
+    // Mod+Ctrl+1 { move-window-to-workspace 1; }
+
+    // Switches focus between the current and the previous workspace.
+    Mod+Tab { focus-workspace-previous; }
+
+    // Consume or expel windows from a column
+    Mod+I { consume-or-expel-window-left; }
+    Mod+O { consume-or-expel-window-right; }
+
+    // Resize windows to predefined sizes
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Ctrl+R { reset-window-height; }
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+
+    // Fine window size adjustment
+    Mod+Minus { set-column-width "-5%"; }
+    Mod+Equal { set-column-width "+5%"; }
+
+    // Makes the column "fill the rest of the space".
+    Mod+Ctrl+F { expand-column-to-available-width; }
+
+    Mod+C { center-column; }
+
+    // Center all fully visible columns on screen.
+    Mod+Ctrl+C { center-visible-columns; }
+
+    // Move the focused window between the floating and the tiling layout.
+    Mod+Shift+S { toggle-window-floating; }
+    Mod+S { switch-focus-between-floating-and-tiling; }
+
+    // Toggle tabbed column display mode.
+    Mod+W { toggle-column-tabbed-display; }
+
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    // Applications such as remote-desktop clients and software KVM switches may
+    // request that niri stops processing the keyboard shortcuts defined here
+    // so they may, for example, forward the key presses as-is to a remote machine.
+    // It's a good idea to bind an escape hatch to toggle the inhibitor,
+    // so a buggy application can't hold your session hostage.
+    //
+    // The allow-inhibiting=false property can be applied to other binds as well,
+    // which ensures niri always processes them, even when an inhibitor is active.
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    // The quit action will show a confirmation dialog to avoid accidental exits.
+    Mod+Shift+E { quit; }
+    Ctrl+Alt+Delete { quit; } 
+
+    // Powers off the monitors. To turn them back on, do any input like
+    // moving the mouse or pressing any other key.
+    Mod+Shift+P { power-off-monitors; }
+}
