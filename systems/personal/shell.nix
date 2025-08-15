@@ -43,6 +43,12 @@
 
     # default terminal editor
     vim
+
+    # run bash scripts easier in fish
+    fishPlugins.bass
+
+    # include python by default (required by bass)
+    python3
   ];
 
   environment.persistence."/persist".users.ryan = {
