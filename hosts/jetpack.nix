@@ -1,7 +1,6 @@
 {...}: {
   custom = {
-    dualBoot = true;
-
+    dualBoot.enable = true;
     bootloader.enable = "grub";
 
     hardware = {

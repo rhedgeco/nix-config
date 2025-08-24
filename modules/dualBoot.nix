@@ -3,15 +3,11 @@
   config,
   ...
 }: {
-  options.custom = {
-    dualBoot = lib.mkOption {
-      type = lib.types.bool;
-      description = "Mark this system as being compatible with dual boot";
-      default = false;
-    };
+  options.custom.dualBoot = {
+    enable = lib.mkEnableOption "Mark this system as being compatible with dual boot";
   };
 
-  config = lib.mkIf config.custom.dualBoot {
+  config = lib.mkIf config.custom.dualBoot.enable {
     # set the hardware clock to local time to play nicely with windows
     time.hardwareClockInLocalTime = true;
   };
