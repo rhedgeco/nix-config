@@ -3,6 +3,10 @@
   config,
   ...
 }: {
+  imports = [
+    ./btrfs
+  ];
+
   options.custom.filesystem = {
     enable = lib.mkOption {
       type = lib.types.enum ["btrfs"];
