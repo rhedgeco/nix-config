@@ -13,16 +13,11 @@
     };
   };
 
-  outputs = {...} @ inputs: {
-    nixosConfigurations = {
-      jetpack = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [
-          {networking.hostName = "jetpack";}
-          ./hardware/framework13/amd-7040
-          ./systems/personal
-        ];
-      };
+  outputs = {...} @ inputs: let
+    utils = import ./utils.nix {inherit inputs;};
+  in {
+    nixosConfigurations = utils.buildHosts {
+      jetpack = ./hosts/jetpack.nix;
     };
   };
 }
