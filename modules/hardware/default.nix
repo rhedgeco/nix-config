@@ -6,6 +6,7 @@
   imports = [
     # always import not-detected to add useful kernel modules
     (modulesPath + "/installer/scan/not-detected.nix")
+    ./framework.nix
   ];
 
   options.custom.hardware = {

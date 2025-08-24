@@ -1,4 +1,8 @@
 {lib, ...}: {
+  imports = [
+    ./grub
+  ];
+
   options.custom.bootloader = {
     enable = lib.mkOption {
       type = lib.types.enum ["grub"];
