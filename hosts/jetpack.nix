@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   custom = {
     hardware = {
       enable = "framework";
@@ -16,6 +16,14 @@
     impermanence = {
       enable = true;
       persistDir = "/persist";
+    };
+
+    greetd = {
+      enable = true;
+      autoLogin = {
+        command = "${pkgs.niri}/bin/niri-session";
+        user = "ryan";
+      };
     };
 
     dualBoot.enable = true;
