@@ -1,8 +1,5 @@
 {...}: {
   custom = {
-    dualBoot.enable = true;
-    bootloader.enable = "grub";
-
     hardware = {
       enable = "framework";
       framework = {
@@ -20,5 +17,10 @@
       enable = true;
       persistDir = "/persist";
     };
+
+    dualBoot.enable = true;
+    bootloader.enable = "grub";
+    codium.enable = true;
+    niri.enable = true;
   };
 }
