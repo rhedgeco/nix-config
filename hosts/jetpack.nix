@@ -16,5 +16,10 @@
       bootDevice = "/dev/disk/by-label/BOOT";
       btrfs.mainDevice = "/dev/disk/by-label/MAIN";
     };
+
+    impermanence = {
+      enable = true;
+      persistDir = "/persist";
+    };
   };
 }
