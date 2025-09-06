@@ -5,7 +5,11 @@
   ...
 }: let
   hardware = config.custom.hardware;
+  framework-13-amd-7040 = hardware.enable == "framework" && hardware.framework.edition == "framework-13-amd-7040";
 in {
+  imports = [
+  ];
+
   options.custom.hardware.framework = {
     edition = lib.mkOption {
       type = lib.types.enum ["framework-13-amd-7040"];
@@ -13,7 +17,7 @@ in {
     };
   };
 
-  config = lib.mkIf (hardware.enable == "framework" && hardware.framework.edition == "framework-13-amd-7040") {
+  config = lib.mkIf framework-13-amd-7040 {
     boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod"];
     boot.initrd.kernelModules = [];
     boot.kernelModules = ["kvm-amd"];

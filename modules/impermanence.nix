@@ -5,7 +5,7 @@
   ...
 }: {
   imports = [
-    inputs.impermanence.nixosModules.impermanence
+    (lib.mkIf config.custom.options.impermanence.enable inputs.impermanence.nixosModules.impermanence)
   ];
 
   options.custom.impermanence = {

@@ -1,5 +1,9 @@
 {pkgs, ...}: {
   custom = {
+    users = {
+      ryan.enable = true;
+    };
+
     hardware = {
       enable = "framework";
       framework = {

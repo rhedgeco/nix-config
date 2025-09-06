@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ./btrfs
+    ./btrfs.nix
   ];
 
   options.custom.filesystem = {
