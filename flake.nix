@@ -3,8 +3,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     yoink = {
@@ -13,16 +13,7 @@
     };
   };
 
-  outputs = {...} @ inputs: {
-    nixosConfigurations = {
-      jetpack = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [
-          {networking.hostName = "jetpack";}
-          ./hardware/framework13/amd-7040
-          ./systems/personal
-        ];
-      };
-    };
+  outputs = inputs: {
+    nixosConfigurations = import ./systems/nixos inputs;
   };
 }
