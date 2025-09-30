@@ -25,6 +25,14 @@ in {
     # add fish shell to the environment shells
     environment.shells = [pkgs.fish];
 
+    # add fish plugins
+    environment.systemPackages = with pkgs; [
+      fishPlugins.bass
+      fishPlugins.grc
+      python3
+      grc
+    ];
+
     # enable the fish shell
     programs.fish = {
       enable = true;
