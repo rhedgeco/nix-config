@@ -32,6 +32,7 @@ in {
 
     # include some shell tools by default with the system
     environment.systemPackages = with pkgs; [
+      python3
       direnv
       vim
     ];
