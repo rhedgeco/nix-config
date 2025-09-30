@@ -4,10 +4,11 @@
   config,
   ...
 }: let
-  session = config.custom.greetd.autoLogin.command;
+  greetd = config.myconfig.greetd;
+  session = greetd.autoLogin.command;
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
 in {
-  options.custom.greetd = {
+  options.myconfig.greetd = {
     enable = lib.mkEnableOption "enable greetd greeter";
 
     autoLogin = {
@@ -22,14 +23,14 @@ in {
     };
   };
 
-  config = lib.mkIf config.custom.greetd.enable {
+  config = lib.mkIf greetd.enable {
     services.greetd = {
       enable = true;
       settings = {
         # autologin user by default
         initial_session = {
           command = session;
-          user = config.custom.greetd.autoLogin.user;
+          user = config.myconfig.greetd.autoLogin.user;
         };
 
         # when logging out show a tuigreet prompt instead

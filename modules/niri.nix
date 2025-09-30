@@ -3,15 +3,30 @@
   pkgs,
   config,
   ...
-}: {
-  options.custom.niri = {
-    enable = lib.mkEnableOption "Enable niri";
+}: let
+  niri = config.myconfig.niri;
+  impermanence = config.myconfig.impermanence;
+in {
+  options.myconfig.niri = {
+    enable = lib.mkEnableOption "Enable niri compositor.";
   };
 
-  config = lib.mkIf config.custom.niri.enable {
-    # enable the niri window manager
+  config = lib.mkIf niri.enable {
+    # enable the niri compositor
     programs.niri.enable = true;
 
+    # TODO: Remove this
+    # Persist the dconf directory for now
+    # but later this should be replaced with a declarative solution
+    environment.persistence."/persist" = lib.mkIf impermanence.enable {
+      users = lib.genAttrs impermanence.persistUsers (name: {
+        directories = [
+          ".config/dconf"
+        ];
+      });
+    };
+
+    # add packages used by niri
     environment.systemPackages = with pkgs; [
       # niri does not have a built in x server
       # xwayland-satellite fills this gap

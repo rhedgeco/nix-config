@@ -3,23 +3,29 @@
   config,
   inputs,
   ...
-}: {
+}: let
+  impermanence = config.myconfig.impermanence;
+in {
   imports = [
-    (lib.mkIf config.custom.options.impermanence.enable inputs.impermanence.nixosModules.impermanence)
+    inputs.impermanence.nixosModules.impermanence
   ];
 
-  options.custom.impermanence = {
-    enable = lib.mkEnableOption "enable impermanence";
+  options.myconfig.impermanence = {
+    enable = lib.mkEnableOption "Enable impermanence.";
 
-    persistDir = lib.mkOption {
-      type = lib.types.str;
-      description = "The path to be used for persisting impermanent files";
+    persistUsers = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "User home directories to persist.";
     };
   };
 
-  config = lib.mkIf config.custom.impermanence.enable {
-    # persist some system directories by default
-    environment.persistence."${config.custom.impermanence.persistDir}" = {
+  config = lib.mkIf impermanence.enable {
+    # allow non root users to fuse mount
+    programs.fuse.userAllowOther = true;
+
+    # persist some system and user directories by default
+    environment.persistence."/persist" = {
       hideMounts = true;
       directories = [
         # system log files
@@ -31,6 +37,31 @@
         # systemd coredump info
         "/var/lib/systemd/coredump"
       ];
+
+      users = lib.genAttrs impermanence.persistUsers (name: {
+        directories = [
+          # basic user directories
+          "Downloads"
+          "Music"
+          "Pictures"
+          "Documents"
+          "Videos"
+          # ssh and gpg keys
+          {
+            directory = ".ssh";
+            mode = "0700";
+          }
+          {
+            directory = ".gnupg";
+            mode = "0700";
+          }
+          # keyring
+          {
+            directory = ".local/share/keyrings";
+            mode = "0700";
+          }
+        ];
+      });
     };
   };
 }
