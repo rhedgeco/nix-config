@@ -1,5 +1,29 @@
 {
-	"reportAnalytics": false,
 	"reportCrashes": false,
-	"theme": "dark"
+	"theme": "dark",
+	"appIdentification": {
+		"machineId": "c4e53627-8db2-4575-8352-e2bd2e6df44d"
+	},
+	"version": "2.4.29",
+	"analyzersPreferences": {},
+	"deviceNames": {},
+	"renderSchemaVersion": 16,
+	"installedExtensions": {
+		"version": 2,
+		"extensions": []
+	},
+	"dismissedMessageId": -1,
+	"installDate": {
+		"timestampMs": 1759207618688,
+		"type": "installDate"
+	},
+	"knownDeviceTypes": [],
+	"automaticallyStartCaptureMSO": true,
+	"marqueeZoomType": "marqueeZoomMultiDimension",
+	"autoLayout": true,
+	"shouldRenameTabToSavedCapture": false,
+	"enableMsoDebugDisplay": false,
+	"relativeZoomMode": "Mouse",
+	"reportAnalytics": false,
+	"isDisabledAutoUpdates": true
 }
