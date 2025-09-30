@@ -26,6 +26,9 @@ in {
       });
     };
 
+    # enable the gnome keyring when using niri
+    services.gnome.gnome-keyring.enable = true;
+
     # add packages used by niri
     environment.systemPackages = with pkgs; [
       # niri does not have a built in x server
