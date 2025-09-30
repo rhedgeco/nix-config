@@ -11,9 +11,10 @@ in {
   };
 
   config = lib.mkIf git.enable {
-    environment.systemPackages = [
-      pkgs.git
-      pkgs.git-lfs
-    ];
+    # enable git with lfs
+    programs.git = {
+      enable = true;
+      lfs.enable = true;
+    };
   };
 }
