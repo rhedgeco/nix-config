@@ -2,10 +2,12 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }: let
   shell = config.myconfig.shell;
   impermanence = config.myconfig.impermanence;
+  yoink = inputs.yoink.packages.${pkgs.system}.default;
 in {
   options.myconfig.shell = {
     default = lib.mkOption {
@@ -32,6 +34,7 @@ in {
 
     # include some shell tools by default with the system
     environment.systemPackages = with pkgs; [
+      yoink
       python3
       direnv
       vim
