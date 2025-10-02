@@ -6,7 +6,7 @@
 }: let
   greetd = config.myconfig.greetd;
   session = greetd.autoLogin.command;
-  tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+  tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
 in {
   options.myconfig.greetd = {
     enable = lib.mkEnableOption "enable greetd greeter";

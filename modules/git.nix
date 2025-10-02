@@ -11,9 +11,6 @@ in {
   };
 
   config = lib.mkIf git.enable {
-    # start the ssh agent
-    programs.ssh.startAgent = true;
-
     # enable git with lfs
     programs.git = {
       enable = true;
