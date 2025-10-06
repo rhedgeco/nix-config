@@ -4,19 +4,19 @@
   inputs,
   ...
 }: {
-  # import the framework 13 amd hardware configuration
   imports = [
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
-    (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  # add kernel modules requires for this system
+  # host specific settings
+  nixpkgs.hostPlatform = "x86_64-linux";
+  time.timeZone = "America/Los_Angeles";
+  hardware.enableRedistributableFirmware = true;
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
-  # set my custom config options
   myconfig = {
     dualBoot = true;
     grub.enable = true;
