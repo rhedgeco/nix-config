@@ -126,6 +126,10 @@ gestures {
     }
 }
 
+switch-events {
+    lid-close { spawn "hyprlock"; }
+}
+
 binds {
     // App launch shortcuts
     Mod+T { spawn "alacritty"; }
