@@ -35,7 +35,7 @@ in {
 
         # when logging out show a tuigreet prompt instead
         default_session = {
-          command = "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time -cmd ${session}";
+          command = "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time --cmd ${session}";
           user = "greeter";
         };
       };
