@@ -1,13 +1,10 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
-  # get all the files in the current directory
-  files = builtins.readDir ./.;
-
-  # filter files to only include nix modules
-  nixModules = lib.attrNames (lib.filterAttrs (
+{lib, ...}: let
+  # get all nix modules in the current directory.
+  # this includes all folders by default
+  # and files with a `.nix` extension
+  # excluding `default.nix` to prevent recursion
+  nixModules = lib.attrNames (
+    lib.filterAttrs (
       name: type:
         type
         == "directory"
@@ -16,44 +13,24 @@
         && name != "default.nix"
         && lib.strings.hasSuffix ".nix" name
     )
-    files);
+    (builtins.readDir ./.)
+  );
 in {
-  # import all the nix modules in this directory
+  # import all the nix modules in this directory.
+  # this helps by importing every module without having to name each one.
   imports = lib.map (name: ./. + "/${name}") nixModules;
 
-  # mark the host platform as x86 by default on all systems
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
   # allow unfree packages by default
-  nixpkgs.config.allowUnfree = lib.mkDefault true;
+  # this allows installing packages that are not FOSS
+  # while I prefer FOSS applications, this restriction can be frustrating
+  nixpkgs.config.allowUnfree = true;
 
-  # enable flakes
-  nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
-    auto-optimise-store = lib.mkDefault true;
-  };
+  # automatically detects files in the store that have identical contents,
+  # and replaces them with hard links to a single copy. This saves disk space.
+  nix.settings.auto-optimise-store = true;
 
-  # add default system fonts
-  fonts = {
-    packages = with pkgs; [
-      # used for default system fonts
-      nerd-fonts.noto
-      nerd-fonts.jetbrains-mono
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-    ];
-
-    fontconfig.defaultFonts = {
-      serif = ["Noto Serif Nerd Font"];
-      sansSerif = ["Noto Sans Nerd Font"];
-      emoji = ["Noto Color Emoji"];
-      monospace = ["JetBrains Mono Nerd Font"];
-    };
-  };
-
-  # set los angeles as the default time zone for all systems
-  time.timeZone = lib.mkDefault "America/Los_Angeles";
-
-  # do not change (unless you know what you are doing)
+  # do not change unless necessary.
+  # this marks the state version that this config was created with.
+  # as nixos updates this is used to know what config items need to change.
   system.stateVersion = "24.05";
 }
