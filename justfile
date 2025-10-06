@@ -1,3 +1,4 @@
+# lists the available `just` commands
 default:
     @just --list
 
@@ -5,14 +6,14 @@ default:
 update:
     nix flake update
 
-# builds and enables the current systems flake next boot
+# builds and enables the `host` flake for next boot
 boot host=(`hostname`):
     sudo nixos-rebuild --flake .#{{host}} boot
 
-# builds and activates the current systems flake
+# builds and activates the `host` flake
 switch host=(`hostname`):
     sudo nixos-rebuild --flake .#{{host}} switch
 
-# does a dry build of the current systems flake
-try host=(`hostname`):
+# does a dry build of the `host` flake
+dry host=(`hostname`):
     nixos-rebuild --flake .#{{host}} dry-build
