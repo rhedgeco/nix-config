@@ -19,6 +19,9 @@ in {
   };
 
   config = lib.mkIf codium.enable {
+    # apply the nix-vscode-extensions overlay
+    nixpkgs.overlays = [inputs.nix-vscode-extensions.overlays.default];
+
     environment.systemPackages = with pkgs; [
       # only include base tools for editing nix files and using extensions
       alejandra
@@ -42,7 +45,10 @@ in {
             rust-lang.rust-analyzer
             tamasfe.even-better-toml
             vadimcn.vscode-lldb
-            serayuzgur.crates
+
+            # this extension is not available in the normal nix registry
+            # so we have to use the nix-vscode-extensions repository to get it
+            pkgs.nix-vscode-extensions.vscode-marketplace.barbosshack.crates-io
           ]));
       })
     ];
