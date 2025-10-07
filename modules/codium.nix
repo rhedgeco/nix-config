@@ -23,7 +23,7 @@ in {
       # only include base tools for editing nix files and using extensions
       alejandra
       just
-      nil
+      nixd
 
       # add codium with base useful extensions
       (vscode-with-extensions.override {

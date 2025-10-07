@@ -12,5 +12,10 @@
     "extensions.autoUpdate": false,
     "update.mode": "none",
     "update.showReleaseNotes": false,
-    "git.confirmSync": false
+    "git.confirmSync": false,
+    "nix.serverPath": "nixd",
+    "nix.enableLanguageServer": true,
+    "nixpkgs": {
+        "expr": "import <nixpkgs> {}"
+    }
 }
