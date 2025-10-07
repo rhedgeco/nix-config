@@ -33,9 +33,14 @@ in {
   # while I prefer FOSS applications, this restriction can be frustrating
   nixpkgs.config.allowUnfree = true;
 
-  # automatically detects files in the store that have identical contents,
-  # and replaces them with hard links to a single copy. This saves disk space.
-  nix.settings.auto-optimise-store = true;
+  nix.settings = {
+    # enables expetimental flakes and nix command features on this system by default
+    # without this, many flake based commands would need `--extra-experimental-features flakes`
+    experimental-features = ["nix-command" "flakes"];
+    # automatically detects files in the store that have identical contents,
+    # and replaces them with hard links to a single copy. This saves disk space.
+    auto-optimise-store = true;
+  };
 
   # do not change unless necessary.
   # this marks the state version that this config was created with.
