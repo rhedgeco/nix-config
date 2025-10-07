@@ -41,15 +41,20 @@ in {
             mkhl.direnv
           ])
           # include rust extensions if rust is enabled
-          ++ (lib.optionals rust.enable (with pkgs.vscode-extensions; [
-            rust-lang.rust-analyzer
-            tamasfe.even-better-toml
-            vadimcn.vscode-lldb
-
-            # this extension is not available in the normal nix registry
-            # so we have to use the nix-vscode-extensions repository to get it
-            pkgs.nix-vscode-extensions.vscode-marketplace.barbosshack.crates-io
-          ]));
+          ++ (lib.optionals rust.enable (
+            # with syntax uses shadowing to resove the correct attribute
+            # this means that if the extension is not in `vscode-extensions`
+            # it will check in the `nix-vscode-extension.vscode-marketplace` instead
+            # this means that any extensions that are not immediately available in the nix repo
+            # can still be pulled from the entire marketplace
+            with pkgs.nix-vscode-extensions.vscode-marketplace;
+            with pkgs.vscode-extensions; [
+              rust-lang.rust-analyzer
+              tamasfe.even-better-toml
+              vadimcn.vscode-lldb
+              barbosshack.crates-io
+            ]
+          ));
       })
     ];
 
