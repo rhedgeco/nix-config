@@ -69,15 +69,9 @@ layout {
 
 // start useful processes
 spawn-at-startup "waybar"
-spawn-at-startup "xwayland-satellite" ":27"
 spawn-at-startup "nm-applet"
 spawn-at-startup "hyprpaper"
 spawn-at-startup "blueman-applet"
-
-environment {
-    // set xwayland environment display variable
-    DISPLAY ":27"
-}
 
 // Ask windows to not draw decorations
 prefer-no-csd
@@ -124,10 +118,6 @@ gestures {
     hot-corners {
         off
     }
-}
-
-switch-events {
-    lid-close { spawn "hyprlock"; }
 }
 
 binds {
