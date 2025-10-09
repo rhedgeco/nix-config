@@ -19,12 +19,13 @@ in {
     # add the saleae logic package
     environment.systemPackages = [
       pkgs.saleae-logic-2
+      pkgs.stlink-gui
     ];
 
     # include required udev services
     services.udev.packages = [
       pkgs.saleae-logic-2
-      pkgs.stlink
+      pkgs.stlink-gui
     ];
 
     # add serial port users to dialout group
