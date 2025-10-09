@@ -17,5 +17,6 @@
     "nix.enableLanguageServer": true,
     "nixpkgs": {
         "expr": "import <nixpkgs> {}"
-    }
+    },
+    "workbench.startupEditor": "none"
 }
