@@ -40,6 +40,7 @@ in {
       direnv
       vim
       fd
+      bat
     ];
 
     # persist users direnv state
