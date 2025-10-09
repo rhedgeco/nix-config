@@ -37,8 +37,8 @@ layout {
         proportion 0.75
     }
 
-    // make new windows default to 50% screen width
-    default-column-width { proportion 0.5; }
+    // make new windows default to 25% screen width
+    default-column-width { proportion 0.25; }
 
     // make larger focus ring around window
     focus-ring {
