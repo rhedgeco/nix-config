@@ -39,6 +39,7 @@ in {
       python3
       direnv
       vim
+      fd
     ];
 
     # persist users direnv state
