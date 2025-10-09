@@ -10,7 +10,13 @@ in {
   # create a service that unbinds the internal gpu if the egpu is detected at startup
   systemd.services.unbind-internal-gpu = {
     description = "unbind the iGPU if an eGPU is detected at boot";
-    serviceConfig.Type = "oneshot";
+
+    serviceConfig = {
+      Type = "oneshot";
+      # ensure the service stays up after it exits
+      # this prevents the service from running again on `nixos-rebuild switch`
+      RemainAfterExit = true;
+    };
 
     # run is wanted by the graphical target,
     # but has to start before the display-manager
