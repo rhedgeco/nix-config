@@ -80,20 +80,6 @@ in {
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.beta;
-
-    # prime = {
-    #   sync.enable = true;
-    #   allowExternalGpu = true;
-    #   offload.enable = false;
-    #   offload.enableOffloadCmd = false;
-
-    #   # bus ids found using `lspci -D | grep VGA`
-    #   # where the format printed is `[domain]:[bus]:[slot].[function]`
-    #   # the domain and bus are printed in hex and have to be converted to decimal
-    #   # the final bus id should be `PCI:[bus]@[domain]:[slot]:[function]`
-    #   nvidiaBusId = "PCI:100@0:0:0"; # 0000:64:00.0
-    #   amdgpuBusId = "PCI:193@0:0:0"; # 0000:c1:00.0
-    # };
   };
 
   # ignore lid switches when plugged into a power source
