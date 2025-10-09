@@ -21,5 +21,5 @@ inputs: let
     hosts;
 in
   buildHosts {
-    jetpack = ./jetpack.nix;
+    jetpack = ./jetpack;
   }
