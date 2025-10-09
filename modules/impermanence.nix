@@ -27,6 +27,9 @@ in {
     # persist some system and user directories by default
     environment.persistence."/persist" = {
       hideMounts = true;
+      files = [
+        "/etc/machine-id"
+      ];
       directories = [
         # system log files
         "/var/log"
