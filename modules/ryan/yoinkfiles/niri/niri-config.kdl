@@ -98,7 +98,15 @@ animations {
 
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="firefox"
+    match title="^Picture-in-Picture$"
+    open-floating true
+}
+
+// Open bitwarden window as floating
+window-rule {
+    match app-id="firefox"
+    match title=".*Bitwarden.*"
     open-floating true
 }
 
