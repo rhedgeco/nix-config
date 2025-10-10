@@ -22,6 +22,6 @@
   };
 
   outputs = inputs: {
-    nixosConfigurations = import ./systems/nixos inputs;
+    nixosConfigurations = import ./hosts/nixos inputs;
   };
 }
