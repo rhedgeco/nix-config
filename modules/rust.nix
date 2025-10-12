@@ -17,6 +17,7 @@ in {
 
     # add the rust binaries to the system environment
     environment.systemPackages = [
+      pkgs.gcc # include gcc for linking
       (pkgs.rust-bin.stable.latest.minimal.override {
         extensions = [
           "rustc"
