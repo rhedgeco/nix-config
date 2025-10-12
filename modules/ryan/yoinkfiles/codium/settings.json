@@ -18,5 +18,12 @@
     "nixpkgs": {
         "expr": "import <nixpkgs> {}"
     },
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    "files.exclude": {
+        "**/.DS_Store": false,
+        "**/.git": false,
+        "**/.hg": false,
+        "**/.svn": false,
+        "**/Thumbs.db": false
+    }
 }
