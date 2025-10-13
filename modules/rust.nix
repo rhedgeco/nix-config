@@ -16,9 +16,10 @@ in {
     nixpkgs.overlays = [inputs.rust-overlay.overlays.default];
 
     # add the rust binaries to the system environment
-    environment.systemPackages = [
-      pkgs.gcc # include gcc for linking
-      (pkgs.rust-bin.stable.latest.minimal.override {
+    environment.systemPackages = with pkgs; [
+      gcc # include gcc for linking
+      cargo-expand
+      (rust-bin.stable.latest.minimal.override {
         extensions = [
           "rustc"
           "cargo"
