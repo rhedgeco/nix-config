@@ -42,24 +42,12 @@ in {
       # xwayland-satellite fills this gap
       # it hosts an xserver and simulates wayland clients
       xwayland-satellite
-
-      # niri expects alacritty as its default terminal
       alacritty
-
-      # niri expects fuzzel as its default app launcher
       fuzzel
-
-      # niri starts up waybar when it is launched by default
       waybar
-
-      # include hyprlock for use as a screen locker
       hyprlock
-
-      # include hyprpaper for wallpaper management
       hyprpaper
-
-      # include light to control backlight
-      light
+      gnome-calculator
     ];
   };
 }

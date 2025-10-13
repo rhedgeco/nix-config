@@ -96,10 +96,11 @@ animations {
     slowdown 0.75
 }
 
-// Open the Firefox picture-in-picture player as floating by default.
+// set up window rules for simple floating windows
 window-rule {
-    match app-id="firefox" title="^Picture-in-Picture$"
     open-floating true
+    match app-id="org.gnome.Calculator"
+    match app-id="firefox" title="Picture-in-Picture"
 }
 
 // Make windows with no title and null app-id float
