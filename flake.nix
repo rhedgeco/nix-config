@@ -21,7 +21,9 @@
     };
   };
 
-  outputs = inputs: {
-    nixosConfigurations = import ./hosts/nixos inputs;
+  outputs = inputs: let
+    systems = import ./systems inputs;
+  in {
+    nixosConfigurations = systems.nixosConfigurations;
   };
 }
