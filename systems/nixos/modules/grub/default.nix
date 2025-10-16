@@ -2,7 +2,6 @@
   pkgs,
   lib,
   config,
-  stdenvNoCC,
   ...
 }: {
   options.myconfig.grub = {
@@ -16,6 +15,7 @@
         enable = true;
         efiSupport = true;
         device = "nodev";
+        timeout = 1;
 
         # theming
         splashImage = ./splash.png;
