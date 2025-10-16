@@ -77,12 +77,6 @@ layout {
     }
 }
 
-// start useful processes
-spawn-at-startup "waybar"
-spawn-at-startup "nm-applet"
-spawn-at-startup "hyprpaper"
-spawn-at-startup "blueman-applet"
-
 // Ask windows to not draw decorations
 prefer-no-csd
 

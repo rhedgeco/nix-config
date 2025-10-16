@@ -8,6 +8,27 @@
     ${yoink}/bin/yoink -r ${./yoinkfiles} push
   '';
 in {
+  imports = [
+    inputs.caelestia-shell.homeManagerModules.default
+  ];
+
+  programs.caelestia = {
+    enable = true;
+    systemd = {
+      target = "graphical-session.target";
+      environment = [];
+    };
+    settings = {
+      paths.wallpaperDir = "~/Pictures/wallpapers";
+    };
+    cli = {
+      enable = true; # Also add caelestia-cli to path
+      settings = {
+        theme.enableGtk = false;
+      };
+    };
+  };
+
   systemd.user.services.yoinkfile-push = {
     Unit = {
       Description = "Pushes yoinkfiles at login";
