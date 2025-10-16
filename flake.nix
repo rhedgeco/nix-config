@@ -22,7 +22,10 @@
   };
 
   outputs = inputs: let
-    systems = import ./systems inputs;
+    users = import ./users;
+    systems = import ./systems {
+      inherit inputs users;
+    };
   in {
     nixosConfigurations = systems.nixosConfigurations;
   };
