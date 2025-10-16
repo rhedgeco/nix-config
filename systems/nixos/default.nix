@@ -15,6 +15,9 @@
             # import the system config
             path
 
+            # import all nixos modules
+            ./modules
+
             # and use the system name as the hostName
             {networking.hostName = "${name}";}
           ]
