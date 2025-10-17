@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  config,
   ...
 }: let
   yoink = inputs.yoink.packages.${pkgs.system}.default;
@@ -10,7 +11,15 @@
 in {
   imports = [
     inputs.caelestia-shell.homeManagerModules.default
+    inputs.impermanence.homeManagerModules.default
   ];
+
+  home.persistence."/persist${config.home.homeDirectory}" = {
+    allowOther = true;
+    directories = [
+      ".local/state/caelestia"
+    ];
+  };
 
   programs.caelestia = {
     enable = true;
