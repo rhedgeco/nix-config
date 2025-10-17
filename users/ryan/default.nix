@@ -20,6 +20,28 @@ in {
     };
     settings = {
       paths.wallpaperDir = "~/Pictures/wallpapers";
+      bar.entries = [
+        {
+          "id" = "logo";
+          "enabled" = true;
+        }
+        {
+          "id" = "spacer";
+          "enabled" = true;
+        }
+        {
+          "id" = "clock";
+          "enabled" = true;
+        }
+        {
+          "id" = "statusIcons";
+          "enabled" = true;
+        }
+        {
+          "id" = "power";
+          "enabled" = true;
+        }
+      ];
     };
     cli = {
       enable = true; # Also add caelestia-cli to path
