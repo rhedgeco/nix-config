@@ -10,12 +10,12 @@
 
   config = lib.mkIf config.myconfig.grub.enable {
     boot.loader = {
+      timeout = 1;
       efi.canTouchEfiVariables = true;
       grub = {
         enable = true;
         efiSupport = true;
         device = "nodev";
-        timeout = 1;
 
         # theming
         splashImage = ./splash.png;
