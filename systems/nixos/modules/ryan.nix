@@ -1,13 +1,16 @@
 {
   lib,
   users,
+  config,
   ...
-}: {
+}: let
+  ryan = config.myconfig.users.ryan;
+in {
   options.myconfig.users.ryan = {
     enable = lib.mkEnableOption "Enable ryan user";
   };
 
-  config = {
+  config = lib.mkIf ryan.enable {
     # create the ryan user
     users.users.ryan = {
       isNormalUser = true;
