@@ -1,9 +1,8 @@
 {
-  utils,
   users,
   inputs,
 }: {
   nixosConfigurations = import ./nixos {
-    inherit utils users inputs;
+    inherit inputs users;
   };
 }

@@ -1,13 +1,16 @@
-utils: {
+inputs: let
+  # get the lib from igloo
+  iglib = inputs.igloo.lib;
+in {
   buildHome = {
     name,
     config ? {},
   }: {...}: {
     imports =
       # import all global user modules
-      utils.modulePaths ./modules
+      iglib.getModulePaths ./modules
       # import all modules from the user directory
-      ++ utils.modulePaths (./. + "/${name}")
+      ++ iglib.getModulePaths (./. + "/${name}")
       # and import all the custom user config
       ++ [({...}: {inherit config;})];
 

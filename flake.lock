@@ -84,6 +84,25 @@
         "type": "github"
       }
     },
+    "igloo": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "path": "./igloo",
+        "type": "path"
+      },
+      "original": {
+        "path": "./igloo",
+        "type": "path"
+      },
+      "parent": []
+    },
     "impermanence": {
       "locked": {
         "lastModified": 1737831083,
@@ -177,6 +196,7 @@
       "inputs": {
         "caelestia-shell": "caelestia-shell",
         "home-manager": "home-manager",
+        "igloo": "igloo",
         "impermanence": "impermanence",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",

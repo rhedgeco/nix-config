@@ -1,10 +1,12 @@
 {
-  utils,
   users,
   inputs,
 }: let
   # get the lib from nixpkgs
   lib = inputs.nixpkgs.lib;
+
+  # get the lib from igloo
+  iglib = inputs.igloo.lib;
 
   # create a function that builds nixos systems
   buildHosts = hosts:
@@ -16,9 +18,9 @@
           # set every systems hostname to match their directory
           [{networking.hostName = "${name}";}]
           # import all global nixos system modules
-          ++ utils.modulePaths ./modules
+          ++ iglib.getModulePaths ./modules
           # import all modules in the system dir
-          ++ utils.modulePaths path;
+          ++ iglib.getModulePaths path;
       })
     hosts;
 in

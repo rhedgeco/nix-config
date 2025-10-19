@@ -23,18 +23,20 @@
       url = "github:rhedgeco/yoink";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    igloo = {
+      url = "path:./igloo";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs = inputs: let
-    # import utils module
-    utils = import ./utils.nix inputs;
-
     # import users module
-    users = import ./users utils;
+    users = import ./users inputs;
 
     # import systems module
     systems = import ./systems {
-      inherit utils users inputs;
+      inherit inputs users;
     };
   in {
     # use the systems module to generate nixosConfigurations
