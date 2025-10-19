@@ -25,5 +25,6 @@
         "**/.hg": false,
         "**/.svn": false,
         "**/Thumbs.db": false
-    }
+    },
+    "terminal.integrated.stickyScroll.enabled": false
 }
