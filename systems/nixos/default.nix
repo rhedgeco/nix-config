@@ -1,6 +1,7 @@
 {
-  inputs,
+  utils,
   users,
+  inputs,
 }: let
   # get the lib from nixpkgs
   lib = inputs.nixpkgs.lib;
@@ -9,17 +10,15 @@
   buildHosts = hosts:
     builtins.mapAttrs (name: path:
       lib.nixosSystem {
+        system = "x86_64-linux";
         specialArgs = {inherit inputs users;};
-        modules = [
-          # import the system config
-          path
-
-          # import all nixos modules
-          ./modules
-
-          # use the system name as the hostName
-          {networking.hostName = "${name}";}
-        ];
+        modules =
+          # set every systems hostname to match their directory
+          [{networking.hostName = "${name}";}]
+          # import all global nixos system modules
+          ++ utils.modulePaths ./modules
+          # import all modules in the system dir
+          ++ utils.modulePaths path;
       })
     hosts;
 in
