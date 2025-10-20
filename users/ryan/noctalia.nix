@@ -45,6 +45,17 @@ in {
         showScreenCorners = true;
         forceBlackScreenCorners = true;
       };
+      ui = {
+        fontDefault = "Noto Sans Nerd Font";
+        fontFixed = "JetBrains Mono Nerd Font";
+      };
+      notifications = {
+        location = "top_center";
+        alwaysOnTop = true;
+        lowUrgencyDuration = 2;
+        normalUrgencyDuration = 3;
+        criticalUrgencyDuration = 8;
+      };
       controlCenter = {
         cards = [
           {
@@ -78,14 +89,14 @@ in {
               id = "SystemMonitor";
             }
             {
-              formatHorizontal = "HH:mm";
-              formatVertical = "HH mm";
               id = "Clock";
-              useMonospacedFont = true;
-              usePrimaryColor = true;
+              formatHorizontal = "ddd - MMM d - HH:mm:ss";
             }
           ];
           right = [
+            {
+              id = "NightLight";
+            }
             {
               id = "Bluetooth";
             }
@@ -96,6 +107,9 @@ in {
               alwaysShowPercentage = false;
               id = "Battery";
               warningThreshold = 30;
+            }
+            {
+              id = "PowerProfile";
             }
             {
               id = "SidePanelToggle";
