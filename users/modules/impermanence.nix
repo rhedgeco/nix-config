@@ -13,7 +13,7 @@ in {
   imports = [inputs.impermanence.homeManagerModules.default];
 
   # set up options to enable impermanence for all users
-  options.myconfig.impermanence = {
+  options.custom.impermanence = {
     enable = lib.mkEnableOption "Enables impermanence storage for ${user.name}";
     userDir = lib.mkOption {
       type = lib.types.str;

@@ -22,6 +22,12 @@ in {
     # set up the home manager configuration for ryan
     home-manager.users.ryan = users.buildHome {
       name = "ryan";
+      config.custom = {
+        impermanence = {
+          enable = true;
+          userDir = "/home/ryan";
+        };
+      };
     };
   };
 }
