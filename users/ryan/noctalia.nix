@@ -12,7 +12,7 @@ in {
   # include noctalia package with system
   home.packages = [noctalia-pkg];
 
-  # enable the noctalia systemd service
+  # build a noctalia systemd service to launch on login
   systemd.user.services.noctalia-shell = {
     Unit = {
       Description = "Noctalia Shell Service";
