@@ -25,7 +25,7 @@ in {
       config.custom = {
         impermanence = {
           enable = true;
-          userDir = "/home/ryan";
+          userDir = "/persist/home/ryan";
         };
       };
     };
