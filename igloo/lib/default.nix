@@ -30,7 +30,7 @@ inputs: let
   libModulePaths = getModulePaths ./.;
 
   # import all the modules content
-  libModuleContent = lib.map (path: import path) libModulePaths;
+  libModuleContent = lib.map (path: import path inputs) libModulePaths;
 
   # merge those modules for the final re-export
   mergedLibModules = lib.mkMerge libModuleContent;
