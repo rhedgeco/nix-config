@@ -1,51 +1,5 @@
 {
   "nodes": {
-    "caelestia-cli": {
-      "inputs": {
-        "caelestia-shell": [
-          "caelestia-shell"
-        ],
-        "nixpkgs": [
-          "caelestia-shell",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1760147156,
-        "narHash": "sha256-ad+1gnp7Lm7jVSzqvGjMiwnA0P61dFZmp6HcRMXicWY=",
-        "owner": "caelestia-dots",
-        "repo": "cli",
-        "rev": "e9668d58f51e935094e50090b99301df8344f590",
-        "type": "github"
-      },
-      "original": {
-        "owner": "caelestia-dots",
-        "repo": "cli",
-        "type": "github"
-      }
-    },
-    "caelestia-shell": {
-      "inputs": {
-        "caelestia-cli": "caelestia-cli",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "quickshell": "quickshell"
-      },
-      "locked": {
-        "lastModified": 1760497394,
-        "narHash": "sha256-/4Hf/irgPh+gRQAcCNjXyXFcUGOrXMX8+OtOwbscbXk=",
-        "owner": "caelestia-dots",
-        "repo": "shell",
-        "rev": "4cb1048fdd6fa281baa0efa36c8c82ddd2cc43a3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "caelestia-dots",
-        "repo": "shell",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -171,19 +125,41 @@
         "type": "github"
       }
     },
+    "noctalia": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "quickshell": "quickshell",
+        "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1760888809,
+        "narHash": "sha256-Bvog5IBGrnlrOISoMVKiuC0016OnVKSn4gcWSxM5W+E=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "rev": "2362dca8b6b1526253cf7963ee4970738dcdaaff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "type": "github"
+      }
+    },
     "quickshell": {
       "inputs": {
         "nixpkgs": [
-          "caelestia-shell",
+          "noctalia",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1760228179,
-        "narHash": "sha256-4Z6k7lv3Zcgk3K+4h60LpqB9wCkR+utkYERU735U068=",
+        "lastModified": 1753595452,
+        "narHash": "sha256-vqkSDvh7hWhPvNjMjEDV4KbSCv2jyl2Arh73ZXe274k=",
         "ref": "refs/heads/master",
-        "rev": "c9d3ffb6043c5bf3f3009202bad7e0e5132c4a25",
-        "revCount": 693,
+        "rev": "a5431dd02dc23d9ef1680e67777fed00fe5f7cda",
+        "revCount": 665,
         "type": "git",
         "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
       },
@@ -194,13 +170,13 @@
     },
     "root": {
       "inputs": {
-        "caelestia-shell": "caelestia-shell",
         "home-manager": "home-manager",
         "igloo": "igloo",
         "impermanence": "impermanence",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "noctalia": "noctalia",
         "rust-overlay": "rust-overlay",
         "yoink": "yoink"
       }
@@ -226,6 +202,21 @@
       }
     },
     "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

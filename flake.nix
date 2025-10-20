@@ -7,8 +7,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    caelestia-shell = {
-      url = "github:caelestia-dots/shell";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rust-overlay = {

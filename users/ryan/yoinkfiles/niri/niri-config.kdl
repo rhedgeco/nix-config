@@ -109,7 +109,7 @@ window-rule {
 
 // Force all window corners to be rounded
 window-rule {
-    geometry-corner-radius 16
+    geometry-corner-radius 12
     clip-to-geometry true
 }
 
