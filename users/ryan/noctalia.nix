@@ -56,6 +56,11 @@ in {
         normalUrgencyDuration = 3;
         criticalUrgencyDuration = 8;
       };
+      location = {
+        name = "Cupertino, US";
+        useFahrenheit = true;
+        showWeekNumberInCalendar = true;
+      };
       controlCenter = {
         cards = [
           {
