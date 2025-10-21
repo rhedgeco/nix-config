@@ -32,7 +32,7 @@
 
   outputs = inputs: let
     # import users module
-    users = import ./users inputs;
+    users = import ./users;
 
     # import systems module
     systems = import ./systems {

@@ -2,8 +2,10 @@
   lib,
   users,
   config,
+  inputs,
   ...
 }: let
+  iglib = inputs.igloo.lib;
   ryan = config.myconfig.users.ryan;
 in {
   options.myconfig.users.ryan = {
@@ -20,12 +22,15 @@ in {
     };
 
     # set up the home manager configuration for ryan
-    home-manager.users.ryan = users.buildHome {
-      name = "ryan";
-      config.custom = {
-        impermanence = {
-          enable = true;
-          userDir = "/persist/home/ryan";
+    home-manager = {
+      extraSpecialArgs = {inherit iglib;};
+      users.ryan = users.buildHome {
+        name = "ryan";
+        config.custom = {
+          impermanence = {
+            enable = true;
+            userDir = "/persist/home/ryan";
+          };
         };
       };
     };

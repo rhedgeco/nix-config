@@ -1,11 +1,8 @@
-inputs: let
-  # get the lib from igloo
-  iglib = inputs.igloo.lib;
-in {
+{
   buildHome = {
     name,
     config ? {},
-  }: {...}: {
+  }: {iglib, ...}: {
     imports =
       # import all global user modules
       iglib.getModulePaths ./modules
