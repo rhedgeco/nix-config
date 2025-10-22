@@ -8,12 +8,12 @@ update:
 
 # builds and enables the `host` flake for next boot
 boot host=(`hostname`):
-    sudo nixos-rebuild --flake .#{{host}} boot
+    sudo nixos-rebuild --flake '.?submodules=1#{{host}}' boot
 
 # builds and activates the `host` flake
 switch host=(`hostname`):
-    sudo nixos-rebuild --flake .#{{host}} switch
+    sudo nixos-rebuild --flake '.?submodules=1#{{host}}' switch
 
 # does a dry build of the `host` flake
 dry host=(`hostname`):
-    nixos-rebuild --flake .#{{host}} dry-build
+    nixos-rebuild --flake '.?submodules=1#{{host}}' dry-build
