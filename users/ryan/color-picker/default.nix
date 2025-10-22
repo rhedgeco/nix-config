@@ -15,6 +15,7 @@ in {
   # include hyprpicker in case I want to run it manually
   home.packages = [
     pkgs.hyprpicker
+    color-picker
   ];
 
   # create a wrapper desktop entry that runs hyprpicker
