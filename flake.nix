@@ -24,7 +24,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     yoink = {
-      url = "github:rhedgeco/yoink";
+      url = "path:./inputs/yoink";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     igloo = {

@@ -383,18 +383,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1753831365,
-        "narHash": "sha256-wGZ8X7VnC08tF3tbTzsgWjWh2VHXZtKquNwpCqHHSOo=",
-        "owner": "rhedgeco",
-        "repo": "yoink",
-        "rev": "0a73e6b6f23b40d758fe8d578fcc5b95be5edecb",
-        "type": "github"
+        "path": "./inputs/yoink",
+        "type": "path"
       },
       "original": {
-        "owner": "rhedgeco",
-        "repo": "yoink",
-        "type": "github"
-      }
+        "path": "./inputs/yoink",
+        "type": "path"
+      },
+      "parent": []
     }
   },
   "root": "root",
