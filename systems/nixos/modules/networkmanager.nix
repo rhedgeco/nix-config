@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }: let
@@ -20,11 +19,6 @@ in {
   config = lib.mkIf networkmanager.enable {
     # enable network manager
     networking.networkmanager.enable = true;
-
-    # include system packages to control network
-    environment.systemPackages = with pkgs; [
-      networkmanagerapplet # network manager app
-    ];
 
     # add the networkmanager group to specified users
     users.users = lib.genAttrs impermanence.persistUsers (name: {

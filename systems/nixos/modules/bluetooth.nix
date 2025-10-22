@@ -12,8 +12,5 @@ in {
   config = lib.mkIf bluetooth.enable {
     # enable the bluetooth hardware
     hardware.bluetooth.enable = true;
-
-    # enable the blueman bluetooth service
-    services.blueman.enable = true;
   };
 }
