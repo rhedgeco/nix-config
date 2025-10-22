@@ -8,6 +8,7 @@
     name = config.home.username;
     home = config.home.homeDirectory;
   };
+  impermanence = config.custom.impermanence;
 in {
   # import the impermanence home manager module for all users
   imports = [inputs.impermanence.homeManagerModules.default];
@@ -18,6 +19,13 @@ in {
     userDir = lib.mkOption {
       type = lib.types.str;
       description = "The users persistent storage location.";
+    };
+  };
+
+  # allow other on the user directory if enabled
+  config = lib.mkIf impermanence.enable {
+    home.persistence."${impermanence.userDir}" = {
+      allowOther = true;
     };
   };
 }
