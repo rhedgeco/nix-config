@@ -1,8 +1,11 @@
 {
+  lib,
   pkgs,
+  config,
   inputs,
   ...
 }: let
+  impermanence = config.custom.impermanence;
   yoink = inputs.yoink.packages.${pkgs.system}.default;
 in {
   # import the dank material shell home module
@@ -12,6 +15,14 @@ in {
   programs.dankMaterialShell = {
     enable = true;
     enableSystemd = true;
+  };
+
+  # persist the dms state directory if impermanence is enabled
+  # this persists notepad sessions and appusage
+  home.persistence = lib.mkIf impermanence.enable {
+    "${impermanence.userDir}".directories = [
+      ".local/state/DankMaterialShell"
+    ];
   };
 
   # run a systemd service that pushes the yoinkfile
