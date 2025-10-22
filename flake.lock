@@ -156,11 +156,11 @@
         ]
       },
       "locked": {
-        "path": "./imports/igloo",
+        "path": "./inputs/igloo",
         "type": "path"
       },
       "original": {
-        "path": "./imports/igloo",
+        "path": "./inputs/igloo",
         "type": "path"
       },
       "parent": []
