@@ -95,21 +95,50 @@
   "mediaSize": 1,
   "dankBarLeftWidgets": [
     "workspaceSwitcher",
-    "focusedWindow"
+    {
+      "id": "music",
+      "enabled": true
+    }
   ],
   "dankBarCenterWidgets": [
-    "music",
-    "clock",
-    "weather"
+    {
+      "id": "cpuTemp",
+      "enabled": true
+    },
+    {
+      "id": "cpuUsage",
+      "enabled": true
+    },
+    {
+      "id": "memUsage",
+      "enabled": true
+    },
+    {
+      "id": "clock",
+      "enabled": true
+    }
   ],
   "dankBarRightWidgets": [
-    "systemTray",
-    "clipboard",
-    "cpuUsage",
-    "memUsage",
-    "notificationButton",
-    "battery",
-    "controlCenterButton"
+    {
+      "id": "systemTray",
+      "enabled": true
+    },
+    {
+      "id": "notificationButton",
+      "enabled": true
+    },
+    {
+      "id": "clipboard",
+      "enabled": true
+    },
+    {
+      "id": "battery",
+      "enabled": true
+    },
+    {
+      "id": "controlCenterButton",
+      "enabled": true
+    }
   ],
   "appLauncherViewMode": "list",
   "spotlightModalViewMode": "list",
@@ -123,9 +152,9 @@
   "launcherLogoBrightness": 0.5,
   "launcherLogoContrast": 1,
   "launcherLogoSizeOffset": 0,
-  "fontFamily": "Inter Variable",
-  "monoFontFamily": "Fira Code",
-  "fontWeight": 400,
+  "fontFamily": "NotoSans Nerd Font",
+  "monoFontFamily": "JetBrainsMono Nerd Font",
+  "fontWeight": 600,
   "fontScale": 1,
   "dankBarFontScale": 1,
   "notepadUseMonospace": true,
