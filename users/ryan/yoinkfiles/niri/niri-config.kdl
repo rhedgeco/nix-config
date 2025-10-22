@@ -121,23 +121,48 @@ gestures {
 }
 
 binds {
+    // Close windows quickly with Mod+Q
+    Mod+Q { close-window; }
+
     // App launch shortcuts
     Mod+T { spawn "alacritty"; }
     Mod+Space { spawn "fuzzel"; }
-    Super+L { spawn "hyprlock"; }
+
+    // Material Shell Tools
+    Mod+P hotkey-overlay-title="Clipboard" {
+        spawn "dms" "ipc" "call" "clipboard" "toggle";
+    }
+    Mod+K hotkey-overlay-title="Task Manager" {
+        spawn "dms" "ipc" "call" "processlist" "toggle";
+    }
+    Mod+N hotkey-overlay-title="Notepad" {
+        spawn "dms" "ipc" "call" "notepad" "toggle";
+    }
+    Super+L hotkey-overlay-title="Lock Screen" {
+        spawn "dms" "ipc" "call" "lock" "lock";
+    }
 
     // Volume controls
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"; }
-    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    XF86AudioRaiseVolume allow-when-locked=true {
+        spawn "dms" "ipc" "call" "audio" "increment" "3";
+    }
+    XF86AudioLowerVolume allow-when-locked=true {
+        spawn "dms" "ipc" "call" "audio" "decrement" "3";
+    }
+    XF86AudioMute allow-when-locked=true {
+        spawn "dms" "ipc" "call" "audio" "mute";
+    }
+    XF86AudioMicMute allow-when-locked=true {
+        spawn "dms" "ipc" "call" "audio" "micmute";
+    }
 
     // Brightness controls
-    XF86MonBrightnessUp allow-when-locked=true { spawn "light" "-A" "5"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "light" "-U" "5"; }
-
-    // Close windows quickly with Mod+Q
-    Mod+Q { close-window; }
+    XF86MonBrightnessUp allow-when-locked=true {
+        spawn "dms" "ipc" "call" "brightness" "increment" "5" "";
+    }
+    XF86MonBrightnessDown allow-when-locked=true {
+        spawn "dms" "ipc" "call" "brightness" "decrement" "5" "";
+    }
 
     // Window movement and navigation
     Mod+Left  { focus-column-left; }
