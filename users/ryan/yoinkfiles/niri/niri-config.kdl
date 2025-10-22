@@ -126,12 +126,13 @@ binds {
 
     // App launch shortcuts
     Mod+T { spawn "alacritty"; }
+    Mod+P { spawn "color-picker" }
 
     // Material Shell Tools
     Mod+Space hotkey-overlay-title="Application Launcher" {
         spawn "dms" "ipc" "call" "spotlight" "toggle";
     }
-    Mod+P hotkey-overlay-title="Clipboard" {
+    Mod+V hotkey-overlay-title="Clipboard" {
         spawn "dms" "ipc" "call" "clipboard" "toggle";
     }
     Mod+K hotkey-overlay-title="Task Manager" {
