@@ -116,19 +116,15 @@
     {
       "id": "clock",
       "enabled": true
+    },
+    {
+      "id": "notificationButton",
+      "enabled": true
     }
   ],
   "dankBarRightWidgets": [
     {
       "id": "systemTray",
-      "enabled": true
-    },
-    {
-      "id": "notificationButton",
-      "enabled": true
-    },
-    {
-      "id": "clipboard",
       "enabled": true
     },
     {
