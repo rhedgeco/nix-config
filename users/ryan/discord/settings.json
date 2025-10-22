@@ -1,19 +1,22 @@
 {
-    "SKIP_HOST_UPDATE": true,
-    "DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING": true,
-    "openasar": {
-        "setup": true,
-        "cmdPreset": "balanced",
-        "quickstart": true
-    },
-    "BACKGROUND_COLOR": "#121214",
-    "offloadAdmControls": true,
-    "enableHardwareAcceleration": true,
-    "chromiumSwitches": {},
-    "WINDOW_BOUNDS": {
-        "x": 0,
-        "y": 0,
-        "width": 1200,
-        "height": 800
-    }
+  "SKIP_HOST_UPDATE": true,
+  "DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING": true,
+  "openasar": {
+    "setup": true,
+    "cmdPreset": "balanced",
+    "quickstart": true
+  },
+  "BACKGROUND_COLOR": "#121214",
+  "offloadAdmControls": true,
+  "enableHardwareAcceleration": true,
+  "chromiumSwitches": {},
+  "WINDOW_BOUNDS": {
+    "x": 0,
+    "y": 0,
+    "width": 1200,
+    "height": 800
+  },
+  "IS_MAXIMIZED": false,
+  "IS_MINIMIZED": false,
+  "trayBalloonShown": true
 }
