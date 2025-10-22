@@ -250,8 +250,7 @@ binds {
     Mod+Ctrl+C { center-visible-columns; }
 
     // Move the focused window between the floating and the tiling layout.
-    Mod+Shift+S { toggle-window-floating; }
-    Mod+S { switch-focus-between-floating-and-tiling; }
+    Mod+S { toggle-window-floating; }
 
     // Toggle tabbed column display mode.
     Mod+W { toggle-column-tabbed-display; }
