@@ -1,0 +1,3 @@
+[submodule "inputs/yoink"]
+	path = inputs/yoink
+	url = git@github.com:rhedgeco/yoink.git
