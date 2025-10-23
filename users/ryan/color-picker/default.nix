@@ -1,6 +1,6 @@
 {pkgs, ...}: let
   # create a script that runs hyprpicker and copies it to the clipboard
-  color-picker = pkgs.writeShellScriptBin "color-picker" ''
+  pick-color = pkgs.writeShellScriptBin "pick-color" ''
     #!${pkgs.runtimeShell}
 
     # run hyprpicker and store its output
@@ -15,11 +15,11 @@ in {
   # include hyprpicker in case I want to run it manually
   home.packages = [
     pkgs.hyprpicker
-    color-picker
+    pick-color
   ];
 
   # create a wrapper desktop entry that runs hyprpicker
-  xdg.desktopEntries."hyprpicker-copy" = {
+  xdg.desktopEntries."pick-color" = {
     name = "Color Picker";
     comment = "Runs `hyprpicker` and copies the hex to the clipboard";
     icon = ./icon.png;
@@ -27,6 +27,6 @@ in {
     terminal = false;
 
     # use the color picker script as the exec target for the desktop entry
-    exec = "${color-picker}/bin/color-picker";
+    exec = "${pick-color}/bin/pick-color";
   };
 }
