@@ -18,5 +18,5 @@ switch host=(`hostname`):
 dry host=(`hostname`):
     nixos-rebuild --flake '.?submodules=1#{{host}}' dry-build
 
-yoink user:
+yoink user="modules":
     yoink -r ./users/{{user}}
