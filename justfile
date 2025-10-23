@@ -20,5 +20,4 @@ dry host=(`hostname`):
 
 # yoinks all files related to the current user
 yoink user=(`whoami`):
-    yoink -r ./users/modules
     yoink -r ./users/{{user}}
