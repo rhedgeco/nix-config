@@ -56,6 +56,5 @@
     nautilus.enable = true;
     keyring.enable = true;
     rust.enable = true;
-    git.enable = true;
   };
 }
