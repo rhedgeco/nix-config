@@ -120,6 +120,9 @@
     {
       "id": "notificationButton",
       "enabled": true
+    },
+    {
+      "id": "spacer"
     }
   ],
   "dankBarRightWidgets": [
