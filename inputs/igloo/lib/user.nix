@@ -11,7 +11,7 @@
   }: {...}: rec {
     # pass all the modules into the imports for the user
     # also inherit the extra user configuration settings
-    imports = modules // [({...}: {config = extraConfig;})];
+    imports = modules ++ [({...}: {config = extraConfig;})];
 
     # set every users name to match their directory by default
     home.username = lib.mkDefault "${name}";
@@ -39,7 +39,7 @@
         default = {};
       };
       extraImports = lib.mkOption {
-        type = lib.types.list;
+        type = lib.types.listOf lib.types.anything;
         description = "Extra imports to add to the '${name}' users home configuration";
         default = [];
       };
@@ -59,7 +59,7 @@
         # set up user using mkUserHome function
         users."${name}" = mkUserHome {
           name = "${name}";
-          modules = modules // userOptions.extraImports;
+          modules = modules ++ userOptions.extraImports;
           extraConfig = userOptions.extraConfig;
         };
       };
