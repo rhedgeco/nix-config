@@ -5,9 +5,9 @@
   }: {iglib, ...}: {
     imports =
       # import all global user modules
-      iglib.getModulePaths ./modules
+      iglib.findModules ./modules
       # import all modules from the user directory
-      ++ iglib.getModulePaths (./. + "/${name}")
+      ++ iglib.findModules (./. + "/${name}")
       # and import all the custom user config
       ++ [({...}: {inherit config;})];
 

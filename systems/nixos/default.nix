@@ -18,9 +18,9 @@
           # set every systems hostname to match their directory
           [{networking.hostName = "${name}";}]
           # import all global nixos system modules
-          ++ iglib.getModulePaths ./modules
+          ++ iglib.findModules ./modules
           # import all modules in the system dir
-          ++ iglib.getModulePaths path;
+          ++ iglib.findModules path;
       })
     hosts;
 in
