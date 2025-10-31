@@ -26,14 +26,13 @@ inputs: let
   in
     modulePaths;
 
-  # use the getModulePaths function get all other modules in the lib
+  # get all the module paths in the current directory
   libModulePaths = getModulePaths ./.;
 
-  # import all the modules content
-  libModuleContent = lib.map (path: import path inputs) libModulePaths;
+  # import all the library content into a list of attribute sets
+  libModuleContents = lib.map (path: import path {inherit lib iglib inputs;}) libModulePaths;
 
-  # merge those modules for the final re-export
-  mergedLibModules = lib.mkMerge libModuleContent;
+  # collect and merge all library content into a single library attribute set
+  iglib = {inherit getModulePaths;} // (builtins.foldl' (acc: elem: acc // elem) {} libModuleContents);
 in
-  # re-export all lib modules and the getModulePaths function
-  mergedLibModules // {inherit getModulePaths;}
+  iglib
