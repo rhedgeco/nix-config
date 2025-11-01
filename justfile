@@ -27,6 +27,10 @@ dry-build host=(`hostname`):
 clean period="30d":
     @nix-collect-garbage --delete-older-than {{period}}
 
+# deletes and removes everything not related to the current running system
+purge:
+    @nix-collect-garbage -d
+
 # yoinks all files related to `user` (defaults to the current user)
 yoink user=(`whoami`):
     @yoink -r ./users/{{user}}
