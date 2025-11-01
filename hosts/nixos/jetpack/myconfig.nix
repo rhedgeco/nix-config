@@ -3,10 +3,6 @@
     dualBoot = true;
     grub.enable = true;
 
-    users = {
-      ryan.enable = true;
-    };
-
     shell.fish = {
       enable = true;
       setDefault = true;
