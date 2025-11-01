@@ -9,7 +9,7 @@
     extraSpecialArgs ? {},
   }: let
     # define host paths
-    hostDir = src + "/systems";
+    hostDir = src + "/hosts";
     hostModuleDir = hostDir + "/modules";
 
     # define nixos host paths
