@@ -29,17 +29,17 @@
     # build the options that can enable and configure the user
     options.igloo.users."${name}" = {
       enable = lib.mkEnableOption "Enables the '${name}' igloo user";
-      config = lib.mkOption {
+      settings = lib.mkOption {
         type = lib.types.attrs;
         description = "Extra system config settings to add to the '${name}' user";
         default = {};
       };
-      homeImports = lib.mkOption {
+      imports = lib.mkOption {
         type = lib.types.listOf lib.types.anything;
         description = "Extra imports to add to the '${name}' users home configuration";
         default = [];
       };
-      homeConfig = lib.mkOption {
+      config = lib.mkOption {
         type = lib.types.attrs;
         description = "Extra config settings to add to the '${name}' users home configuration";
         default = {};
@@ -50,15 +50,15 @@
     config = lib.mkIf userOptions.enable {
       # set up normal system user
       users.users."${name}" =
-        userOptions.config
+        userOptions.settings
         // {isNormalUser = true;};
 
       home-manager = {
         # set up user using mkUserHome function
         users."${name}" = mkHomeUser {
           name = "${name}";
-          modules = modules ++ userOptions.homeImports;
-          extraConfig = userOptions.homeConfig;
+          modules = modules ++ userOptions.imports;
+          extraConfig = userOptions.config;
         };
       };
     };
