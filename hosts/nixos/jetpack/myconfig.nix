@@ -29,7 +29,6 @@
       };
     };
 
-    bluetooth.enable = true;
     networkmanager = {
       enable = true;
       powersave = true;

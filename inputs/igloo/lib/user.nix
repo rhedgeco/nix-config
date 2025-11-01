@@ -48,11 +48,10 @@
 
     # create home manager configuration for user if its enabled
     config = lib.mkIf userOptions.enable {
-      # set up normal system user with sane defaults
+      # set up normal system user
       users.users."${name}" =
         {
           isNormalUser = true;
-          useDefaultShell = lib.mkDefault true;
         }
         // userOptions.config;
 
