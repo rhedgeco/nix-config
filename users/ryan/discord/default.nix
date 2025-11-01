@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  iglib,
   config,
   ...
 }: let
@@ -20,9 +19,10 @@ in {
   };
 
   # create a systemd service that launches discord when the user logs in
-  systemd.user.services.discord-runner = iglib.mkDefaultHomeService {
-    description = "Launches discord on login";
-    script = "${discord}/bin/discord";
+  systemd.user.services.discord-runner = {
+    Unit.Description = "Launches discord on login";
+    Service.ExecStart = "${discord}/bin/discord";
+    Install.WantedBy = ["default.target"];
   };
 
   # create the discord settings json file

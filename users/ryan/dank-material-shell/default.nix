@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  iglib,
   config,
   inputs,
   ...
@@ -19,15 +18,17 @@ in {
 
   # create a services that update the clipboard history
   systemd.user.services = {
-    update-cliphist-text = iglib.mkDefaultHomeService {
-      description = "Updates cliphist with any new text from wl-paste";
-      script = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist} store";
-      restart = true;
+    update-cliphist-text = {
+      Unit.Description = "Updates cliphist with any new text from wl-paste";
+      Service.ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist}/bin/cliphist store";
+      Install.WantedBy = ["default.target"];
+      Service.Restart = "always";
     };
-    update-cliphist-image = iglib.mkDefaultHomeService {
-      description = "Updates cliphist with any new images from wl-paste";
-      script = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist} store";
-      restart = true;
+    update-cliphist-image = {
+      Unit.Description = "Updates cliphist with any new images from wl-paste";
+      Service.ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store";
+      Install.WantedBy = ["default.target"];
+      Service.Restart = "always";
     };
   };
 
