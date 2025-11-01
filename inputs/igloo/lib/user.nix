@@ -28,10 +28,10 @@
     name,
     modules ? [],
   }: {config, ...}: let
-    userOptions = config.igloo.user."${name}";
+    userOptions = config.igloo.users."${name}";
   in {
     # build the options that can enable and configure the user
-    options.igloo.user."${name}" = {
+    options.igloo.users."${name}" = {
       enable = lib.mkEnableOption "Enables the '${name}' igloo user";
       extraSpecialArgs = lib.mkOption {
         type = lib.types.attrs;

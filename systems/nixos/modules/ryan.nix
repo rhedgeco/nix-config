@@ -20,17 +20,14 @@ in {
       extraGroups = ["wheel"];
     };
 
-    # set up the home manager configuration for ryan
-    home-manager = {
+    # enable the igloo user
+    igloo.users.ryan = {
+      enable = true;
       extraSpecialArgs = {inherit iglib;};
-      users.ryan = iglib.mkUserHome {
-        name = "ryan";
-        modules = (iglib.findModules ../../../users/modules) ++ (iglib.findModules ../../../users/ryan);
-        extraConfig = {
-          custom.impermanence = {
-            enable = true;
-            userDir = "/persist/home/ryan";
-          };
+      extraConfig = {
+        custom.impermanence = {
+          enable = true;
+          userDir = "/persist/home/ryan";
         };
       };
     };
