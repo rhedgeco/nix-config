@@ -6,7 +6,11 @@ inputs: let
   # also assert that the path provided is a directory instead of a file
   findModules = path: let
     # read all the files from the provided directory
-    pathChildren = builtins.readDir path;
+    # if the directory does not exist, just use an empty set
+    pathChildren =
+      if builtins.pathExists path
+      then builtins.readDir path
+      else {};
 
     # filter the directory content to only nix modules
     moduleNames = lib.attrNames (

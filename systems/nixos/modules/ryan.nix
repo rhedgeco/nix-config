@@ -1,10 +1,8 @@
 {
   lib,
   config,
-  inputs,
   ...
 }: let
-  iglib = inputs.igloo.lib;
   ryan = config.myconfig.users.ryan;
 in {
   options.myconfig.users.ryan = {
@@ -23,7 +21,6 @@ in {
     # enable the igloo user
     igloo.users.ryan = {
       enable = true;
-      extraSpecialArgs = {inherit iglib;};
       extraConfig = {
         custom.impermanence = {
           enable = true;
