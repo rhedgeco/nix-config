@@ -34,7 +34,7 @@
         # include all directories that are not "modules"
         fileName: fileType:
           fileType == "directory" && fileName != "modules"
-      ) (builtins.readDir nixosDir)
+      ) (iglib.tryReadDir nixosDir)
     );
 
     # collect all user names
@@ -43,7 +43,7 @@
         # include all directories that are not "modules"
         fileName: fileType:
           fileType == "directory" && fileName != "modules"
-      ) (builtins.readDir userDir)
+      ) (iglib.tryReadDir userDir)
     );
 
     # build the system module for each user

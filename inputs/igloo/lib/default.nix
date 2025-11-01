@@ -2,15 +2,18 @@ inputs: let
   # get the lib from nixpkgs
   lib = inputs.nixpkgs.lib;
 
+  # create a function for fallibly reading a directory
+  tryReadDir = path:
+    if builtins.pathExists
+    then builtins.readDir
+    else {};
+
   # create a function that gets the path of every nix module at a path
   # also assert that the path provided is a directory instead of a file
   findModules = path: let
     # read all the files from the provided directory
     # if the directory does not exist, just use an empty set
-    pathChildren =
-      if builtins.pathExists path
-      then builtins.readDir path
-      else {};
+    pathChildren = iglib.tryReadDir path;
 
     # filter the directory content to only nix modules
     moduleNames = lib.attrNames (
@@ -37,6 +40,6 @@ inputs: let
   libModuleContent = lib.map (path: import path {inherit lib iglib inputs;}) libModulePaths;
 
   # collect and fold all library content into a single library attribute set
-  iglib = (builtins.foldl' (acc: elem: acc // elem) {} libModuleContent) // {inherit findModules;};
+  iglib = (builtins.foldl' (acc: elem: acc // elem) {} libModuleContent) // {inherit tryReadDir findModules;};
 in
   iglib
