@@ -48,7 +48,7 @@ pkgs.stdenv.mkDerivation rec {
     appstream-glib
     blueprint-compiler
     rustPlatform.cargoSetupHook
-    wrapGAppsHook
+    wrapGAppsHook3
     makeWrapper
   ];
 

@@ -7,7 +7,8 @@
 }: let
   shell = config.myconfig.shell;
   impermanence = config.myconfig.impermanence;
-  yoink = inputs.yoink.packages.${pkgs.system}.default;
+  system = pkgs.stdenv.hostPlatform.system;
+  yoink = inputs.yoink.packages.${system}.default;
 in {
   options.myconfig.shell = {
     default = lib.mkOption {
