@@ -22,7 +22,7 @@ in {
   systemd.user.services.discord-runner = {
     Unit.Description = "Launches discord on login";
     Service.ExecStart = "${discord}/bin/discord";
-    Install.WantedBy = ["default.target"];
+    Install.WantedBy = ["graphical-session.target"];
   };
 
   # create the discord settings json file
