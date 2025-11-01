@@ -31,14 +31,14 @@
 
       # define global module locations
       modules = {
-        host = [./hosts/nixos/modules];
-        user = [./users/modules];
+        nixos = [./modules/nixos];
+        user = [./modules/user];
       };
 
       # define user module locations
       users.ryan = [./users/ryan];
 
       # define nixos module locations
-      nixos.jetpack = [./hosts/nixos/jetpack];
+      nixos.jetpack = [./hosts/jetpack];
     };
 }
