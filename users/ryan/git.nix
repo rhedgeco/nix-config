@@ -22,12 +22,13 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    userName = "Ryan Hedgecock";
-    userEmail = "rhedgeco@gmail.com";
-    # sets up GPG signing
-    signing.signByDefault = true;
-    extraConfig = {
+    settings = {
+      user.name = "Ryan Hedgecock";
+      user.email = "rhedgeco@gmail.com";
       init.defaultBranch = "main";
     };
+
+    # enable GPG signing
+    signing.signByDefault = true;
   };
 }
