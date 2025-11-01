@@ -1,7 +1,4 @@
-{
-  users,
-  inputs,
-}: let
+{inputs}: let
   # get the lib from nixpkgs
   lib = inputs.nixpkgs.lib;
 
@@ -13,7 +10,7 @@
     builtins.mapAttrs (name: path:
       lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs users;};
+        specialArgs = {inherit inputs;};
         modules =
           # set every systems hostname to match their directory
           [{networking.hostName = "${name}";}]

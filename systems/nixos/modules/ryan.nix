@@ -1,6 +1,5 @@
 {
   lib,
-  users,
   config,
   inputs,
   ...
@@ -24,10 +23,11 @@ in {
     # set up the home manager configuration for ryan
     home-manager = {
       extraSpecialArgs = {inherit iglib;};
-      users.ryan = users.buildHome {
+      users.ryan = iglib.mkUserHome {
         name = "ryan";
-        config.custom = {
-          impermanence = {
+        modules = (iglib.findModules ../../../users/modules) ++ (iglib.findModules ../../../users/ryan);
+        extraConfig = {
+          custom.impermanence = {
             enable = true;
             userDir = "/persist/home/ryan";
           };

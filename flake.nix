@@ -35,13 +35,8 @@
   };
 
   outputs = inputs: let
-    # import users module
-    users = import ./users;
-
     # import systems module
-    systems = import ./systems {
-      inherit inputs users;
-    };
+    systems = import ./systems inputs;
   in {
     # use the systems module to generate nixosConfigurations
     nixosConfigurations = systems.nixosConfigurations;
