@@ -1,8 +1,4 @@
-{
-  lib,
-  iglib,
-  ...
-}: let
+{lib, ...}: let
   # a function that builds home manager configurations for a user
   mkUserHome = {
     name,
@@ -33,17 +29,17 @@
     # build the options that can enable and configure the user
     options.igloo.users."${name}" = {
       enable = lib.mkEnableOption "Enables the '${name}' igloo user";
-      extraSpecialArgs = lib.mkOption {
+      config = lib.mkOption {
         type = lib.types.attrs;
-        description = "Extra special args to pass to the `${name}` users home modules";
+        description = "Extra system config settings to add to the '${name}' user";
         default = {};
       };
-      extraImports = lib.mkOption {
+      homeImports = lib.mkOption {
         type = lib.types.listOf lib.types.anything;
         description = "Extra imports to add to the '${name}' users home configuration";
         default = [];
       };
-      extraConfig = lib.mkOption {
+      homeConfig = lib.mkOption {
         type = lib.types.attrs;
         description = "Extra config settings to add to the '${name}' users home configuration";
         default = {};
@@ -52,15 +48,20 @@
 
     # create home manager configuration for user if its enabled
     config = lib.mkIf userOptions.enable {
-      home-manager = {
-        # automatically pass the iglib library to home manager modules
-        extraSpecialArgs = {inherit iglib;} // userOptions.extraSpecialArgs;
+      # set up normal system user with sane defaults
+      users.users."${name}" =
+        {
+          isNormalUser = true;
+          useDefaultShell = lib.mkDefault true;
+        }
+        // userOptions.config;
 
+      home-manager = {
         # set up user using mkUserHome function
         users."${name}" = mkUserHome {
           name = "${name}";
-          modules = modules ++ userOptions.extraImports;
-          extraConfig = userOptions.extraConfig;
+          modules = modules ++ userOptions.homeImports;
+          extraConfig = userOptions.homeConfig;
         };
       };
     };

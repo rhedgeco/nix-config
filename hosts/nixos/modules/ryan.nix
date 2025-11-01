@@ -10,18 +10,14 @@ in {
   };
 
   config = lib.mkIf ryan.enable {
-    # create the ryan user
-    users.users.ryan = {
-      isNormalUser = true;
-      useDefaultShell = true;
-      initialPassword = "ryan";
-      extraGroups = ["wheel"];
-    };
-
     # enable the igloo user
     igloo.users.ryan = {
       enable = true;
-      extraConfig = {
+      config = {
+        initialPassword = "ryan";
+        extraGroups = ["wheel"];
+      };
+      homeConfig = {
         custom.impermanence = {
           enable = true;
           userDir = "/persist/home/ryan";

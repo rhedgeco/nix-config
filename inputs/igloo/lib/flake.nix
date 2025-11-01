@@ -76,8 +76,8 @@
                 # set the hostname of the system to match by default
                 networking.hostName = lib.mkDefault "${name}";
 
-                # pass extra special args to home manager as well
-                home-manager.extraSpecialArgs = extraSpecialArgs;
+                # pass iglib and extraSpecialArgs to home manager as well
+                home-manager.extraSpecialArgs = {inherit iglib;} // extraSpecialArgs;
 
                 # re-use the global system package store by default
                 # saves space and re-downloading of packages
