@@ -37,6 +37,6 @@ inputs: let
   libModuleContent = lib.map (path: import path {inherit lib iglib inputs;}) libModulePaths;
 
   # collect and fold all library content into a single library attribute set
-  iglib = {inherit findModules;} // (builtins.foldl' (acc: elem: acc // elem) {} libModuleContent);
+  iglib = (builtins.foldl' (acc: elem: acc // elem) {} libModuleContent) // {inherit findModules;};
 in
   iglib

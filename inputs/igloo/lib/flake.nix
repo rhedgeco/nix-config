@@ -20,6 +20,9 @@
     userDir = src + "/users";
     userModuleDir = userDir + "/modules";
 
+    # define the special args for all systems
+    specialArgs = {inherit iglib;} // extraSpecialArgs;
+
     # collect the global modules for all systems and users
     globalHostModules = iglib.findModules hostModuleDir;
     globalNixosModules = iglib.findModules nixosModuleDir;
@@ -59,7 +62,7 @@
       in {
         inherit name;
         value = lib.nixosSystem {
-          specialArgs = {inherit iglib;} // extraSpecialArgs;
+          specialArgs = specialArgs;
           modules =
             hostModules
             # include every user module in the system
@@ -77,7 +80,7 @@
                 networking.hostName = lib.mkDefault "${name}";
 
                 # pass iglib and extraSpecialArgs to home manager as well
-                home-manager.extraSpecialArgs = {inherit iglib;} // extraSpecialArgs;
+                home-manager.extraSpecialArgs = specialArgs;
 
                 # re-use the global system package store by default
                 # saves space and re-downloading of packages

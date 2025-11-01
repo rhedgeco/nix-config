@@ -50,10 +50,8 @@
     config = lib.mkIf userOptions.enable {
       # set up normal system user
       users.users."${name}" =
-        {
-          isNormalUser = true;
-        }
-        // userOptions.config;
+        userOptions.config
+        // {isNormalUser = true;};
 
       home-manager = {
         # set up user using mkUserHome function
