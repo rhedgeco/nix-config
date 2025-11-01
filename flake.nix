@@ -27,7 +27,18 @@
 
   outputs = inputs:
     inputs.igloo.lib.mkFlake {
-      src = ./.;
       extraSpecialArgs = {inherit inputs;};
+
+      # define global module locations
+      modules = {
+        host = [./hosts/nixos/modules];
+        user = [./users/modules];
+      };
+
+      # define user module locations
+      users.ryan = [./users/ryan];
+
+      # define nixos module locations
+      nixos.jetpack = [./hosts/nixos/jetpack];
     };
 }
