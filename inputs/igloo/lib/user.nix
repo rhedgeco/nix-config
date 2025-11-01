@@ -1,6 +1,6 @@
 {lib, ...}: let
   # a function that builds home manager configurations for a user
-  mkUserHome = {
+  mkHomeUser = {
     name,
     modules ? [],
     extraConfig ? {},
@@ -20,7 +20,7 @@
   };
 
   # a function that builds a system module that can enable home manager users
-  mkUserModule = {
+  mkHomeUserModule = {
     name,
     modules ? [],
   }: {config, ...}: let
@@ -55,7 +55,7 @@
 
       home-manager = {
         # set up user using mkUserHome function
-        users."${name}" = mkUserHome {
+        users."${name}" = mkHomeUser {
           name = "${name}";
           modules = modules ++ userOptions.homeImports;
           extraConfig = userOptions.homeConfig;
@@ -64,5 +64,5 @@
     };
   };
 in {
-  inherit mkUserHome mkUserModule;
+  inherit mkHomeUser mkHomeUserModule;
 }
