@@ -7,7 +7,7 @@ inputs: let
   # this essentially preloads the arguments for any path that gets called
   importLib = lib.flip import {inherit lib iglib inputs;};
 
-  # create a function that gets the path of every nix module at a path
+  # a function that gets the path of every nix module at a path
   # also assert that the path provided is a directory instead of a file
   findModules = path: let
     # read all the files from the provided directory
@@ -25,19 +25,22 @@ inputs: let
       )
       pathChildren
     );
-
-    # then map the module names to a list of paths
-    modulePaths = lib.map (name: path + "/${name}") moduleNames;
   in
-    modulePaths;
+    # then map the module names to a list of paths
+    lib.map (name: path + "/${name}") moduleNames;
 
-  # find all the library modules in the current directory
-  libModulePaths = findModules ./.;
+  # collection of all igloo library content in a single attribute set
+  iglib = let
+    # find all the library modules in the current directory
+    libPaths = findModules ./.;
 
-  # import all the library content into a list of attribute sets
-  libModuleContent = lib.map (path: importLib path) libModulePaths;
+    # import all the library content into a list of attribute sets
+    libContent = lib.map (path: importLib path) libPaths;
 
-  # collect and fold all library content into a single library attribute set
-  iglib = (builtins.foldl' (acc: elem: acc // elem) {} libModuleContent) // {inherit findModules;};
+    # fold and merge the attribute sets into a single set
+    mergedContent = builtins.foldl' (acc: elem: acc // elem) {} libContent;
+  in
+    # combine the merged content with the `findModules` function from this file
+    mergedContent // {inherit findModules;};
 in
   iglib
