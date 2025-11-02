@@ -46,7 +46,6 @@
     };
 
     niri.enable = true;
-    codium.enable = true;
     firefox.enable = true;
     nautilus.enable = true;
     keyring.enable = true;

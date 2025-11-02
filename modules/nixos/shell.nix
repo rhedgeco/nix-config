@@ -39,6 +39,7 @@ in {
       yoink
       python3
       direnv
+      just
       vim
       fd
       bat
