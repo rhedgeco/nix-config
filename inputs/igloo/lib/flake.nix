@@ -31,6 +31,7 @@
           iglib.mkHomeUserModule {
             inherit name;
             modules =
+              # include the users module content
               module
               # include all modules defined at the user level
               ++ flakeModules.user
@@ -40,7 +41,7 @@
       )
       users;
 
-    # create a the home manager setup confgiguration defaults
+    # setup home manager confgiguration defaults
     homeManagerSetup = {
       # import the home manager module
       imports = [inputs.home-manager.nixosModules.home-manager];
@@ -64,6 +65,7 @@
       lib.nixosSystem {
         specialArgs = specialArgs;
         modules =
+          # include the systems module content
           module
           # include every home users module in the system
           ++ homeUserModules
@@ -75,8 +77,8 @@
           ++ flakeModules.global
           # set the hostname of the system to match by default
           ++ [{networking.hostName = lib.mkDefault "${name}";}]
-          # include the home manager setup config only if there are home users
-          ++ (lib.optional (builtins.length homeUserModules != 0) homeManagerSetup);
+          # include the nixos home manager setup configuration
+          ++ [homeManagerSetup];
       })
     nixos;
   };
