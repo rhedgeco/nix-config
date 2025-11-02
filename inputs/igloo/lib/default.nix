@@ -2,6 +2,11 @@ inputs: let
   # get the lib from nixpkgs
   lib = inputs.nixpkgs.lib;
 
+  # a function that imports a library file
+  # lib.flip 'flips' the import and inherit block arguments
+  # this essentially preloads the arguments for any path that gets called
+  importLib = lib.flip import {inherit lib iglib inputs;};
+
   # create a function that gets the path of every nix module at a path
   # also assert that the path provided is a directory instead of a file
   findModules = path: let
@@ -30,7 +35,7 @@ inputs: let
   libModulePaths = findModules ./.;
 
   # import all the library content into a list of attribute sets
-  libModuleContent = lib.map (path: import path {inherit lib iglib inputs;}) libModulePaths;
+  libModuleContent = lib.map (path: importLib path) libModulePaths;
 
   # collect and fold all library content into a single library attribute set
   iglib = (builtins.foldl' (acc: elem: acc // elem) {} libModuleContent) // {inherit findModules;};
