@@ -67,6 +67,8 @@
         modules =
           # include the systems module content
           module
+          # include the home manager setup
+          ++ [homeManagerSetup]
           # include every home users module in the system
           ++ homeUserModules
           # include all modules defined at the nixos level
@@ -76,9 +78,7 @@
           # include all modules defined at the global level
           ++ flakeModules.global
           # set the hostname of the system to match by default
-          ++ [{networking.hostName = lib.mkDefault "${name}";}]
-          # include the nixos home manager setup configuration
-          ++ [homeManagerSetup];
+          ++ [{networking.hostName = lib.mkDefault "${name}";}];
       })
     nixos;
   };
