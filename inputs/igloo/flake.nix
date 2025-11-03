@@ -11,17 +11,12 @@
     # `call` is a function that automatically imports with certain params
     # the `lib.flip` essentially combines the import with a set of parameters
     call = lib.flip import {
-      inherit lib inputs call iglib modules;
+      inherit lib inputs iglib call;
     };
 
     lib = nixpkgs.lib;
     iglib = call ./lib;
-    modules = call ./modules;
   in {
     lib = iglib;
-    nixosModules = {
-      default = modules.nixos.igloo;
-      igloo = modules.nixos.igloo;
-    };
   };
 }
