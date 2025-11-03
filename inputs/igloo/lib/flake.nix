@@ -4,7 +4,7 @@
   inputs,
   ...
 }: let
-  mkFlake = {
+  flake = {
     extraSpecialArgs ? {},
     modules ? {},
     nixos ? {},
@@ -33,7 +33,7 @@
     homeUserModules =
       lib.mapAttrsToList (
         name: module:
-          iglib.mkHomeUserModule {
+          iglib.homeUserModule {
             inherit name;
             modules =
               # include the users module content
@@ -88,5 +88,5 @@
     nixos;
   };
 in {
-  inherit mkFlake;
+  inherit flake;
 }

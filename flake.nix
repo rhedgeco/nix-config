@@ -26,7 +26,7 @@
   };
 
   outputs = inputs:
-    inputs.igloo.lib.mkFlake {
+    inputs.igloo.lib.flake {
       extraSpecialArgs = {inherit inputs;};
 
       # define global module locations
