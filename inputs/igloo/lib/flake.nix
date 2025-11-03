@@ -2,8 +2,11 @@
   lib,
   iglib,
   inputs,
+  modules,
   ...
 }: let
+  iglooModule = modules.nixos.igloo;
+
   mkFlake = {
     extraSpecialArgs ? {},
     modules ? {},
@@ -67,6 +70,8 @@
         modules =
           # include the systems module content
           module
+          # include the igloo nixos module
+          ++ [iglooModule]
           # include the home manager setup
           ++ [homeManagerSetup]
           # include every home users module in the system

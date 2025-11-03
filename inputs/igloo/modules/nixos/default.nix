@@ -1,0 +1,3 @@
+{...}: {
+  igloo = import ./igloo.nix;
+}

@@ -1,0 +1,3 @@
+{call, ...}: {
+  nixos = call ./nixos;
+}
