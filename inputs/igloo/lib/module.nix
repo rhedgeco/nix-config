@@ -33,14 +33,14 @@
         config = lib.mkIf config.igloo.module."${name}".enable moduleGlobal.config;
       })
 
-      # import a module that changes configuration based on iglooType
+      # import a module that changes configuration based on iglooTarget
       ({
         config,
-        iglooType ? "unknown",
+        iglooTarget ? "unknown",
         ...
       }: let
-        isUser = iglooType == "user";
-        isNixos = iglooType == "nixos";
+        isUser = iglooTarget == "user";
+        isNixos = iglooTarget == "nixos";
       in {
         imports =
           if isNixos

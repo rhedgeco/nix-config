@@ -15,9 +15,9 @@
     specialArgs = extraSpecialArgs // {inherit iglib;};
 
     # define system type specific set of special args
-    # this sets the `iglooType` argument allowing config switching
-    homeSpecialArgs = specialArgs // {iglooType = "user";};
-    nixosSpecialArgs = specialArgs // {iglooType = "nixos";};
+    # this sets the `iglooTarget` argument allowing config switching
+    homeSpecialArgs = specialArgs // {iglooTarget = "user";};
+    nixosSpecialArgs = specialArgs // {iglooTarget = "nixos";};
 
     # define and set defaults for all flake module paths
     flakeModules =
