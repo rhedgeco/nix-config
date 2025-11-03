@@ -1,4 +1,28 @@
 {lib, ...}: let
+  userModule = {
+    name,
+    enable ? false,
+    imports ? [],
+    options ? {},
+    config ? {},
+  }:
+    module {
+      inherit name enable;
+      user = {inherit imports options config;};
+    };
+
+  nixosModule = {
+    name,
+    enable ? false,
+    imports ? [],
+    options ? {},
+    config ? {},
+  }:
+    module {
+      inherit name enable;
+      nixos = {inherit imports options config;};
+    };
+
   module = {
     name,
     enable ? false,
@@ -6,15 +30,27 @@
     nixos ? {},
     user ? {},
   }: let
-    # create and apply defaults to config variants
-    default = {
-      imports ? [],
-      options ? {},
-      config ? {},
-    }: {inherit imports options config;};
-    moduleGlobal = default global;
-    moduleNixos = default nixos;
-    moduleUser = default user;
+    # create a function that generates a module for a specific iglooTarget
+    buildTargetModule = {
+      target,
+      imports,
+      options,
+      config,
+    }: let
+      targetImports = imports;
+      targetOptions = options;
+      targetConfig = config;
+    in ({
+      config,
+      iglooTarget ? "unknown",
+    }:
+      if iglooTarget == target
+      then {
+        imports = targetImports;
+        options.igloo.module."${name}" = targetOptions;
+        config = lib.mkIf config.igloo.module."${name}".enable targetConfig;
+      }
+      else {});
   in {
     # create the enable option for this igloo module
     options.igloo.module."${name}" = {
@@ -28,44 +64,28 @@
     imports = [
       # import a module that applies all global values
       ({config, ...}: {
-        imports = moduleGlobal.imports;
-        options.igloo.module."${name}" = moduleGlobal.options;
-        config = lib.mkIf config.igloo.module."${name}".enable moduleGlobal.config;
+        imports = global.imports or [];
+        options.igloo.module."${name}" = global.options or {};
+        config = lib.mkIf config.igloo.module."${name}".enable (global.config or {});
       })
 
-      # import a module that changes configuration based on iglooTarget
-      ({
-        config,
-        iglooTarget ? "unknown",
-        ...
-      }: let
-        isUser = iglooTarget == "user";
-        isNixos = iglooTarget == "nixos";
-      in {
-        imports =
-          if isNixos
-          then moduleNixos.imports
-          else if isUser
-          then moduleUser.imports
-          else {};
+      # import a module that applies all nixos config if applicable
+      (buildTargetModule {
+        target = "nixos";
+        imports = nixos.imports or [];
+        options = nixos.options or {};
+        config = nixos.config or {};
+      })
 
-        options.igloo.module."${name}" =
-          if isNixos
-          then moduleNixos.options
-          else if isUser
-          then moduleUser.options
-          else {};
-
-        config = lib.mkIf config.igloo.module."${name}".enable (
-          if isNixos
-          then moduleNixos.config
-          else if isUser
-          then moduleUser.config
-          else {}
-        );
+      # import a module that applies all user config if applicable
+      (buildTargetModule {
+        target = "user";
+        imports = user.imports or [];
+        options = user.options or {};
+        config = user.config or {};
       })
     ];
   };
 in {
-  inherit module;
+  inherit module userModule nixosModule;
 }
