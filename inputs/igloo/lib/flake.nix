@@ -10,9 +10,14 @@
     nixos ? {},
     users ? {},
   }: let
-    # define the special args for all systems
-    # also include the igloo lib in all special args
+    # define base special args for all systems
+    # include the igloo lib in the special args
     specialArgs = extraSpecialArgs // {inherit iglib;};
+
+    # define system type specific set of special args
+    # this sets the `iglooType` argument allowing config switching
+    homeSpecialArgs = specialArgs // {iglooType = "user";};
+    nixosSpecialArgs = specialArgs // {iglooType = "nixos";};
 
     # define and set defaults for all flake module paths
     flakeModules =
@@ -47,7 +52,7 @@
       imports = [inputs.home-manager.nixosModules.home-manager];
 
       # pass iglib and extraSpecialArgs to home manager as well
-      home-manager.extraSpecialArgs = specialArgs;
+      home-manager.extraSpecialArgs = homeSpecialArgs;
 
       # re-use the global system package store
       # saves space and re-downloading of packages
@@ -63,7 +68,7 @@
     # build all nixos configurations from the system names found
     nixosConfigurations = lib.mapAttrs (name: module:
       lib.nixosSystem {
-        specialArgs = specialArgs;
+        specialArgs = nixosSpecialArgs;
         modules =
           # include the systems module content
           module

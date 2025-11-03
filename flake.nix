@@ -31,6 +31,7 @@
 
       # define global module locations
       modules = {
+        global = [./modules/global];
         nixos = [./modules/nixos];
         user = [./modules/user];
       };
