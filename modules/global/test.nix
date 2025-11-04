@@ -17,7 +17,7 @@ iglib.module {
   };
 
   user = {iglooModule, ...}: {
-    options.enableGum = lib.mkEnableOption "Enable gum";
+    options.enableGum = lib.mkEnableOption "Enable pokemonsay";
     config = {
       igloo.modules.test.enableGum = true;
       home.packages = lib.optional (iglooModule.enableGum && iglooModule.enableCowsay) pkgs.gum;
