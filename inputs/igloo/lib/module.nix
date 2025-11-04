@@ -43,10 +43,11 @@
   module = {
     name,
     enabled ? true,
-    options ? {},
     igloo ? {},
+    imports ? [],
+    options ? {},
+    config ? {},
     packages ? [],
-    global ? {},
     nixos ? {},
     user ? {},
   }: {
@@ -61,21 +62,22 @@
     imports = [
       # generate global module for all systems
       (genTargetModule name "global" {
-        inherit options; # pass through the options directly
-        config.igloo = igloo; # apply igloo settings to `config.igloo`
+        inherit imports options config; # pass through the imports/options/config directly
       })
 
+      # define a global module with igloo as shorthand configuration
+      (genTargetModule name "global" {inherit igloo;})
+
       # pass system modules through with respective target
-      (genTargetModule name "global" global)
       (genTargetModule name "nixos" nixos)
       (genTargetModule name "user" user)
 
-      # pass packages to all nixos systems
+      # set up packages with all nixos systems
       (genTargetModule name "nixos" {
         environment.systemPackages = packages;
       })
 
-      # pass packages to all user systems
+      # set up packages with all user systems
       (genTargetModule name "user" {
         home.packages = packages;
       })
