@@ -1,5 +1,5 @@
 {lib, ...}: let
-  genTargetModule = name: target: content: {iglooTarget ? "unknown", ...} @ systemArgs: let
+  genTargetModule = name: target: content: {iglooTarget, ...} @ systemArgs: let
     # collect igloo modules configuration options
     iglooModules = systemArgs.config.igloo.modules;
     iglooModule = iglooModules."${name}";
