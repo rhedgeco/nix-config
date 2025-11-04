@@ -13,14 +13,14 @@ iglib.module {
   };
 
   nixos = {iglooModule, ...}: {
-    igloo.module.test.enableCowsay = true;
+    igloo.modules.test.enableCowsay = true;
     environment.systemPackages = lib.optional iglooModule.enableCowsay pkgs.cowsay;
   };
 
   user = {iglooModule, ...}: {
     options.enableGum = lib.mkEnableOption "Enable cowsay";
     config = {
-      igloo.module.test.enableGum = true;
+      igloo.modules.test.enableGum = true;
       home.packages = lib.optional iglooModule.enableGum pkgs.gum;
     };
   };

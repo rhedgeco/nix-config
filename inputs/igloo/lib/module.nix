@@ -1,7 +1,7 @@
 {lib, ...}: let
   genTargetModule = name: target: content: {iglooTarget ? "unknown", ...} @ systemArgs: let
     # collect igloo modules configuration options
-    iglooModules = systemArgs.config.igloo.module;
+    iglooModules = systemArgs.config.igloo.modules;
     iglooModule = iglooModules."${name}";
 
     # resolve the module content using the systemArgs
@@ -11,7 +11,7 @@
     # build the final module using the resolved content
     finalModule = {
       # place the options under the igloo options route
-      options.igloo.module."${name}" = resolved.options or {};
+      options.igloo.modules."${name}" = resolved.options or {};
       # then strip the options and import the rest of the config
       imports = [(lib.attrsets.removeAttrs resolved ["options"])];
     };
@@ -30,7 +30,7 @@
     nixos ? {...}: {},
     user ? {...}: {},
   }: {
-    options.igloo.module."${name}" = {
+    options.igloo.modules."${name}" = {
       enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enables the '${name}' igloo module.";
