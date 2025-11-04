@@ -14,6 +14,8 @@ check:
 # builds and enables the `host` configuration for next boot (defaults to the current host)
 boot host=(`hostname`):
     @sudo nixos-rebuild --flake '.?submodules=1#{{host}}' boot
+    @gum confirm "Reboot Now?" --default="No"
+    @reboot
 
 # builds and activates the `host` configuration (defaults to the current host)
 switch host=(`hostname`):
