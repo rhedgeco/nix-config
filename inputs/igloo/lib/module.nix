@@ -4,9 +4,14 @@
     iglooModules = systemArgs.config.igloo.modules;
     iglooModule = iglooModules."${name}";
 
-    # resolve the module content using the systemArgs
+    # resolve the module content using the systemArgs if its a function
     # pass in the iglooModule and iglooModules parameters for easy access
-    resolvedContent = content (systemArgs // {inherit iglooModules iglooModule;});
+    resolvedContent =
+      if builtins.isAttrs content
+      then content
+      else if builtins.isFunction content
+      then content (systemArgs // {inherit iglooModules iglooModule;})
+      else throw "genTargetModule content is not a function or an attribute set";
 
     # there are also top level special keys that need to be managed correctly and not stuffed in a config
     specialKeys = ["_class" "_file" "key" "disabledModules" "imports" "options" "config" "meta" "freeformType"];
@@ -38,9 +43,10 @@
   module = {
     name,
     enabled ? true,
-    global ? {...}: {},
-    nixos ? {...}: {},
-    user ? {...}: {},
+    packages ? [],
+    global ? {},
+    nixos ? {},
+    user ? {},
   }: {
     options.igloo.modules."${name}" = {
       enable = lib.mkOption {
@@ -51,9 +57,20 @@
     };
 
     imports = [
+      # generate modules for each kind of custom system
       (genTargetModule name "global" global)
       (genTargetModule name "nixos" nixos)
       (genTargetModule name "user" user)
+
+      # pass packages to all nixos systems
+      (genTargetModule name "nixos" {
+        environment.systemPackages = packages;
+      })
+
+      # pass packages to all user systems
+      (genTargetModule name "user" {
+        home.packages = packages;
+      })
     ];
   };
 in {

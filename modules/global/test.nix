@@ -6,6 +6,7 @@
 }:
 iglib.module {
   name = "test";
+  enabled = false;
 
   global = {...}: {
     options.enableCowsay = lib.mkEnableOption "Enable cowsay";
