@@ -17,7 +17,7 @@
 
     # define system type specific set of special args
     # this sets the `iglooTarget` argument allowing config switching
-    homeSpecialArgs = specialArgs // {iglooTarget = "user";};
+    homeSpecialArgs = specialArgs // {iglooTarget = "home";};
     nixosSpecialArgs = specialArgs // {iglooTarget = "nixos";};
 
     # define and set defaults for all flake module paths
