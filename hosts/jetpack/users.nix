@@ -1,11 +1,11 @@
 {...}: {
   igloo.users.ryan = {
     enable = true;
-    settings = {
+    systemConfig = {
       initialPassword = "ryan";
       extraGroups = ["wheel"];
     };
-    config = {
+    homeConfig = {
       custom.impermanence = {
         enable = true;
         userDir = "/persist/home/ryan";

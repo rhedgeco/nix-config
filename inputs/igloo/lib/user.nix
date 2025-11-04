@@ -2,18 +2,18 @@
   # a function that builds home manager configurations for a user
   homeUser = {
     name,
+    config ? {},
     modules ? [],
-    extraConfig ? {},
-  }: {...}: rec {
+  }: {
     # pass all the modules into the imports for the user
     # also inherit the extra user configuration settings
-    imports = modules ++ [({...}: {config = extraConfig;})];
+    imports = modules ++ [config];
 
     # set every users name to match their directory by default
     home.username = lib.mkDefault "${name}";
 
     # set each users home directory to the standard path by default
-    home.homeDirectory = lib.mkDefault "/home/${home.username}";
+    home.homeDirectory = lib.mkDefault "/home/${name}";
 
     # let home manager install and manage itself by default
     programs.home-manager.enable = lib.mkDefault true;
@@ -29,19 +29,19 @@
     # build the options that can enable and configure the user
     options.igloo.users."${name}" = {
       enable = lib.mkEnableOption "Enables the '${name}' igloo user";
-      settings = lib.mkOption {
-        type = lib.types.attrs;
-        description = "Extra system config settings to add to the '${name}' user";
-        default = {};
-      };
-      imports = lib.mkOption {
+      modules = lib.mkOption {
         type = lib.types.listOf lib.types.anything;
-        description = "Extra imports to add to the '${name}' users home configuration";
+        description = "Extra modules to add to the '${name}' users home configuration";
         default = [];
       };
-      config = lib.mkOption {
+      systemConfig = lib.mkOption {
         type = lib.types.attrs;
-        description = "Extra config settings to add to the '${name}' users home configuration";
+        description = "Extra system configuration to add to the '${name}' user";
+        default = {};
+      };
+      homeConfig = lib.mkOption {
+        type = lib.types.attrs;
+        description = "Extra home-manager configuration to add to the '${name}' user";
         default = {};
       };
     };
@@ -50,15 +50,15 @@
     config = lib.mkIf userOptions.enable {
       # set up normal system user
       users.users."${name}" =
-        userOptions.settings
+        userOptions.systemConfig
         // {isNormalUser = true;};
 
       home-manager = {
         # set up user using mkUserHome function
         users."${name}" = homeUser {
           name = "${name}";
-          modules = modules ++ userOptions.imports;
-          extraConfig = userOptions.config;
+          config = userOptions.homeConfig;
+          modules = modules ++ userOptions.modules;
         };
       };
     };

@@ -5,27 +5,39 @@
     iglooModule = iglooModules."${name}";
 
     # resolve the module content using the systemArgs
-    # also pass in the module and modules parameter for easy access
-    resolved = content (systemArgs // {inherit iglooModules iglooModule;});
+    # pass in the iglooModule and iglooModules parameters for easy access
+    resolvedContent = content (systemArgs // {inherit iglooModules iglooModule;});
 
-    # build the final module using the resolved content
-    finalModule = {
-      # place the options under the igloo options route
-      options.igloo.modules."${name}" = resolved.options or {};
-      # then strip the options and import the rest of the config
-      imports = [(lib.attrsets.removeAttrs resolved ["options"])];
+    # there are also top level special keys that need to be managed correctly and not stuffed in a config
+    specialKeys = ["_class" "_file" "key" "disabledModules" "imports" "options" "config" "meta" "freeformType"];
+    specialContent = lib.filterAttrs (key: value: lib.elem key specialKeys) resolvedContent;
+    unspecialContent = lib.removeAttrs resolvedContent specialKeys;
+
+    # extract the options content and place them under the igloo modules route
+    optionContent = {
+      options.igloo.modules."${name}" = resolvedContent.options or {};
     };
+
+    # normalize the config content based on if the content is shorthand or not
+    normalizedContent =
+      # first we detect if the module is in shorthand format
+      # this is determined if there is either an `options` or a `config` key at the top level
+      if !(resolvedContent ? options || resolvedContent ? config)
+      # if the content is in shorthand, then we can just wrap all the unspecial content with `config`
+      then {config = lib.mkIf iglooModule.enable unspecialContent;}
+      # if it is shorthand, we have to wrap the resolved config key and merge it with the unspecial content
+      else unspecialContent // {config = lib.mkIf iglooModule.enable (resolvedContent.config or {});};
   in
-    # only apply the igloo module if the iglooTarget matches
-    # if the target is set to 'global', then it should work for all targets
+    # only apply the module content if the iglooTarget matches
+    # however, if the target is set to 'global' then it should always apply
     if target == "global" || iglooTarget == target
-    then finalModule
+    then specialContent // optionContent // normalizedContent
     else {};
 
   # a function that generates the igloo target modules for each kind of system
   module = {
     name,
-    enable ? false,
+    disabled ? false,
     global ? {...}: {},
     nixos ? {...}: {},
     user ? {...}: {},
@@ -34,7 +46,7 @@
       enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enables the '${name}' igloo module.";
-        default = enable;
+        default = !disabled;
       };
     };
 
