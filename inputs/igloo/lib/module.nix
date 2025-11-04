@@ -46,6 +46,7 @@
     options ? {},
     igloo ? {},
     packages ? [],
+    global ? {},
     nixos ? {},
     user ? {},
   }: {
@@ -65,6 +66,7 @@
       })
 
       # pass system modules through with respective target
+      (genTargetModule name "global" global)
       (genTargetModule name "nixos" nixos)
       (genTargetModule name "user" user)
 
