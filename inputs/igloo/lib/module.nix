@@ -1,58 +1,35 @@
 {lib, ...}: let
-  userModule = {
-    name,
-    enable ? false,
-    imports ? [],
-    options ? {},
-    config ? {},
-  }:
-    module {
-      inherit name enable;
-      user = {inherit imports options config;};
-    };
+  genTargetModule = name: target: content: {iglooTarget ? "unknown", ...} @ systemArgs: let
+    # collect igloo modules configuration options
+    iglooModules = systemArgs.config.igloo.module;
+    iglooModule = iglooModules."${name}";
 
-  nixosModule = {
-    name,
-    enable ? false,
-    imports ? [],
-    options ? {},
-    config ? {},
-  }:
-    module {
-      inherit name enable;
-      nixos = {inherit imports options config;};
-    };
+    # resolve the module content using the systemArgs
+    # also pass in the module and modules parameter for easy access
+    resolved = content (systemArgs // {inherit iglooModules iglooModule;});
 
+    # build the final module using the resolved content
+    finalModule = {
+      # place the options under the igloo options route
+      options.igloo.module."${name}" = resolved.options or {};
+      # then strip the options and import the rest of the config
+      imports = [(lib.attrsets.removeAttrs resolved ["options"])];
+    };
+  in
+    # only apply the igloo module if the iglooTarget matches
+    # if the target is set to 'global', then it should work for all targets
+    if target == "global" || iglooTarget == target
+    then finalModule
+    else {};
+
+  # a function that generates the igloo target modules for each kind of system
   module = {
     name,
     enable ? false,
-    global ? {},
-    nixos ? {},
-    user ? {},
-  }: let
-    # create a function that generates a module for a specific iglooTarget
-    buildTargetModule = {
-      target,
-      imports,
-      options,
-      config,
-    }: let
-      targetImports = imports;
-      targetOptions = options;
-      targetConfig = config;
-    in ({
-      config,
-      iglooTarget ? "unknown",
-    }:
-      if iglooTarget == target
-      then {
-        imports = targetImports;
-        options.igloo.module."${name}" = targetOptions;
-        config = lib.mkIf config.igloo.module."${name}".enable targetConfig;
-      }
-      else {});
-  in {
-    # create the enable option for this igloo module
+    global ? {...}: {},
+    nixos ? {...}: {},
+    user ? {...}: {},
+  }: {
     options.igloo.module."${name}" = {
       enable = lib.mkOption {
         type = lib.types.bool;
@@ -62,30 +39,11 @@
     };
 
     imports = [
-      # import a module that applies all global values
-      ({config, ...}: {
-        imports = global.imports or [];
-        options.igloo.module."${name}" = global.options or {};
-        config = lib.mkIf config.igloo.module."${name}".enable (global.config or {});
-      })
-
-      # import a module that applies all nixos config if applicable
-      (buildTargetModule {
-        target = "nixos";
-        imports = nixos.imports or [];
-        options = nixos.options or {};
-        config = nixos.config or {};
-      })
-
-      # import a module that applies all user config if applicable
-      (buildTargetModule {
-        target = "user";
-        imports = user.imports or [];
-        options = user.options or {};
-        config = user.config or {};
-      })
+      (genTargetModule name "global" global)
+      (genTargetModule name "nixos" nixos)
+      (genTargetModule name "user" user)
     ];
   };
 in {
-  inherit module userModule nixosModule;
+  inherit module;
 }
