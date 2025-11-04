@@ -7,7 +7,7 @@
 }: let
   flake = {
     extraSpecialArgs ? {},
-    modules ? {},
+    modules ? [],
     nixos ? {},
     users ? {},
   }: let
@@ -20,16 +20,6 @@
     homeSpecialArgs = specialArgs // {iglooTarget = "home";};
     nixosSpecialArgs = specialArgs // {iglooTarget = "nixos";};
 
-    # define and set defaults for all flake module paths
-    flakeModules =
-      {
-        global = [];
-        host = [];
-        nixos = [];
-        user = [];
-      }
-      // modules;
-
     # build the system module for each user
     homeUserModules =
       lib.mapAttrsToList (
@@ -37,12 +27,10 @@
           iglib.homeUserModule {
             inherit name;
             modules =
-              # include the users module content
+              # include this users module content
               module
-              # include all modules defined at the user level
-              ++ flakeModules.user
-              # include all modules defined at the global level
-              ++ flakeModules.global
+              # include igloo modules with every user
+              ++ modules
               # include the igloo home module
               ++ [igloo.homeModules.igloo];
           }
@@ -54,16 +42,12 @@
       lib.nixosSystem {
         specialArgs = nixosSpecialArgs;
         modules =
-          # include the systems module content
+          # include this systems module content
           module
+          # include igloo modules with every nixos system
+          ++ modules
           # include every home users module in the system
           ++ homeUserModules
-          # include all modules defined at the nixos level
-          ++ flakeModules.host
-          # include all modules defined at the host level
-          ++ flakeModules.nixos
-          # include all modules defined at the global level
-          ++ flakeModules.global
           # include the igloo module
           ++ [igloo.nixosModules.igloo]
           # include the home manager module

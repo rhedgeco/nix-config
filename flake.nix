@@ -27,19 +27,16 @@
 
   outputs = inputs:
     inputs.igloo.lib.flake {
+      # pass the inputs to all modules
       extraSpecialArgs = {inherit inputs;};
 
       # define global module locations
-      modules = {
-        global = [./modules/global];
-        nixos = [./modules/nixos];
-        user = [./modules/user];
-      };
+      modules = [./modules];
 
-      # define user module locations
-      users.ryan = [./users/ryan];
-
-      # define nixos module locations
+      # define nixos host module locations
       nixos.jetpack = [./hosts/jetpack];
+
+      # define user host module locations
+      users.ryan = [./users/ryan];
     };
 }
