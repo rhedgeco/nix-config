@@ -37,7 +37,7 @@
   # a function that generates the igloo target modules for each kind of system
   module = {
     name,
-    disabled ? false,
+    enabled ? true,
     global ? {...}: {},
     nixos ? {...}: {},
     user ? {...}: {},
@@ -46,7 +46,7 @@
       enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enables the '${name}' igloo module.";
-        default = !disabled;
+        default = enabled;
       };
     };
 

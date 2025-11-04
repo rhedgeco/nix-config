@@ -1,6 +1,7 @@
 {
   lib,
   iglib,
+  igloo,
   inputs,
   ...
 }: let
@@ -41,7 +42,9 @@
               # include all modules defined at the user level
               ++ flakeModules.user
               # include all modules defined at the global level
-              ++ flakeModules.global;
+              ++ flakeModules.global
+              # include the igloo home module
+              ++ [igloo.homeModules.igloo];
           }
       )
       users;
@@ -61,12 +64,13 @@
           ++ flakeModules.nixos
           # include all modules defined at the global level
           ++ flakeModules.global
+          # include the igloo module
+          ++ [igloo.nixosModules.igloo]
+          # include the home manager module
+          ++ [inputs.home-manager.nixosModules.home-manager]
           # include some resonable default configuration settings
           ++ [
             {
-              # import the home manager module
-              imports = [inputs.home-manager.nixosModules.home-manager];
-
               # set the networking hostname to match the system name by default
               networking.hostName = lib.mkDefault "${name}";
 

@@ -7,16 +7,33 @@
     };
   };
 
-  outputs = {nixpkgs, ...} @ inputs: let
+  outputs = {
+    self,
+    nixpkgs,
+    ...
+  } @ inputs: let
     # `call` is a function that automatically imports with certain params
     # the `lib.flip` essentially combines the import with a set of parameters
     call = lib.flip import {
       inherit lib inputs iglib call;
+      igloo = self;
     };
 
     lib = nixpkgs.lib;
     iglib = call ./lib;
+    homeModule = import ./modules/home.nix;
+    nixosModule = import ./modules/nixos.nix;
   in {
     lib = iglib;
+
+    nixosModules = {
+      default = nixosModule;
+      igloo = nixosModule;
+    };
+
+    homeModules = {
+      default = homeModule;
+      igloo = homeModule;
+    };
   };
 }
