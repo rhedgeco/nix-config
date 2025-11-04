@@ -43,8 +43,9 @@
   module = {
     name,
     enabled ? true,
+    options ? {},
+    igloo ? {},
     packages ? [],
-    global ? {},
     nixos ? {},
     user ? {},
   }: {
@@ -57,8 +58,13 @@
     };
 
     imports = [
-      # generate modules for each kind of custom system
-      (genTargetModule name "global" global)
+      # generate global module for all systems
+      (genTargetModule name "global" {
+        inherit options; # pass through the options directly
+        config.igloo = igloo; # apply igloo settings to `config.igloo`
+      })
+
+      # pass system modules through with respective target
       (genTargetModule name "nixos" nixos)
       (genTargetModule name "user" user)
 

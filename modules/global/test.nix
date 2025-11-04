@@ -8,10 +8,9 @@ iglib.module {
   name = "test";
   enabled = false;
 
-  global = {...}: {
-    options.enableCowsay = lib.mkEnableOption "Enable cowsay";
-    config.igloo.modules.test.enableCowsay = true;
-  };
+  options.enableCowsay = lib.mkEnableOption "Enable cowsay";
+
+  igloo.modules.test.enableCowsay = true;
 
   nixos = {iglooModule, ...}: {
     environment.systemPackages = lib.optional iglooModule.enableCowsay pkgs.cowsay;
