@@ -1,8 +1,8 @@
 {lib, ...}: let
   genTargetModule = name: target: content: {iglooTarget, ...} @ systemArgs: let
     # collect igloo modules configuration options
-    iglooModules = systemArgs.config.igloo.modules;
-    iglooModule = iglooModules."${name}";
+    modules = systemArgs.config.igloo.modules;
+    module = modules."${name}";
 
     # resolve the module content using the systemArgs if its a function
     # pass in the iglooModule and iglooModules parameters for easy access
@@ -10,7 +10,7 @@
       if builtins.isAttrs content
       then content
       else if builtins.isFunction content
-      then content (systemArgs // {inherit iglooModules iglooModule;})
+      then content (systemArgs // {inherit modules module;})
       else throw "genTargetModule content is not a function or an attribute set";
 
     # there are also top level special keys that need to be managed correctly and not stuffed in a config
@@ -29,9 +29,9 @@
       # this is determined if there is either an `options` or a `config` key at the top level
       if !(resolvedContent ? options || resolvedContent ? config)
       # if the content is in shorthand, then we can just wrap all the unspecial content with `config`
-      then {config = lib.mkIf iglooModule.enable unspecialContent;}
+      then {config = lib.mkIf module.enable unspecialContent;}
       # if it is shorthand, we have to wrap the resolved config key and merge it with the unspecial content
-      else unspecialContent // {config = lib.mkIf iglooModule.enable (resolvedContent.config or {});};
+      else unspecialContent // {config = lib.mkIf module.enable (resolvedContent.config or {});};
   in
     # only apply the module content if the iglooTarget matches
     # however, if the target is set to 'global' then it should always apply

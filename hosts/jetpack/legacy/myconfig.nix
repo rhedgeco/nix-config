@@ -40,11 +40,6 @@
       users = ["ryan"];
     };
 
-    embedded = {
-      enable = true;
-      serialUsers = ["ryan"];
-    };
-
     niri.enable = true;
     firefox.enable = true;
     nautilus.enable = true;
