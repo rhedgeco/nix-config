@@ -17,10 +17,10 @@ iglib.module {
   };
 
   homeModule = {iglooModule, ...}: {
-    options.enableGum = lib.mkEnableOption "Enable pokemonsay";
+    options.enablePokemonsay = lib.mkEnableOption "Enable pokemonsay";
     config = {
-      igloo.modules.test.enableGum = true;
-      home.packages = lib.optional (iglooModule.enableGum && iglooModule.enableCowsay) pkgs.gum;
+      igloo.modules.test.enablePokemonsay = true;
+      home.packages = lib.optional (iglooModule.enablePokemonsay && iglooModule.enableCowsay) pkgs.pokemonsay;
     };
   };
 }
