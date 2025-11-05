@@ -28,11 +28,11 @@
             inherit name;
             modules =
               # include this users module content
-              module
+              (lib.toList module)
               # include igloo modules with every user
-              ++ modules
+              ++ (lib.toList modules)
               # include all extra modules
-              ++ extraModules
+              ++ (lib.toList extraModules)
               # include the igloo home module
               ++ [igloo.homeModules.igloo];
           }
@@ -45,9 +45,9 @@
         specialArgs = nixosSpecialArgs;
         modules =
           # include this systems module content
-          module
+          (lib.toList module)
           # include igloo modules with every nixos system
-          ++ modules
+          ++ (lib.toList modules)
           # make the user modules and include the system module
           ++ mkUserModules module
           # include the igloo module

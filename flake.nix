@@ -30,13 +30,13 @@
       # pass the inputs to all modules
       extraSpecialArgs = {inherit inputs;};
 
-      # define global module locations
-      modules = [./modules];
+      # define global module location
+      modules = ./modules;
 
       # define nixos host module locations
-      nixos.jetpack = [./hosts/jetpack];
+      nixos.jetpack = ./hosts/jetpack;
 
       # define user host module locations
-      users.ryan = [./users/ryan];
+      users.ryan = ./users/ryan;
     };
 }
