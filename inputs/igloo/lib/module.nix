@@ -48,8 +48,8 @@
     options ? {},
     config ? {},
     packages ? [],
-    nixosModule ? {},
-    homeModule ? {},
+    nixos ? {},
+    home ? {},
   }: {
     options.igloo.modules."${name}" = {
       enable = lib.mkOption {
@@ -69,8 +69,8 @@
       (genTargetModule name "global" {inherit igloo;})
 
       # pass system modules through with respective target
-      (genTargetModule name "nixos" nixosModule)
-      (genTargetModule name "home" homeModule)
+      (genTargetModule name "nixos" nixos)
+      (genTargetModule name "home" home)
 
       # set up packages with all nixos systems
       (genTargetModule name "nixos" {

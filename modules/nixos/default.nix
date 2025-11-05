@@ -5,7 +5,7 @@
 }:
 iglib.module {
   name = "legacy-nixos-modules";
-  nixosModule = {
+  nixos = {
     # import all modules in this directory
     imports = iglib.findModules ./.;
 

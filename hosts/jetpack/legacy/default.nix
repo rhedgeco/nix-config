@@ -1,7 +1,7 @@
 {iglib, ...}:
 iglib.module {
   name = "legacy-jetpack-modules";
-  nixosModule = {
+  nixos = {
     # import all modules in this directory
     imports = iglib.findModules ./.;
   };

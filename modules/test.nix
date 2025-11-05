@@ -12,11 +12,11 @@ iglib.module {
 
   igloo.modules.test.enableCowsay = true;
 
-  nixosModule = {iglooModule, ...}: {
+  nixos = {iglooModule, ...}: {
     environment.systemPackages = lib.optional iglooModule.enableCowsay pkgs.cowsay;
   };
 
-  homeModule = {iglooModule, ...}: {
+  home = {iglooModule, ...}: {
     options.enablePokemonsay = lib.mkEnableOption "Enable pokemonsay";
     config = {
       igloo.modules.test.enablePokemonsay = true;
