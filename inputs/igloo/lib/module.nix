@@ -47,17 +47,17 @@
     normalizedContent;
 
   module = {
-    name,
-    enabled ? false,
-    nixosEnabled ? false,
-    homeEnabled ? false,
-    igloo ? {},
-    imports ? [],
-    options ? {},
-    config ? {},
-    packages ? [],
-    nixos ? {},
-    home ? {},
+    name, # the name of the igloo module
+    enabled ? false, # should this module be enabled by default on all targets
+    nixosEnabled ? false, # should this module be enabled by default on nixos targets
+    homeEnabled ? false, # should this module be enabled by default on home targets
+    igloo ? {}, # igloo configuration to apply to all targets (when enabled)
+    imports ? [], # additional imports to apply to all targets (even if not enabled)
+    options ? {}, # additional igloo module options to define on all targets (even if not enabled)
+    config ? {}, # additional configuration to apply to all targets (when enabled)
+    packages ? [], # packages to include on all targets (when enabled)
+    nixos ? {}, # configuration to apply to only nixos targets (when enabled)
+    home ? {}, # configuration to apply to only home targets (when enabled)
   }: let
     # a function for generating the module enable option with a default value
     enableOption = default: {
@@ -68,8 +68,9 @@
       };
     };
 
-    # a function that conditionally enables the config based on the modules `enable` status
-    iglooModule = content: systemArgs: let
+    # a function that nests all options under its `igloo.modules` route
+    # and conditionally enables the config based on the modules `enable` status
+    wrapIglooModule = content: systemArgs: let
       # get common option paths to pass into module args
       modules = systemArgs.config.igloo.modules;
       module = modules."${name}";
@@ -92,29 +93,29 @@
     imports = [
       # generate the module enable option on nixos targets
       # set the default value to match then `enabled` or `nixosEnabled` module parameter
-      (iglooModule (wrapTarget "nixos" (enableOption (enabled || nixosEnabled))))
+      (wrapIglooModule (wrapTarget "nixos" (enableOption (enabled || nixosEnabled))))
 
       # generate the module enable option on home targets
       # set the default value to match then `enabled` or `homeEnabled` module parameter
-      (iglooModule (wrapTarget "home" (enableOption (enabled || homeEnabled))))
+      (wrapIglooModule (wrapTarget "home" (enableOption (enabled || homeEnabled))))
 
       # create a global module with igloo parameters passed through
-      (iglooModule {inherit igloo;})
+      (wrapIglooModule {inherit igloo;})
 
       # create a global module with `imports`, `options`, and `config` passed through
-      (iglooModule {inherit imports options config;})
+      (wrapIglooModule {inherit imports options config;})
 
       # create system modules that pass the config through to their target
-      (iglooModule (wrapTarget "nixos" nixos))
-      (iglooModule (wrapTarget "home" home))
+      (wrapIglooModule (wrapTarget "nixos" nixos))
+      (wrapIglooModule (wrapTarget "home" home))
 
       # create a nixos module that populates the packages
-      (iglooModule (wrapTarget "nixos" {
+      (wrapIglooModule (wrapTarget "nixos" {
         environment.systemPackages = packages;
       }))
 
       # create a home module that populates the packages
-      (iglooModule (wrapTarget "home" {
+      (wrapIglooModule (wrapTarget "home" {
         home.packages = packages;
       }))
     ];
