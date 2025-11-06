@@ -1,45 +1,51 @@
 {lib, ...}: let
-  genTargetModule = name: target: content: {iglooTarget, ...} @ systemArgs: let
-    # collect igloo modules configuration options
-    modules = systemArgs.config.igloo.modules;
-    module = modules."${name}";
+  # a function that conditionally compiles a module if the target matches the `iglooTarget`
+  wrapTarget = target: content: {iglooTarget, ...} @ systemArgs:
+    if target != iglooTarget
+    # id the igloo target doesnt match, return nothing
+    then {}
+    # if it does match, and its a function, then call it with the systemArgs
+    else if lib.isFunction content
+    then content systemArgs
+    # otherwise, just return the content as it is
+    else content;
 
-    # resolve the module content using the systemArgs if its a function
-    # pass in the iglooModule and iglooModules parameters for easy access
+  normalized = content: systemArgs: let
+    # import the content
+    importedContent =
+      # if the content is a path is must be imported
+      if lib.isPath content
+      then import content
+      # otherwise we can assume it is already imported
+      else content;
+
+    # resolve the imported content
     resolvedContent =
-      if builtins.isAttrs content
-      then content
-      else if builtins.isFunction content
-      then content (systemArgs // {inherit modules module;})
-      else throw "genTargetModule content is not a function or an attribute set";
+      # if the imported content is a function, call it with the systemArgs
+      if lib.isFunction importedContent
+      then importedContent systemArgs
+      # otherwise we can assume that the imported content is already resolved
+      else importedContent;
 
-    # there are also top level special keys that need to be managed correctly and not stuffed in a config
-    specialKeys = ["_class" "_file" "key" "disabledModules" "imports" "options" "config" "meta" "freeformType"];
-    specialContent = lib.filterAttrs (key: value: lib.elem key specialKeys) resolvedContent;
-    unspecialContent = lib.removeAttrs resolvedContent specialKeys;
+    # nix modules can either be in shorthand or longform
+    # these are sets of keys that should only appear at the top level of a module, and not nested in a `config`
+    # we can use this information to extract the items that are required to be at the top level when normalizing the content
+    # https://github.com/NixOS/nixpkgs/blob/b3d51a0365f6695e7dd5cdf3e180604530ed33b4/lib/modules.nix#L614-L624
+    longformKeys = ["_class" "_file" "key" "disabledModules" "imports" "options" "config" "meta" "freeformType"];
+    longformContent = lib.filterAttrs (key: value: lib.elem key longformKeys) resolvedContent;
+    shortformContent = lib.removeAttrs resolvedContent longformKeys;
 
-    # extract the options content and place them under the igloo modules route
-    optionContent = {
-      options.igloo.modules."${name}" = resolvedContent.options or {};
-    };
-
-    # normalize the config content based on if the content is shorthand or not
+    # normalize the content by nesting any shortform content inside the `config` key
+    # to stay consistent with how nix evaluates modules and to keep errors somewhat sensible,
+    # the module being in shortform vs longform is determined by there being a `config` or `option` top level key
+    # https://github.com/NixOS/nixpkgs/blob/b3d51a0365f6695e7dd5cdf3e180604530ed33b4/lib/modules.nix#L612
     normalizedContent =
-      # first we detect if the module is in shorthand format
-      # this is determined if there is either an `options` or a `config` key at the top level
-      if !(resolvedContent ? options || resolvedContent ? config)
-      # if the content is in shorthand, then we can just wrap all the unspecial content with `config`
-      then {config = lib.mkIf module.enable unspecialContent;}
-      # if it is shorthand, we have to wrap the resolved config key and merge it with the unspecial content
-      else unspecialContent // {config = lib.mkIf module.enable (resolvedContent.config or {});};
+      if !(resolvedContent ? config || resolvedContent ? options)
+      then longformContent // {config = shortformContent;}
+      else resolvedContent;
   in
-    # only apply the module content if the iglooTarget matches
-    # however, if the target is set to 'global' then it should always apply
-    if target == "global" || iglooTarget == target
-    then specialContent // optionContent // normalizedContent
-    else {};
+    normalizedContent;
 
-  # a function that generates the igloo target modules for each kind of system
   module = {
     name,
     enabled ? true,
@@ -50,7 +56,29 @@
     packages ? [],
     nixos ? {},
     home ? {},
-  }: {
+  }: let
+    # a function that conditionally enables the config based on the modules `enable` status
+    iglooModule = content: systemArgs: let
+      # get common option paths to pass into module args
+      modules = systemArgs.config.igloo.modules;
+      module = modules."${name}";
+
+      # first the module must be normalized
+      # also pass in the `module` and `modules` settings for convenience
+      normalContent = normalized content (systemArgs // {inherit module modules;});
+
+      # create the igloo content by nesting `config` and `options` keys
+      iglooContent = {
+        # nest the options under the igloo module route
+        options.igloo.modules."${name}" = normalContent.options or {};
+        # nest the config in a conditional based the `module.enable` option
+        config = lib.mkIf module.enable normalContent.config or {};
+      };
+    in
+      # merge the `iglooContent` back into the normalized content to replace the keys
+      normalContent // iglooContent;
+  in {
+    # generate an enable option for this module
     options.igloo.modules."${name}" = {
       enable = lib.mkOption {
         type = lib.types.bool;
@@ -60,27 +88,25 @@
     };
 
     imports = [
-      # generate global module for all systems
-      (genTargetModule name "global" {
-        inherit imports options config; # pass through the imports/options/config directly
-      })
+      # create a global module with igloo parameters passed through
+      (iglooModule {inherit igloo;})
 
-      # define a global module with igloo as shorthand configuration
-      (genTargetModule name "global" {inherit igloo;})
+      # create a global module with `imports`, `options`, and `config` passed through
+      (iglooModule {inherit imports options config;})
 
-      # pass system modules through with respective target
-      (genTargetModule name "nixos" nixos)
-      (genTargetModule name "home" home)
+      # create system modules that pass the config through to their target
+      (iglooModule (wrapTarget "nixos" nixos))
+      (iglooModule (wrapTarget "home" home))
 
-      # set up packages with all nixos systems
-      (genTargetModule name "nixos" {
+      # create a nixos module that populates the packages
+      (iglooModule (wrapTarget "nixos" {
         environment.systemPackages = packages;
-      })
+      }))
 
-      # set up packages with all home systems
-      (genTargetModule name "home" {
+      # create a home module that populates the packages
+      (iglooModule (wrapTarget "home" {
         home.packages = packages;
-      })
+      }))
     ];
   };
 in {
