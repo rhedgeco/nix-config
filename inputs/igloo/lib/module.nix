@@ -48,7 +48,9 @@
 
   module = {
     name,
-    enabled ? true,
+    enabled ? false,
+    nixosEnabled ? false,
+    homeEnabled ? false,
     igloo ? {},
     imports ? [],
     options ? {},
@@ -57,6 +59,15 @@
     nixos ? {},
     home ? {},
   }: let
+    # a function for generating the module enable option with a default value
+    enableOption = default: {
+      options.enable = lib.mkOption {
+        type = lib.types.bool;
+        description = "Enables the '${name}' igloo module.";
+        default = default;
+      };
+    };
+
     # a function that conditionally enables the config based on the modules `enable` status
     iglooModule = content: systemArgs: let
       # get common option paths to pass into module args
@@ -78,16 +89,15 @@
       # merge the `iglooContent` back into the normalized content to replace the keys
       normalContent // iglooContent;
   in {
-    # generate an enable option for this module
-    options.igloo.modules."${name}" = {
-      enable = lib.mkOption {
-        type = lib.types.bool;
-        description = "Enables the '${name}' igloo module.";
-        default = enabled;
-      };
-    };
-
     imports = [
+      # generate the module enable option on nixos targets
+      # set the default value to match then `enabled` or `nixosEnabled` module parameter
+      (iglooModule (wrapTarget "nixos" (enableOption (enabled || nixosEnabled))))
+
+      # generate the module enable option on home targets
+      # set the default value to match then `enabled` or `homeEnabled` module parameter
+      (iglooModule (wrapTarget "home" (enableOption (enabled || homeEnabled))))
+
       # create a global module with igloo parameters passed through
       (iglooModule {inherit igloo;})
 

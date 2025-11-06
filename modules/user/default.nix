@@ -1,6 +1,7 @@
 {iglib, ...}:
 iglib.module {
   name = "legacy-user-modules";
+  enabled = true; # enabled by default
   home = {
     # import all modules in this directory
     imports = iglib.findModules ./.;

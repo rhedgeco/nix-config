@@ -6,7 +6,6 @@
 }:
 iglib.module {
   name = "embedded";
-  enabled = false;
 
   packages = with pkgs; [
     saleae-logic-2

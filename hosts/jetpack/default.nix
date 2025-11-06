@@ -1,6 +1,7 @@
 {iglib, ...}:
 iglib.module {
   name = "jetpack-config";
+  enabled = true; # enabled by default
 
   # import all modules in this directory
   imports = iglib.findModules ./.;

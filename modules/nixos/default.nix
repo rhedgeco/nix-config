@@ -5,6 +5,7 @@
 }:
 iglib.module {
   name = "legacy-nixos-modules";
+  enabled = true; # enabled by default
   nixos = {
     # import all modules in this directory
     imports = iglib.findModules ./.;
