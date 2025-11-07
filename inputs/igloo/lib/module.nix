@@ -61,7 +61,7 @@
   }: let
     # a function for generating the module enable option with a default value
     enableOption = default: {
-      options.enable = lib.mkOption {
+      options.igloo.modules."${name}".enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enables the '${name}' igloo module.";
         default = default;
@@ -93,11 +93,11 @@
     imports = [
       # generate the module enable option on nixos targets
       # set the default value to match then `enabled` or `nixosEnabled` module parameter
-      (wrapIglooModule (wrapTarget "nixos" (enableOption (enabled || nixosEnabled))))
+      (wrapTarget "nixos" (enableOption (enabled || nixosEnabled)))
 
       # generate the module enable option on home targets
       # set the default value to match then `enabled` or `homeEnabled` module parameter
-      (wrapIglooModule (wrapTarget "home" (enableOption (enabled || homeEnabled))))
+      (wrapTarget "home" (enableOption (enabled || homeEnabled)))
 
       # create a global module with igloo parameters passed through
       (wrapIglooModule {inherit igloo;})
