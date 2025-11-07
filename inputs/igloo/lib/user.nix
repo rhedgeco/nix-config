@@ -1,4 +1,5 @@
 {lib, ...}: let
+  # a function that gets a igloo users config
   userCfg = config: name: config.igloo.users."${name}";
 
   # a function that builds home manager configurations for a user
@@ -61,5 +62,5 @@
     };
   };
 in {
-  inherit userCfg homeUser userModule;
+  inherit homeUser userModule userCfg;
 }

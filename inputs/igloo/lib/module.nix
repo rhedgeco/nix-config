@@ -1,4 +1,10 @@
 {lib, ...}: let
+  # a function that gets an igloo modules config
+  moduleCfg = config: name: let
+    namePath = lib.splitString "." name;
+  in
+    lib.getAttrFromPath namePath config.igloo.modules;
+
   # a function that conditionally compiles a module if the target matches the `iglooTarget`
   wrapTarget = target: content: {iglooTarget, ...} @ systemArgs:
     if target != iglooTarget
@@ -76,13 +82,12 @@
     # a function that nests all options under its `igloo.modules` route
     # and conditionally enables the config based on the modules `enable` status
     wrapIglooModule = content: systemArgs: let
-      # get common option paths to pass into module args
-      modules = systemArgs.config.igloo.modules;
-      module = lib.getAttrFromPath namePath modules;
+      # get module config from the systemArgs config
+      module = moduleCfg systemArgs.config name;
 
       # first the module must be normalized
       # also pass in the `module` and `modules` settings for convenience
-      normalContent = normalized content (systemArgs // {inherit module modules;});
+      normalContent = normalized content (systemArgs // {inherit module;});
 
       # create the igloo content by nesting `config` and `options` keys
       iglooContent = {
@@ -127,5 +132,5 @@
     ];
   };
 in {
-  inherit module;
+  inherit module moduleCfg;
 }
