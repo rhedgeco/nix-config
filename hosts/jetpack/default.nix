@@ -8,16 +8,18 @@ iglib.module {
 
   nixos.igloo.users.ryan = {
     enable = true;
-    systemConfig = {
+    config = {
       initialPassword = "ryan";
       extraGroups = ["wheel"];
     };
-    homeConfig = {
-      custom.impermanence = {
-        enable = true;
-        userDir = "/persist/home/ryan";
-      };
-    };
+    imports = [
+      {
+        custom.impermanence = {
+          enable = true;
+          userDir = "/persist/home/ryan";
+        };
+      }
+    ];
   };
 
   igloo.modules.embedded = {

@@ -1,13 +1,14 @@
 {lib, ...}: let
+  userCfg = config: name: config.igloo.users."${name}";
+
   # a function that builds home manager configurations for a user
   homeUser = {
     name,
-    config ? {},
     modules ? [],
   }: {
     # pass all the modules into the imports for the user
     # also inherit the extra user configuration settings
-    imports = modules ++ [config];
+    imports = modules;
 
     # set every users name to match their directory by default
     home.username = lib.mkDefault "${name}";
@@ -19,50 +20,46 @@
     programs.home-manager.enable = lib.mkDefault true;
   };
 
-  # a function that builds a system module that can enable home manager users
-  homeUserModule = {
+  # a function that builds a system module to manage a specific user
+  userModule = {
     name,
     modules ? [],
   }: {config, ...}: let
-    userOptions = config.igloo.users."${name}";
+    cfg = userCfg config name;
   in {
-    # build the options that can enable and configure the user
     options.igloo.users."${name}" = {
       enable = lib.mkEnableOption "Enables the '${name}' igloo user";
-      modules = lib.mkOption {
+      config = lib.mkOption {
+        type = lib.types.attrs;
+        description = "Extra nixos configuration to add to the '${name}' user";
+        default = {};
+      };
+      iglooModules = lib.mkOption {
+        type = lib.types.attrs;
+        description = "Extra igloo module config to add to the '${name}' users home configuration";
+        default = {};
+      };
+      imports = lib.mkOption {
         type = lib.types.listOf lib.types.anything;
-        description = "Extra modules to add to the '${name}' users home configuration";
+        description = "Extra imports to add to the '${name}' users home configuration";
         default = [];
-      };
-      systemConfig = lib.mkOption {
-        type = lib.types.attrs;
-        description = "Extra system configuration to add to the '${name}' user";
-        default = {};
-      };
-      homeConfig = lib.mkOption {
-        type = lib.types.attrs;
-        description = "Extra home-manager configuration to add to the '${name}' user";
-        default = {};
       };
     };
 
-    # create home manager configuration for user if its enabled
-    config = lib.mkIf userOptions.enable {
-      # set up normal system user
-      users.users."${name}" =
-        userOptions.systemConfig
-        // {isNormalUser = true;};
+    config = lib.mkIf cfg.enable {
+      users.users."${name}" = cfg.config // {isNormalUser = true;};
 
       home-manager = {
-        # set up user using mkUserHome function
         users."${name}" = homeUser {
           name = "${name}";
-          config = userOptions.homeConfig;
-          modules = modules ++ userOptions.modules;
+          modules =
+            modules
+            ++ cfg.imports
+            ++ [{igloo.modules = cfg.iglooModules;}];
         };
       };
     };
   };
 in {
-  inherit homeUser homeUserModule;
+  inherit homeUser userModule;
 }

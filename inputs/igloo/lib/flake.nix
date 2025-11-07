@@ -24,7 +24,7 @@
     mkUserModules = extraModules:
       lib.mapAttrsToList (
         name: module:
-          iglib.homeUserModule {
+          iglib.userModule {
             inherit name;
             modules =
               # include this users module content
