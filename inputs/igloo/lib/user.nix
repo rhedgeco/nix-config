@@ -61,5 +61,5 @@
     };
   };
 in {
-  inherit homeUser userModule;
+  inherit userCfg homeUser userModule;
 }
