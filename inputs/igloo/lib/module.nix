@@ -59,12 +59,17 @@
     nixos ? {}, # configuration to apply to only nixos targets (when enabled)
     home ? {}, # configuration to apply to only home targets (when enabled)
   }: let
+    # expand the name to capture any period seperators
+    namePath = lib.splitString "." name;
+
     # a function for generating the module enable option with a default value
     enableOption = default: {
-      options.igloo.modules."${name}".enable = lib.mkOption {
-        type = lib.types.bool;
-        description = "Enables the '${name}' igloo module.";
-        default = default;
+      options.igloo.modules = lib.setAttrByPath namePath {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          description = "Enables the '${name}' igloo module.";
+          default = default;
+        };
       };
     };
 
@@ -73,7 +78,7 @@
     wrapIglooModule = content: systemArgs: let
       # get common option paths to pass into module args
       modules = systemArgs.config.igloo.modules;
-      module = modules."${name}";
+      module = lib.getAttrFromPath namePath modules;
 
       # first the module must be normalized
       # also pass in the `module` and `modules` settings for convenience
@@ -81,10 +86,11 @@
 
       # create the igloo content by nesting `config` and `options` keys
       iglooContent = {
-        # nest the options under the igloo module route
-        options.igloo.modules."${name}" = normalContent.options or {};
         # nest the config in a conditional based the `module.enable` option
         config = lib.mkIf module.enable normalContent.config or {};
+
+        # nest the options under the igloo modules name path
+        options.igloo.modules = lib.setAttrByPath namePath (normalContent.options or {});
       };
     in
       # merge the `iglooContent` back into the normalized content to replace the keys
