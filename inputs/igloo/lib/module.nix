@@ -91,8 +91,8 @@
           in
             # if the value is of '_type' == 'option', then it is an leaf option value
             if (optionValue ? "_type" && optionValue._type == "option")
-            # if the value is an leaf option, replace it with the system value
-            then systemValue
+            # if the value is an leaf option, replace it with the system value as a default
+            then lib.mkDefault systemValue
             # if its not a leaf, then its a parent and we need to link the nested options
             else generatePassthrough systemValue optionValue
         )
