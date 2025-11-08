@@ -27,6 +27,7 @@
     modules ? [],
   }: {config, ...}: let
     cfg = userCfg config name;
+    userImports = config.igloo.users.imports;
   in {
     options.igloo.users."${name}" = {
       enable = lib.mkEnableOption "Enables the '${name}' igloo user";
@@ -48,14 +49,22 @@
     };
 
     config = lib.mkIf cfg.enable {
+      # apply the user system settings
+      # then merge with isNormalUser to ensure it always is true
       users.users."${name}" = cfg.config // {isNormalUser = true;};
 
+      # set up users home manager
       home-manager = {
         users."${name}" = homeUser {
           name = "${name}";
           modules =
+            # include the modules for this user
             modules
+            # include extra imports for every user
+            ++ userImports
+            # include extra imports defined in the system
             ++ cfg.imports
+            # include extra igloo config defined in the system
             ++ [{igloo.modules = cfg.iglooModules;}];
         };
       };

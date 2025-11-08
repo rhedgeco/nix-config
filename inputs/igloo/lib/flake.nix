@@ -21,7 +21,7 @@
     nixosSpecialArgs = specialArgs // {iglooTarget = "nixos";};
 
     # build the system module for each user
-    mkUserModules = extraModules:
+    userModules =
       lib.mapAttrsToList (
         name: module:
           iglib.userModule {
@@ -31,8 +31,6 @@
               (lib.toList module)
               # include igloo modules with every user
               ++ (lib.toList modules)
-              # include all extra modules
-              ++ (lib.toList extraModules)
               # include the igloo home module
               ++ [igloo.homeModules.igloo];
           }
@@ -48,8 +46,8 @@
           (lib.toList module)
           # include igloo modules with every nixos system
           ++ (lib.toList modules)
-          # make the user modules and include the system module
-          ++ mkUserModules module
+          # include all system user modules
+          ++ userModules
           # include the igloo module
           ++ [igloo.nixosModules.igloo]
           # include the home manager module

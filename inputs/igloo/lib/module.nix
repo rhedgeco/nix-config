@@ -55,8 +55,6 @@
   module = {
     name, # the name of the igloo module
     enabled ? false, # should this module be enabled by default on all targets
-    nixosEnabled ? false, # should this module be enabled by default on nixos targets
-    homeEnabled ? false, # should this module be enabled by default on home targets
     igloo ? {}, # igloo configuration to apply to all targets (when enabled)
     imports ? [], # additional imports to apply to all targets (even if not enabled)
     options ? {}, # additional igloo module options to define on all targets (even if not enabled)
@@ -68,15 +66,39 @@
     # expand the name to capture any period seperators
     namePath = lib.splitString "." name;
 
-    # a function for generating the module enable option with a default value
-    enableOption = default: {
-      options.igloo.modules = lib.setAttrByPath namePath {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          description = "Enables the '${name}' igloo module.";
-          default = default;
-        };
-      };
+    # define the global options with an enable option by default
+    globalOptions = {
+      options.igloo.modules = lib.setAttrByPath namePath (
+        {
+          enable = lib.mkOption {
+            type = lib.types.bool;
+            description = "Enables the '${name}' igloo module.";
+            default = enabled;
+          };
+        }
+        # merge in the user defined options second, so the enable option can be overriden
+        // options
+      );
+    };
+
+    # define a module that copies all global options from the system into home manager
+    homeManagerPassthrough = {config, ...}: let
+      generatePassthrough = systemCfg: optionSet:
+        lib.mapAttrs (
+          optionName: optionValue: let
+            # extract the value set in the system config
+            systemValue = systemCfg.${optionName};
+          in
+            # if the value is of '_type' == 'option', then it is an leaf option value
+            if (optionValue ? "_type" && optionValue._type == "option")
+            # if the value is an leaf option, replace it with the system value
+            then systemValue
+            # if its not a leaf, then its a parent and we need to link the nested options
+            else generatePassthrough systemValue optionValue
+        )
+        optionSet;
+    in {
+      home-manager.sharedModules = [(generatePassthrough config globalOptions.options)];
     };
 
     # a function that nests all options under its `igloo.modules` route
@@ -102,19 +124,16 @@
       normalContent // iglooContent;
   in {
     imports = [
-      # generate the module enable option on nixos targets
-      # set the default value to match then `enabled` or `nixosEnabled` module parameter
-      (wrapTarget "nixos" (enableOption (enabled || nixosEnabled)))
+      # create a global module with all options defined on every system
+      # also include the module that passes all system config into home manager
+      globalOptions
+      (wrapTarget "nixos" homeManagerPassthrough)
 
-      # generate the module enable option on home targets
-      # set the default value to match then `enabled` or `homeEnabled` module parameter
-      (wrapTarget "home" (enableOption (enabled || homeEnabled)))
-
-      # create a global module with igloo parameters passed through
+      # create a global module with igloo config passed through
       (wrapIglooModule {inherit igloo;})
 
       # create a global module with `imports`, `options`, and `config` passed through
-      (wrapIglooModule {inherit imports options config;})
+      (wrapIglooModule {inherit imports config;})
 
       # create system modules that pass the config through to their target
       (wrapIglooModule (wrapTarget "nixos" nixos))
