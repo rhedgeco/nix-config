@@ -27,10 +27,12 @@ dry-build host=(`hostname`):
 
 # collects all leftover nix garbage older than `period` (defaults to 30d)
 clean period="30d":
+    @gum confirm "Are you sure you want to delete nix content older than {{period}}?" --default="No"
     @nix-collect-garbage --delete-older-than {{period}}
 
 # deletes and removes everything not related to the current running system
 purge:
+    @gum confirm "Are you sure you want to delete *all* old nix content?" --default="No"
     @nix-collect-garbage -d
 
 # yoinks all files related to `user` (defaults to the current user)
