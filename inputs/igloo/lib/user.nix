@@ -32,12 +32,12 @@
       enable = lib.mkEnableOption "Enables the '${name}' igloo user";
       config = lib.mkOption {
         type = lib.types.attrs;
-        description = "Extra nixos configuration to add to the '${name}' user";
+        description = "Extra settings to add to the '${name}' users system config";
         default = {};
       };
-      iglooModules = lib.mkOption {
+      home = lib.mkOption {
         type = lib.types.attrs;
-        description = "Extra igloo module config to add to the '${name}' users home configuration";
+        description = "Extra settings to add to the '${name}' users home config";
         default = {};
       };
       imports = lib.mkOption {
@@ -61,8 +61,8 @@
             modules
             # include extra imports defined in the system
             ++ cfg.imports
-            # include extra igloo config defined in the system
-            ++ [{igloo.modules = cfg.iglooModules;}];
+            # include home config defined in the system
+            ++ [{config = cfg.home;}];
         };
       };
     };

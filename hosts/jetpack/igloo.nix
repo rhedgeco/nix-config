@@ -5,14 +5,10 @@
       initialPassword = "ryan";
       extraGroups = ["wheel"];
     };
-    imports = [
-      {
-        custom.impermanence = {
-          enable = true;
-          userDir = "/persist/home/ryan";
-        };
-      }
-    ];
+    home.custom.impermanence = {
+      enable = true;
+      userDir = "/persist/home/ryan";
+    };
   };
 
   igloo.modules.embedded = {
