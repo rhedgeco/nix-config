@@ -27,7 +27,6 @@
     modules ? [],
   }: {config, ...}: let
     cfg = userCfg config name;
-    userImports = config.igloo.users.imports;
   in {
     options.igloo.users."${name}" = {
       enable = lib.mkEnableOption "Enables the '${name}' igloo user";
@@ -60,8 +59,6 @@
           modules =
             # include the modules for this user
             modules
-            # include extra imports for every user
-            ++ userImports
             # include extra imports defined in the system
             ++ cfg.imports
             # include extra igloo config defined in the system
