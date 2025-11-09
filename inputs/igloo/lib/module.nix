@@ -124,9 +124,10 @@
       normalContent // iglooContent;
   in {
     imports = [
-      # create a global module with all options defined on every system
-      # also include the module that passes all system config into home manager
+      # insert the global options module into every system
       globalOptions
+
+      # pass through all system options values as the default for home manager
       (wrapTarget "nixos" homeManagerPassthrough)
 
       # create a global module with igloo config passed through
