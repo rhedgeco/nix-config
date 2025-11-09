@@ -9,7 +9,12 @@ iglib.module {
 
   # core cli tools included with any system by default
   packages = with pkgs; [
-    just
+    bat
+    direnv
+    fd
     gum
+    inotify-tools
+    just
+    python3
   ];
 }
