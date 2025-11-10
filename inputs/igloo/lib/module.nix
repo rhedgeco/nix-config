@@ -7,7 +7,7 @@
 
   # a function that conditionally compiles a module if the target matches the `iglooTarget`
   wrapTarget = target: content: {iglooTarget, ...} @ systemArgs:
-    if target != iglooTarget
+    if !(lib.isList target && builtins.elem iglooTarget target) && target != iglooTarget
     # id the igloo target doesnt match, return nothing
     then {}
     # if it does match, and its a function, then call it with the systemArgs
