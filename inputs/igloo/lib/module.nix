@@ -158,16 +158,16 @@
         # otherwise we can assume that the imported content is already resolved
         else importedContent;
 
-      # convert the module syntax into its longform style with config and options keys
+      # normalize the module syntax into its longform style with config and options keys
       normalContent = unifyModuleSyntax __curPos.file "${name} -> ${toString target}" resolvedContent;
 
       # create the igloo content by nesting `config` and `options` keys
       iglooContent = {
         # nest the config in a conditional based the `module.enable` option
-        config = lib.mkIf module.enable normalContent.config or {};
+        config = lib.mkIf module.enable normalContent.config;
 
         # nest the options under the igloo modules name path
-        options.igloo.modules = lib.setAttrByPath namePath (normalContent.options or {});
+        options.igloo.modules = lib.setAttrByPath namePath normalContent.options;
       };
 
       # merge the `iglooContent` back into the normalized content to replace the keys
