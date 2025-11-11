@@ -97,7 +97,8 @@
     # expand the name to capture any period seperators
     namePath = lib.splitString "." name;
 
-    # define the global options with an enable option by default
+    # define the global options
+    # include an enable option to turn the whole module on or off
     globalOptions = {
       options.igloo.modules = lib.setAttrByPath namePath (
         {
