@@ -11,8 +11,12 @@
     };
   };
 
-  igloo.modules.embedded = {
-    enable = true;
-    users = ["ryan"];
+  igloo.modules = {
+    printing-3d.enable = true;
+
+    embedded = {
+      enable = true;
+      users = ["ryan"];
+    };
   };
 }
