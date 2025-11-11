@@ -16,41 +16,72 @@
     # otherwise, just return the content as it is
     else content;
 
-  normalized = content: systemArgs: let
-    # import the content
-    importedContent =
-      # if the content is a path is must be imported
-      if lib.isPath content
-      then import content
-      # otherwise we can assume it is already imported
-      else content;
-
-    # resolve the imported content
-    resolvedContent =
-      # if the imported content is a function, call it with the systemArgs
-      if lib.isFunction importedContent
-      then importedContent systemArgs
-      # otherwise we can assume that the imported content is already resolved
-      else importedContent;
-
-    # nix modules can either be in shorthand or longform
-    # these are sets of keys that should only appear at the top level of a module, and not nested in a `config`
-    # we can use this information to extract the items that are required to be at the top level when normalizing the content
-    # https://github.com/NixOS/nixpkgs/blob/b3d51a0365f6695e7dd5cdf3e180604530ed33b4/lib/modules.nix#L614-L624
-    longformKeys = ["_class" "_file" "key" "disabledModules" "imports" "options" "config" "meta" "freeformType"];
-    longformContent = lib.filterAttrs (key: value: lib.elem key longformKeys) resolvedContent;
-    shortformContent = lib.removeAttrs resolvedContent longformKeys;
-
-    # normalize the content by nesting any shortform content inside the `config` key
-    # to stay consistent with how nix evaluates modules and to keep errors somewhat sensible,
-    # the module being in shortform vs longform is determined by there being a `config` or `option` top level key
-    # https://github.com/NixOS/nixpkgs/blob/b3d51a0365f6695e7dd5cdf3e180604530ed33b4/lib/modules.nix#L612
-    normalizedContent =
-      if !(resolvedContent ? config || resolvedContent ? options)
-      then longformContent // {config = shortformContent;}
-      else resolvedContent;
+  # copied from
+  # https://github.com/NixOS/nixpkgs/blob/d792a6e0cd4ba35c90ea787b717d72410f56dc40/lib/modules.nix#L590
+  unifyModuleSyntax = file: key: m: let
+    addMeta = config:
+      if m ? meta
+      then
+        lib.mkMerge [
+          config
+          {meta = m.meta;}
+        ]
+      else config;
+    addFreeformType = config:
+      if m ? freeformType
+      then
+        lib.mkMerge [
+          config
+          {_module.freeformType = m.freeformType;}
+        ]
+      else config;
   in
-    normalizedContent;
+    if m ? config || m ? options
+    then let
+      badAttrs = removeAttrs m [
+        "_class"
+        "_file"
+        "key"
+        "disabledModules"
+        "imports"
+        "options"
+        "config"
+        "meta"
+        "freeformType"
+      ];
+    in
+      if badAttrs != {}
+      then throw "Igloo module `${key}` has an unsupported attribute `${lib.head (lib.attrNames badAttrs)}'. This is caused by introducing a top-level `config' or `options' attribute. Add configuration attributes immediately on the top level instead, or move all of them (namely: ${toString (lib.attrNames badAttrs)}) into the explicit `config' attribute."
+      else {
+        _file = toString m._file or file;
+        _class = m._class or null;
+        key = toString m.key or key;
+        disabledModules = m.disabledModules or [];
+        imports = m.imports or [];
+        options = m.options or {};
+        config = addFreeformType (addMeta (m.config or {}));
+      }
+    else
+      # shorthand syntax
+      lib.throwIfNot (lib.isAttrs m) "igloo module `${key}` does not look like a module." {
+        _file = toString m._file or file;
+        _class = m._class or null;
+        key = toString m.key or key;
+        disabledModules = m.disabledModules or [];
+        imports = m.require or [] ++ m.imports or [];
+        options = {};
+        config = addFreeformType (
+          removeAttrs m [
+            "_class"
+            "_file"
+            "key"
+            "disabledModules"
+            "require"
+            "imports"
+            "freeformType"
+          ]
+        );
+      };
 
   module = {
     name, # the name of the igloo module
@@ -102,14 +133,32 @@
     };
 
     # a function that nests all options under its `igloo.modules` route
-    # and conditionally enables the config based on the modules `enable` status
-    wrapIglooModule = content: systemArgs: let
-      # get module config from the systemArgs config
+    # conditionally enables the config based on the modules `enable` status
+    # and only compiles the module if the `target` matches the `iglooTarget`
+    wrapIglooModule = target: content: systemArgs: let
+      # get module and modules config from the systemArgs config
       module = moduleCfg systemArgs.config name;
+      modules = systemArgs.igloo.modules;
 
-      # first the module must be normalized
-      # also pass in the `module` and `modules` settings for convenience
-      normalContent = normalized content (systemArgs // {inherit module;});
+      # import the content if it is a path
+      importedContent =
+        # if the content is a path is must be imported
+        if lib.isPath content
+        then import content
+        # otherwise we can assume it is already imported
+        else content;
+
+      # resolve the imported content if it is a function
+      resolvedContent =
+        # if the imported content is a function, call it with the systemArgs
+        if lib.isFunction importedContent
+        # also pass in the `module` and `modules` settings for convenience
+        then importedContent (systemArgs // {inherit module modules;})
+        # otherwise we can assume that the imported content is already resolved
+        else importedContent;
+
+      # convert the module syntax into its longform style with config and options keys
+      normalContent = unifyModuleSyntax "igloo:${name}" "${name} -> ${toString target}" resolvedContent;
 
       # create the igloo content by nesting `config` and `options` keys
       iglooContent = {
@@ -119,9 +168,15 @@
         # nest the options under the igloo modules name path
         options.igloo.modules = lib.setAttrByPath namePath (normalContent.options or {});
       };
-    in
+
       # merge the `iglooContent` back into the normalized content to replace the keys
-      normalContent // iglooContent;
+      mergedContent = normalContent // iglooContent;
+    in
+      if target != "global"
+      # if the target is not global, conditionally compile for that target
+      then wrapTarget target mergedContent systemArgs
+      # otherwise, just return the merged module content
+      else mergedContent;
   in {
     imports = [
       # insert the global options module into every system
@@ -131,24 +186,24 @@
       (wrapTarget "nixos" homeManagerPassthrough)
 
       # create a global module with igloo config passed through
-      (wrapIglooModule {inherit igloo;})
+      (wrapIglooModule "global" {inherit igloo;})
 
       # create a global module with `imports`, `options`, and `config` passed through
-      (wrapIglooModule {inherit imports config;})
+      (wrapIglooModule "global" {inherit imports config;})
 
       # create system modules that pass the config through to their target
-      (wrapIglooModule (wrapTarget "nixos" nixos))
-      (wrapIglooModule (wrapTarget "home" home))
+      (wrapIglooModule "nixos" nixos)
+      (wrapIglooModule "home" home)
 
       # create a nixos module that populates the packages
-      (wrapIglooModule (wrapTarget "nixos" {
+      (wrapIglooModule "nixos" {
         environment.systemPackages = packages;
-      }))
+      })
 
       # create a home module that populates the packages
-      (wrapIglooModule (wrapTarget "home" {
+      (wrapIglooModule "home" {
         home.packages = packages;
-      }))
+      })
     ];
   };
 in {
