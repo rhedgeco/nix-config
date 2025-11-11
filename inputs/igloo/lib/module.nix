@@ -158,7 +158,7 @@
         else importedContent;
 
       # convert the module syntax into its longform style with config and options keys
-      normalContent = unifyModuleSyntax "igloo:${name}" "${name} -> ${toString target}" resolvedContent;
+      normalContent = unifyModuleSyntax __curPos.file "${name} -> ${toString target}" resolvedContent;
 
       # create the igloo content by nesting `config` and `options` keys
       iglooContent = {
