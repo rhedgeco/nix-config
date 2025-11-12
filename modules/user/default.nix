@@ -4,7 +4,7 @@ iglib.module {
   enabled = true; # enabled by default
   home = {
     # import all modules in this directory
-    imports = iglib.findModules ./.;
+    imports = iglib.collectNixFiles ./.;
 
     # do not change unless necessary.
     # this marks the state version that this config was initially created with.

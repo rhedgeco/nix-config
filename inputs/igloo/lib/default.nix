@@ -5,7 +5,7 @@
 }: let
   # a function that gets the path of every nix module at a path
   # also assert that the path provided is a directory instead of a file
-  findModules = path: let
+  collectNixFiles = path: let
     # read all the files from the provided directory
     pathChildren = builtins.readDir path;
 
@@ -28,7 +28,7 @@
   # collection of all igloo library content in a single attribute set
   iglib = let
     # find all the library modules in the current directory
-    libPaths = findModules ./.;
+    libPaths = collectNixFiles ./.;
 
     # import all the library content into a list of attribute sets
     libContent = lib.map (path: call path) libPaths;
@@ -36,7 +36,7 @@
     # fold and merge the attribute sets into a single set
     mergedContent = builtins.foldl' (acc: elem: acc // elem) {} libContent;
   in
-    # combine the merged content with the `findModules` function from this file
-    mergedContent // {inherit findModules;};
+    # combine the merged content with the `collectNixFiles` function from this file
+    mergedContent // {inherit collectNixFiles;};
 in
   iglib
