@@ -11,6 +11,9 @@ check:
     @nix flake check '.?submodules=1'
     @echo -e "\033[1;32mALL CHECKS PASSED\033[0m"
 
+inspect:
+    @nix repl '.?sumodules=1'
+
 # builds and enables the `host` configuration for next boot (defaults to the current host)
 boot host=(`hostname`):
     @sudo nixos-rebuild --flake '.?submodules=1#{{host}}' boot
