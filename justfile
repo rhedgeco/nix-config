@@ -13,8 +13,8 @@ check:
     @echo -e "\033[1;32mALL CHECKS PASSED\033[0m"
 
 # opens a nix repl shell with the current flake loaded
-inspect:
-    @nix repl '.?submodules=1'
+inspect target=".":
+    @nix repl '{{target}}?submodules=1'
 
 # builds and enables the `host` configuration for next boot (defaults to the current host)
 boot host=(`hostname`):
