@@ -7,10 +7,12 @@ update:
     @nix flake update --flake '.?submodules=1'
     @echo -e "\033[1;32mFLAKE UPDATED\033[0m"
 
+# checks every item in the flake for errors
 check:
     @nix flake check '.?submodules=1'
     @echo -e "\033[1;32mALL CHECKS PASSED\033[0m"
 
+# opens a nix repl shell with the current flake loaded
 inspect:
     @nix repl '.?submodules=1'
 
