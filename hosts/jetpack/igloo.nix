@@ -12,6 +12,7 @@
   };
 
   igloo.modules = {
+    ai-tools.enable = true;
     printing-3d.enable = true;
 
     embedded = {
