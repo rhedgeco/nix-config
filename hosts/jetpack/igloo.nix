@@ -1,5 +1,8 @@
 {...}: {
-  igloo.enable = ["grub"];
+  igloo.modules = {
+    grub.enable = true;
+    boot.device = "/dev/disk/by-label/BOOT";
+  };
 
   igloo.users.ryan = {
     enable = true;

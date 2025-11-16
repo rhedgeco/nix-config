@@ -8,7 +8,6 @@
     };
 
     filesystem = {
-      boot.device = "/dev/disk/by-label/BOOT";
       btrfs = {
         enable = true;
         device = "/dev/disk/by-label/MAIN";
