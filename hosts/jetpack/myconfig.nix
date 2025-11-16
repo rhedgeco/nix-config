@@ -35,11 +35,6 @@
       users = ["ryan"];
     };
 
-    docker = {
-      enable = true;
-      users = ["ryan"];
-    };
-
     niri.enable = true;
     firefox.enable = true;
     nautilus.enable = true;
