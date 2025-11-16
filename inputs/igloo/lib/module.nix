@@ -32,45 +32,26 @@
     igloo ? {}, # igloo configuration to apply to all targets (when enabled)
     imports ? [], # additional imports to apply to all targets (even if not enabled)
     options ? {}, # additional igloo module options to define on all targets (even if not enabled)
-    config ? {}, # additional configuration to apply to all targets (when enabled)
     packages ? [], # packages to include on all targets (when enabled)
     nixos ? {}, # configuration to apply to only nixos targets (when enabled)
     home ? {}, # configuration to apply to only home targets (when enabled)
   }: let
-    # generate the enable option for this module
-    enableOption = {
-      enable = lib.mkOption {
-        type = lib.types.bool;
-        description = "Enables the '${name}' igloo module.";
-        default = enabled;
-      };
-    };
-
     # combine all options into a single set
     moduleOptions = {
       # nest the options under the correct igloo module route
-      # and merge the user defined options second to the enable can be overriden
-      igloo.modules."${name}" = enableOption // options;
+      igloo.modules."${name}" = (
+        {
+          # add an enable option to the module by default
+          enable = lib.mkOption {
+            type = lib.types.bool;
+            description = "Enables the '${name}' igloo module.";
+            default = enabled;
+          };
+        }
+        # and merge the user defined options second to the enable can be overriden
+        // options
+      );
     };
-
-    # # generate a module that copies all system level configuration into home manager
-    # homePassthroughModule = args: let
-    #   linkOptions = systemCfg: optionSet:
-    #     lib.mapAttrs (optionName: optionValue: let
-    #       # extract the value set in the system config
-    #       systemValue = systemCfg.${optionName};
-    #     in
-    #       # if the value is of '_type' == 'option', then it is an leaf option value
-    #       if (optionValue ? "_type" && optionValue._type == "option")
-    #       # if the value is an leaf option, replace it with the system value as a default
-    #       then lib.mkDefault systemValue
-    #       # if its not a leaf, then its a parent and we need to link the nested options
-    #       else linkOptions systemValue optionValue)
-    #     optionSet;
-    # in {
-    #   # pass all the linked system config into home manager as a shared module
-    #   config.home-manager.sharedModules = [(linkOptions args.config moduleOptions)];
-    # };
 
     # a function that wraps and generates a module for a specific igloo target
     iglooTargetModule = target: content: args: let
@@ -86,9 +67,13 @@
         modules = args.config.igloo.modules;
         module = modules."${name}";
 
-        # extract all the username of all the users that have this module enabled
+        # extract user information that can be useful to the module author
         userEnabled = userName: lib.attrByPath ["igloo" "modules" "${name}" "enable"] false args.config.home-manager.users."${userName}";
-        users = lib.filter userEnabled (lib.attrNames args.config.home-manager.users or {});
+        enabledUsers = lib.filter userEnabled (lib.attrNames args.config.home-manager.users or {});
+        users = {
+          anyEnabled = builtins.length enabledUsers > 0;
+          enabled = enabledUsers;
+        };
       in {
         inherit module modules users;
       };
@@ -106,15 +91,23 @@
         else throw "Expected igloo target module '${name}':'${target}' to evaluate to an attribute set. Found '${lib.typeOf resolvedContent}'";
 
       # validate that the content has the correct top level keys
-      badAttrs = removeAttrs attrContent ["imports" "options" "config"];
+      listStr = list: "'${lib.concatStringsSep "', '" list}'";
+      validKeys = ["imports" "options" "enabled" "disabled" "always" "userEnabled"];
+      badAttrs = removeAttrs attrContent validKeys;
       validContent =
         if badAttrs != {}
-        then throw "Igloo target module '${name}':'${target}' contains invalid top level keys ('${lib.concatStringsSep "', '" (lib.attrNames badAttrs)}'). Igloo targets must use longform representation."
+        then throw "Igloo target module '${name}':'${target}' contains invalid top level keys (${listStr (lib.attrNames badAttrs)}). Valid keys are (${listStr validKeys})"
         else {
+          # directly pass through the imports
           imports = attrContent.imports or [];
-          # wrap the options in the
+          # wrap the options under the correct igloo module path
           options.igloo.modules."${name}" = attrContent.options or {};
-          config = lib.mkIf extraArgs.module.enable (attrContent.config or {});
+          # merge the configurations to match their specified enable types
+          config = lib.mkMerge [
+            (attrContent.always or {})
+            (lib.mkIf extraArgs.module.enable (attrContent.enabled or {}))
+            (lib.mkIf (!extraArgs.module.enable) (attrContent.disabled or {}))
+          ];
         };
     in
       wrapTargetModule target validContent args;
@@ -124,21 +117,15 @@
       # include the user defined imports as well
       imports
       ++ [
-        # apply the user defined config to all systems only when the module is enabled
-        (iglooTargetModule "global" {inherit config;})
-
         # apply the extra igloo config to all systems only when the module is enabled
-        (iglooTargetModule "global" {config.igloo = igloo;})
-
-        # apply the home manager passthrough to only nixos systems
-        # (iglooTargetModule "nixos" homePassthroughModule)
+        (iglooTargetModule "global" {enabled.igloo = igloo;})
 
         # apply the packages to the correct config location for each system when the module is enabled
         (iglooTargetModule "nixos" {
-          config.environment.systemPackages = packages;
+          enabled.environment.systemPackages = packages;
         })
         (iglooTargetModule "home" {
-          config.home.packages = packages;
+          enabled.home.packages = packages;
         })
 
         # apply target specific modules to their respective targets

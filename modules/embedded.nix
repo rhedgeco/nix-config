@@ -7,21 +7,20 @@
 iglib.module {
   name = "embedded";
 
-  home.config.home.packages = with pkgs; [
+  home.enabled.home.packages = with pkgs; [
     saleae-logic-2
     stlink-gui
   ];
 
   nixos = {users, ...}: {
-    config = {
-      # include the udev packages with nixos systems
+    # always add udev rules and user groups if any users have this module enabled
+    always = lib.mkIf users.anyEnabled {
       services.udev.packages = with pkgs; [
         saleae-logic-2
         stlink-gui
       ];
 
-      # give enabled users dialout access to the system
-      users.users = lib.genAttrs users (name: {
+      users.users = lib.genAttrs users.enabled (name: {
         extraGroups = [
           "dialout"
         ];

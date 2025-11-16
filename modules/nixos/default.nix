@@ -10,7 +10,7 @@ iglib.module {
     # import all modules in this directory
     imports = iglib.collectNixFiles ./.;
 
-    config = {
+    enabled = {
       # sets the nix packages path to match the one from this flake
       # this means when the <nixpkgs> syntax is used it will match the system packages
       nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];

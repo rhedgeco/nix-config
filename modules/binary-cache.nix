@@ -3,7 +3,7 @@ iglib.module {
   name = "binary-cache";
   enabled = true;
 
-  nixos.config.nix.settings = {
+  nixos.enabled.nix.settings = {
     substituters = [
       "https://nix-community.cachix.org"
     ];
