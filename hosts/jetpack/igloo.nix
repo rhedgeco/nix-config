@@ -1,4 +1,6 @@
 {...}: {
+  igloo.enable = ["grub"];
+
   igloo.users.ryan = {
     enable = true;
     config = {

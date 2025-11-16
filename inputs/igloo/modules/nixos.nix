@@ -26,14 +26,14 @@
   config = {
     # use the igloo enable option to quickly enable all requested modules
     igloo.modules = lib.genAttrs config.igloo.enable (name: {
-      "${name}".enable = true;
+      enable = true;
     });
 
     # use the userEnable list to generate user configuration that enables all requested modules
     igloo.userModules =
       lib.map (
         name: {
-          igloo.modules."${name}".enable = lib.mkDefault true;
+          igloo.modules."${name}".enable = true;
         }
       )
       config.igloo.userEnable;

@@ -1,14 +1,12 @@
 {
   pkgs,
-  lib,
-  config,
+  iglib,
   ...
-}: {
-  options.myconfig.grub = {
-    enable = lib.mkEnableOption "Enables custom grub config.";
-  };
+}:
+iglib.module {
+  name = "grub";
 
-  config = lib.mkIf config.myconfig.grub.enable {
+  nixos.enabled = {
     boot.loader = {
       timeout = 1;
       efi.canTouchEfiVariables = true;

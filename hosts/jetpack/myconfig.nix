@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   myconfig = {
     dualBoot = true;
-    grub.enable = true;
 
     shell.fish = {
       enable = true;
