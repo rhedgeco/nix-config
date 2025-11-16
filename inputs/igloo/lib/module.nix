@@ -30,10 +30,10 @@
     name, # the name of the igloo module
     enabled ? false, # should this module be enabled by default on all targets
     igloo ? {}, # igloo configuration to apply to all targets (when enabled)
-    imports ? [], # additional imports to apply to all targets (even if not enabled)
+    imports ? [], # additional imports to apply to all targets
     packages ? [], # packages to include on all targets (when enabled)
-    nixos ? {}, # configuration to apply to only nixos targets (when enabled)
-    home ? {}, # configuration to apply to only home targets (when enabled)
+    nixos ? {}, # configuration to apply to only nixos targets
+    home ? {}, # configuration to apply to only home targets
   }: let
     # generate the default options for this module
     moduleOptions = {
