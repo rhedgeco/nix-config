@@ -1,16 +1,16 @@
 {
   lib,
-  pkgs,
+  # pkgs,
   config,
   ...
 }: let
   impermanence = config.custom.impermanence;
 in {
   # include formatters lsps for extensions
-  home.packages = with pkgs; [
-    alejandra
-    nixd
-  ];
+  # home.packages = with pkgs; [
+  #   alejandra
+  #   nixd
+  # ];
 
   # create the codium settings json file
   home.file.".config/VSCodium/User/settings.json" = {
@@ -28,16 +28,16 @@ in {
   };
 
   # enable and configure the base install of vscodium
-  programs.vscode = {
-    enable = true;
-    package = pkgs.vscodium;
+  # programs.vscode = {
+  #   enable = true;
+  #   package = pkgs.vscodium;
 
-    # include extensions for editing nix files
-    profiles.default.extensions = with pkgs.vscode-extensions; [
-      jnoortheen.nix-ide
-      kamadorueda.alejandra
-      skellock.just
-      mkhl.direnv
-    ];
-  };
+  #   # include extensions for editing nix files
+  #   profiles.default.extensions = with pkgs.vscode-extensions; [
+  #     jnoortheen.nix-ide
+  #     kamadorueda.alejandra
+  #     skellock.just
+  #     mkhl.direnv
+  #   ];
+  # };
 }
