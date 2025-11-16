@@ -12,13 +12,7 @@ iglib.module {
     stlink-gui
   ];
 
-  options.users = lib.mkOption {
-    type = lib.types.listOf lib.types.str;
-    description = "List of users with 'dialout' access";
-    default = [];
-  };
-
-  nixos = {module, ...}: {
+  nixos = {users, ...}: {
     config = {
       # include the udev packages with nixos systems
       services.udev.packages = with pkgs; [
@@ -27,7 +21,7 @@ iglib.module {
       ];
 
       # give enabled users dialout access to the system
-      users.users = lib.genAttrs module.users (name: {
+      users.users = lib.genAttrs users (name: {
         extraGroups = [
           "dialout"
         ];

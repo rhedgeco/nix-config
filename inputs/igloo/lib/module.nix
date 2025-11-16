@@ -81,9 +81,16 @@
         else content;
 
       # generate extra args to be used when resolving the content
-      extraArgs = {
-        module = args.config.igloo.modules."${name}";
+      extraArgs = let
+        # extract module and modules path from the config
         modules = args.config.igloo.modules;
+        module = modules."${name}";
+
+        # extract all the username of all the users that have this module enabled
+        userEnabled = userName: lib.attrByPath ["igloo" "modules" "${name}" "enable"] false args.config.home-manager.users."${userName}";
+        users = lib.filter userEnabled (lib.attrNames args.config.home-manager.users or {});
+      in {
+        inherit module modules users;
       };
 
       # if the imported content is a function, resolve it with the args
