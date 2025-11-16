@@ -13,8 +13,7 @@ iglib.module {
   ];
 
   nixos = {iglooUsers, ...}: {
-    # always enable udev rules and groups when any users are enabled
-    always = lib.mkIf iglooUsers.anyEnabled {
+    enabled = {
       services.udev.packages = with pkgs; [
         saleae-logic-2
         stlink-gui

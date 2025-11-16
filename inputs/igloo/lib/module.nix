@@ -68,8 +68,12 @@
         iglooModule = iglooModules."${name}";
 
         # extract user information that can be useful to the module author
-        userEnabled = userName: lib.attrByPath ["igloo" "modules" "${name}" "enable"] false args.config.home-manager.users."${userName}";
-        enabledUsers = lib.filter userEnabled (lib.attrNames args.config.home-manager.users or {});
+        # users.enabled holds a list of all users that have this module currently enabled
+        # users.anyEnabled is a boolean that is true if any user in the system has this module enabled
+        # NOTE: On home targets, the iglooUsers.enabled list will always be empty and is basically useless
+        enabledUsers =
+          lib.filter (userName: lib.attrByPath ["home-manager" "users" "${userName}" "igloo" "modules" "${name}" "enable"] false args.config)
+          (lib.attrNames (lib.attrByPath ["home-manager" "users"] {} args.config));
         iglooUsers = {
           anyEnabled = builtins.length enabledUsers > 0;
           enabled = enabledUsers;
@@ -92,7 +96,7 @@
 
       # validate that the content has the correct top level keys
       listStr = list: "'${lib.concatStringsSep "', '" list}'";
-      validKeys = ["imports" "options" "enabled" "disabled" "always" "userEnabled"];
+      validKeys = ["imports" "options" "enabled" "disabled" "always"];
       badAttrs = removeAttrs attrContent validKeys;
       validContent =
         if badAttrs != {}
@@ -103,11 +107,16 @@
           # wrap the options under the correct igloo module path
           options.igloo.modules."${name}" = attrContent.options or {};
           # merge the configurations to match their specified enable types
-          config = lib.mkMerge [
-            (attrContent.always or {})
-            (lib.mkIf extraArgs.iglooModule.enable (attrContent.enabled or {}))
-            (lib.mkIf (!extraArgs.iglooModule.enable) (attrContent.disabled or {}))
-          ];
+          config = let
+            # a module is enabled if the system enables it, or any of the system users enable it
+            # NOTE: since iglooUsers.enabled is always empty on home targets, a user being enabled DOES NOT enable it for other users
+            moduleEnabled = extraArgs.iglooModule.enable || extraArgs.iglooUsers.anyEnabled;
+          in
+            lib.mkMerge [
+              (attrContent.always or {})
+              (lib.mkIf moduleEnabled (attrContent.enabled or {}))
+              (lib.mkIf (!moduleEnabled) (attrContent.disabled or {}))
+            ];
         };
     in
       wrapTargetModule target validContent args;
