@@ -62,7 +62,9 @@
             # include extra imports defined in the system
             ++ cfg.imports
             # include home config defined in the system
-            ++ [{config = cfg.home;}];
+            ++ [{config = cfg.home;}]
+            # include all igloo defined user modules
+            ++ config.igloo.userModules;
         };
       };
     };
