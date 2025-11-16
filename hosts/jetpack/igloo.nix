@@ -10,9 +10,4 @@
       userDir = "/persist/home/ryan";
     };
   };
-
-  igloo.modules = {
-    embedded.enable = true;
-    docker.enable = true;
-  };
 }
