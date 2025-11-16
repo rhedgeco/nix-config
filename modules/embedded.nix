@@ -7,7 +7,7 @@
 iglib.module {
   name = "embedded";
 
-  packages = with pkgs; [
+  home.config.home.packages = with pkgs; [
     saleae-logic-2
     stlink-gui
   ];

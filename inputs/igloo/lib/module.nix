@@ -53,24 +53,24 @@
       igloo.modules."${name}" = enableOption // options;
     };
 
-    # generate a module that copies all system level configuration into home manager
-    homePassthroughModule = args: let
-      linkOptions = systemCfg: optionSet:
-        lib.mapAttrs (optionName: optionValue: let
-          # extract the value set in the system config
-          systemValue = systemCfg.${optionName};
-        in
-          # if the value is of '_type' == 'option', then it is an leaf option value
-          if (optionValue ? "_type" && optionValue._type == "option")
-          # if the value is an leaf option, replace it with the system value as a default
-          then lib.mkDefault systemValue
-          # if its not a leaf, then its a parent and we need to link the nested options
-          else linkOptions systemValue optionValue)
-        optionSet;
-    in {
-      # pass all the linked system config into home manager as a shared module
-      config.home-manager.sharedModules = [(linkOptions args.config moduleOptions)];
-    };
+    # # generate a module that copies all system level configuration into home manager
+    # homePassthroughModule = args: let
+    #   linkOptions = systemCfg: optionSet:
+    #     lib.mapAttrs (optionName: optionValue: let
+    #       # extract the value set in the system config
+    #       systemValue = systemCfg.${optionName};
+    #     in
+    #       # if the value is of '_type' == 'option', then it is an leaf option value
+    #       if (optionValue ? "_type" && optionValue._type == "option")
+    #       # if the value is an leaf option, replace it with the system value as a default
+    #       then lib.mkDefault systemValue
+    #       # if its not a leaf, then its a parent and we need to link the nested options
+    #       else linkOptions systemValue optionValue)
+    #     optionSet;
+    # in {
+    #   # pass all the linked system config into home manager as a shared module
+    #   config.home-manager.sharedModules = [(linkOptions args.config moduleOptions)];
+    # };
 
     # a function that wraps and generates a module for a specific igloo target
     iglooTargetModule = target: content: args: let
@@ -131,7 +131,7 @@
         (iglooTargetModule "global" {config.igloo = igloo;})
 
         # apply the home manager passthrough to only nixos systems
-        (iglooTargetModule "nixos" homePassthroughModule)
+        # (iglooTargetModule "nixos" homePassthroughModule)
 
         # apply the packages to the correct config location for each system when the module is enabled
         (iglooTargetModule "nixos" {
