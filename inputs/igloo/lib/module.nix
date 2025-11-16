@@ -31,29 +31,21 @@
     enabled ? false, # should this module be enabled by default on all targets
     igloo ? {}, # igloo configuration to apply to all targets (when enabled)
     imports ? [], # additional imports to apply to all targets (even if not enabled)
-    options ? {}, # additional igloo module options to define on all targets (even if not enabled)
     packages ? [], # packages to include on all targets (when enabled)
     nixos ? {}, # configuration to apply to only nixos targets (when enabled)
     home ? {}, # configuration to apply to only home targets (when enabled)
   }: let
-    # combine all options into a single set
+    # generate the default options for this module
     moduleOptions = {
-      # nest the options under the correct igloo module route
-      igloo.modules."${name}" = (
-        {
-          # add an enable option to the module by default
-          enable = lib.mkOption {
-            type = lib.types.bool;
-            description = "Enables the '${name}' igloo module.";
-            default = enabled;
-          };
-        }
-        # and merge the user defined options second to the enable can be overriden
-        // options
-      );
+      # create a default enable option for every module
+      igloo.modules."${name}".enable = lib.mkOption {
+        type = lib.types.bool;
+        description = "Enables the '${name}' igloo module.";
+        default = enabled;
+      };
     };
 
-    # a function that wraps and generates a module for a specific igloo target
+    # wraps and generates a module for a specific igloo target
     iglooTargetModule = target: content: args: let
       # ensure the content is imported if its a path
       importedContent =
@@ -124,32 +116,29 @@
     in
       wrapTargetModule target validContent args;
 
-    # combine all module imports into a single list
-    moduleImports =
-      # include the user defined imports as well
-      imports
-      ++ [
-        # apply the extra igloo config to all systems only when the module is enabled
-        (iglooTargetModule "global" {enabled.igloo = igloo;})
+    # generate module imports for each target
+    moduleImports = [
+      # apply the extra igloo config to all systems only when the module is enabled
+      (iglooTargetModule "global" {enabled.igloo = igloo;})
 
-        # apply the packages to the correct config location for each system when the module is enabled
-        (iglooTargetModule "nixos" {
-          enabled.environment.systemPackages = packages;
-        })
-        (iglooTargetModule "home" {
-          enabled.home.packages = packages;
-        })
+      # apply the packages to the correct config location for each system when the module is enabled
+      (iglooTargetModule "nixos" {
+        enabled.environment.systemPackages = packages;
+      })
+      (iglooTargetModule "home" {
+        enabled.home.packages = packages;
+      })
 
-        # apply target specific modules to their respective targets
-        (iglooTargetModule "nixos" nixos)
-        (iglooTargetModule "home" home)
-      ];
+      # apply target specific modules to their respective targets
+      (iglooTargetModule "nixos" nixos)
+      (iglooTargetModule "home" home)
+    ];
   in {
-    # expose the module options unconditionally to every system
+    # every system will get an module enable option by default
     options = moduleOptions;
 
     # combine the user and module imports and expose them unconditionally to every system
-    imports = moduleImports;
+    imports = imports ++ moduleImports;
   };
 in {
   inherit module moduleCfg;
