@@ -67,16 +67,19 @@
         iglooModules = args.config.igloo.modules;
         iglooModule = iglooModules."${name}";
 
-        # extract user information that can be useful to the module author
-        # users.enabled holds a list of all users that have this module currently enabled
-        # users.anyEnabled is a boolean that is true if any user in the system has this module enabled
-        # NOTE: On home targets, the iglooUsers.enabled list will always be empty and is basically useless
-        enabledUsers =
-          lib.filter (userName: lib.attrByPath ["home-manager" "users" "${userName}" "igloo" "modules" "${name}" "enable"] false args.config)
-          (lib.attrNames (lib.attrByPath ["home-manager" "users"] {} args.config));
+        # collect a list of all users and lists of users with this module enabled/disabled
+        # also include utility functions for generating attribute sets with these user lists
+        # NOTE: On home targets, the iglooUsers list will always be empty and is basically useless
+        allUsers = lib.attrNames (lib.attrByPath ["home-manager" "users"] {} args.config);
+        enabledUsers = lib.filter (userName: lib.attrByPath ["home-manager" "users" "${userName}" "igloo" "modules" "${name}" "enable"] false args.config) allUsers;
+        disabledUsers = lib.subtractLists allUsers enabledUsers;
         iglooUsers = {
-          anyEnabled = builtins.length enabledUsers > 0;
+          all = allUsers;
           enabled = enabledUsers;
+          disabled = disabledUsers;
+          genAll = lib.genAttrs allUsers;
+          genEnabled = lib.genAttrs enabledUsers;
+          genDisabled = lib.genAttrs disabledUsers;
         };
       in {
         inherit iglooModule iglooModules iglooUsers;
@@ -110,7 +113,7 @@
           config = let
             # a module is enabled if the system enables it, or any of the system users enable it
             # NOTE: since iglooUsers.enabled is always empty on home targets, a user being enabled DOES NOT enable it for other users
-            moduleEnabled = extraArgs.iglooModule.enable || extraArgs.iglooUsers.anyEnabled;
+            moduleEnabled = extraArgs.iglooModule.enable || (builtins.length extraArgs.iglooUsers.enabled > 0);
           in
             lib.mkMerge [
               (attrContent.always or {})

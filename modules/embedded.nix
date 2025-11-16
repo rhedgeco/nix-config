@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   iglib,
   ...
@@ -21,7 +20,7 @@ iglib.module {
 
       # any enabled user should have access to the dialout group
       # this is required for users to have access to the usb ports
-      users.users = lib.genAttrs iglooUsers.enabled (name: {
+      users.users = iglooUsers.genEnabled (name: {
         extraGroups = [
           "dialout"
         ];

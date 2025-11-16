@@ -1,8 +1,4 @@
-{
-  lib,
-  iglib,
-  ...
-}:
+{iglib, ...}:
 iglib.module {
   name = "docker";
 
@@ -11,7 +7,7 @@ iglib.module {
       virtualisation.docker.enable = true;
 
       # any enabled user should have access to the docker group
-      users.users = lib.genAttrs iglooUsers.enabled (name: {
+      users.users = iglooUsers.genEnabled (name: {
         extraGroups = [
           "docker"
         ];
