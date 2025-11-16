@@ -64,18 +64,18 @@
       # generate extra args to be used when resolving the content
       extraArgs = let
         # extract module and modules path from the config
-        modules = args.config.igloo.modules;
-        module = modules."${name}";
+        iglooModules = args.config.igloo.modules;
+        iglooModule = iglooModules."${name}";
 
         # extract user information that can be useful to the module author
         userEnabled = userName: lib.attrByPath ["igloo" "modules" "${name}" "enable"] false args.config.home-manager.users."${userName}";
         enabledUsers = lib.filter userEnabled (lib.attrNames args.config.home-manager.users or {});
-        users = {
+        iglooUsers = {
           anyEnabled = builtins.length enabledUsers > 0;
           enabled = enabledUsers;
         };
       in {
-        inherit module modules users;
+        inherit iglooModule iglooModules iglooUsers;
       };
 
       # if the imported content is a function, resolve it with the args
@@ -105,8 +105,8 @@
           # merge the configurations to match their specified enable types
           config = lib.mkMerge [
             (attrContent.always or {})
-            (lib.mkIf extraArgs.module.enable (attrContent.enabled or {}))
-            (lib.mkIf (!extraArgs.module.enable) (attrContent.disabled or {}))
+            (lib.mkIf extraArgs.iglooModule.enable (attrContent.enabled or {}))
+            (lib.mkIf (!extraArgs.iglooModule.enable) (attrContent.disabled or {}))
           ];
         };
     in
