@@ -37,6 +37,5 @@
     firefox.enable = true;
     nautilus.enable = true;
     keyring.enable = true;
-    rust.enable = true;
   };
 }

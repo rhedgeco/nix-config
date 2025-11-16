@@ -5,5 +5,6 @@
     ai-tools.enable = true;
     printing-3d.enable = true;
     vscodium.enable = true;
+    rust.enable = true;
   };
 }
