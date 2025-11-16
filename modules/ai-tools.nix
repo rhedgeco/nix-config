@@ -6,7 +6,7 @@
 iglib.module {
   name = "ai-tools";
 
-  packages = with pkgs; [
+  home.config.home.packages = with pkgs; [
     gemini-cli
   ];
 }

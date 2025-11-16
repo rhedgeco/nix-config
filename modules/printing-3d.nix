@@ -6,7 +6,7 @@
 iglib.module {
   name = "printing-3d";
 
-  packages = with pkgs; [
+  home.config.home.packages = with pkgs; [
     prusa-slicer
     printrun
   ];
