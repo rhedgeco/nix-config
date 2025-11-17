@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   igloo.modules = {
     embedded.enable = true;
     docker.enable = true;
@@ -6,5 +6,6 @@
     printing-3d.enable = true;
     vscodium.enable = true;
     rust.enable = true;
+    greetd.command = "${pkgs.niri}/bin/niri-session";
   };
 }

@@ -2,6 +2,11 @@
   igloo.modules = {
     grub.enable = true;
     boot.device = "/dev/disk/by-label/BOOT";
+
+    greetd = {
+      enable = true;
+      autoLogin = "ryan";
+    };
   };
 
   igloo.users.ryan = {

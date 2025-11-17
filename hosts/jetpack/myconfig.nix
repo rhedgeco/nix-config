@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   myconfig = {
     dualBoot = true;
 
@@ -17,14 +17,6 @@
     impermanence = {
       enable = true;
       persistUsers = ["ryan"];
-    };
-
-    greetd = {
-      enable = true;
-      autoLogin = {
-        command = "${pkgs.niri}/bin/niri-session";
-        user = "ryan";
-      };
     };
 
     networkmanager = {
