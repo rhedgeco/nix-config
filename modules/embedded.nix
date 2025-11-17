@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   iglib,
   ...
@@ -12,7 +13,7 @@ iglib.module {
   ];
 
   nixos = {iglooUsers, ...}: {
-    enabled = {
+    always = lib.mkIf iglooUsers.anyEnabled {
       services.udev.packages = with pkgs; [
         saleae-logic-2
         stlink-gui

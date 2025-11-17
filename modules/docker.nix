@@ -1,9 +1,13 @@
-{iglib, ...}:
+{
+  lib,
+  iglib,
+  ...
+}:
 iglib.module {
   name = "docker";
 
   nixos = {iglooUsers, ...}: {
-    enabled = {
+    always = lib.mkIf iglooUsers.anyEnabled {
       virtualisation.docker.enable = true;
 
       # any enabled user should have access to the docker group

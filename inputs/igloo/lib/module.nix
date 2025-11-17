@@ -59,19 +59,27 @@
         iglooModules = args.config.igloo.modules;
         iglooModule = iglooModules."${name}";
 
-        # collect a list of all users and lists of users with this module enabled/disabled
-        # also include utility functions for generating attribute sets with these user lists
-        # NOTE: On home targets, the iglooUsers list will always be empty and is basically useless
+        # collect useful user information and functions for operating on igloo users
+        # NOTE: On home targets, the iglooUsers will always be empty and is basically useless
         allUsers = lib.attrNames (lib.attrByPath ["home-manager" "users"] {} args.config);
         enabledUsers = lib.filter (userName: lib.attrByPath ["home-manager" "users" "${userName}" "igloo" "modules" "${name}" "enable"] false args.config) allUsers;
         disabledUsers = lib.subtractLists allUsers enabledUsers;
+        userModules = user: args.config.home-manager.users."${user}".igloo.modules;
+        userModule = user: (userModules user)."${name}";
         iglooUsers = {
+          # convenient lists of users with different enable/disable states
           all = allUsers;
           enabled = enabledUsers;
           disabled = disabledUsers;
+          # a boolean flag that marks if any igloo user has this module enabled
+          anyEnabled = builtins.length allUsers > 0;
+          # generators for creating attribute sets with certain kinds of users
           genAll = lib.genAttrs allUsers;
           genEnabled = lib.genAttrs enabledUsers;
           genDisabled = lib.genAttrs disabledUsers;
+          # functions for getting the state of a users igloo module
+          modules = userModules;
+          module = userModule;
         };
       in {
         inherit iglooModule iglooModules iglooUsers;
@@ -102,16 +110,11 @@
           # wrap the options under the correct igloo module path
           options.igloo.modules."${name}" = attrContent.options or {};
           # merge the configurations to match their specified enable types
-          config = let
-            # a module is enabled if the system enables it, or any of the system users enable it
-            # NOTE: since iglooUsers.enabled is always empty on home targets, a user being enabled DOES NOT enable it for other users
-            moduleEnabled = extraArgs.iglooModule.enable || (builtins.length extraArgs.iglooUsers.enabled > 0);
-          in
-            lib.mkMerge [
-              (attrContent.always or {})
-              (lib.mkIf moduleEnabled (attrContent.enabled or {}))
-              (lib.mkIf (!moduleEnabled) (attrContent.disabled or {}))
-            ];
+          config = lib.mkMerge [
+            (attrContent.always or {})
+            (lib.mkIf extraArgs.iglooModule.enable (attrContent.enabled or {}))
+            (lib.mkIf (!extraArgs.iglooModule.enable) (attrContent.disabled or {}))
+          ];
         };
     in
       wrapTargetModule target validContent args;
