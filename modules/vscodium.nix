@@ -21,6 +21,7 @@ iglib.module {
       programs.vscode = {
         enable = true;
         package = pkgs.vscodium;
+        mutableExtensionsDir = false;
 
         # include base extensions for editing nix files
         profiles.default.extensions =
