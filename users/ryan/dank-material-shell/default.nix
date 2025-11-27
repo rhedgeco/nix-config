@@ -13,7 +13,7 @@ in {
   # enable dank material shell and launch with systemd
   programs.dankMaterialShell = {
     enable = true;
-    enableSystemd = true;
+    systemd.enable = true;
   };
 
   # create a services that update the clipboard history
