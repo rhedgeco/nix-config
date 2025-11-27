@@ -1,7 +1,8 @@
 {pkgs, ...}: let
   # create a script that runs hyprpicker and copies it to the clipboard
   color-picker = pkgs.writeShellScriptBin "color-picker" ''
-    #!${pkgs.runtimeShell}
+    # check for a delay value and sleep before running the picker
+    sleep "''${1:-0}"
 
     # run hyprpicker and store its output
     COLOR=$(${pkgs.hyprpicker}/bin/hyprpicker)
@@ -12,7 +13,7 @@
     fi
   '';
 in {
-  # include the script in packages so it can be run manually too
+  # include the script in packages so it can be run from the terminal
   home.packages = [color-picker];
 
   # create a wrapper desktop entry that runs hyprpicker
@@ -24,6 +25,7 @@ in {
     terminal = false;
 
     # use the color picker script as the exec target for the desktop entry
-    exec = "${color-picker}/bin/color-picker";
+    # pass a delay of half a second to skip any app launch animations
+    exec = "${color-picker}/bin/color-picker 0.5";
   };
 }
