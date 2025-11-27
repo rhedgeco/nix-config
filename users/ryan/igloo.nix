@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   igloo.modules = {
+    color-picker.enable = true;
     embedded.enable = true;
     docker.enable = true;
     ai-tools.enable = true;
