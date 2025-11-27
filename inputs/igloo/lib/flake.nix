@@ -61,10 +61,6 @@
               # pass the home special args that include `iglib` and `iglooTarget`
               home-manager.extraSpecialArgs = homeSpecialArgs;
 
-              # re-use the global system package store
-              # saves space and re-downloading of packages
-              home-manager.useGlobalPkgs = lib.mkDefault true;
-
               # By default packages will be installed to $HOME/.nix-profile
               # this options puts them in /etc/profiles
               # This is necessary if you wish to use nixos-rebuild build-vm.

@@ -7,13 +7,8 @@
 iglib.module {
   name = "rust";
 
-  # apply overlays at the nixos level
-  nixos.always = {
-    nixpkgs.overlays = [
-      inputs.rust-overlay.overlays.default
-      inputs.nix-vscode-extensions.overlays.default
-    ];
-  };
+  # apply the rust overlay
+  overlays = [inputs.rust-overlay.overlays.default];
 
   home.enabled = {
     # include rust tools and binaries in user packages

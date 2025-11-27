@@ -31,7 +31,9 @@
     enabled ? false, # should this module be enabled by default on all targets
     igloo ? {}, # igloo configuration to apply to all targets (when enabled)
     imports ? [], # additional imports to apply to all targets
+    overlays ? [], # overlays to apply to nixpkgs on all targets
     packages ? [], # packages to include on all targets (when enabled)
+    global ? {}, # configuration to apply to all targets
     nixos ? {}, # configuration to apply to only nixos targets
     home ? {}, # configuration to apply to only home targets
   }: let
@@ -128,13 +130,16 @@
 
       # apply the packages to the correct config location for each system when the module is enabled
       (iglooTargetModule "nixos" {
+        always.nixpkgs.overlays = overlays;
         enabled.environment.systemPackages = packages;
       })
       (iglooTargetModule "home" {
+        always.nixpkgs.overlays = overlays;
         enabled.home.packages = packages;
       })
 
       # apply target specific modules to their respective targets
+      (iglooTargetModule "global" global)
       (iglooTargetModule "nixos" nixos)
       (iglooTargetModule "home" home)
     ];
