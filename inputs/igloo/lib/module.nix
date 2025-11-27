@@ -53,42 +53,44 @@
         then import content
         else content;
 
-      # generate extra args to be used when resolving the content
-      extraArgs = let
-        # extract module and modules path from the config
-        iglooModules = args.config.igloo.modules;
-        iglooModule = iglooModules."${name}";
+      # create the iglooCtx with useful shortcuts
+      iglooCtx = rec {
+        # define simple keys to provide quick acess to modules
+        modules = args.config.igloo.modules;
+        module = modules."${name}";
 
-        # collect useful user information and functions for operating on igloo users
-        # NOTE: On home targets, the iglooUsers will always be empty and is basically useless
-        allUsers = lib.attrNames (lib.attrByPath ["home-manager" "users"] {} args.config);
-        enabledUsers = lib.filter (userName: lib.attrByPath ["home-manager" "users" "${userName}" "igloo" "modules" "${name}" "enable"] false args.config) allUsers;
-        disabledUsers = lib.subtractLists allUsers enabledUsers;
-        userModules = user: args.config.home-manager.users."${user}".igloo.modules;
-        userModule = user: (userModules user)."${name}";
-        iglooUsers = {
-          # convenient lists of users with different enable/disable states
-          all = allUsers;
-          enabled = enabledUsers;
-          disabled = disabledUsers;
-          # a boolean flag that marks if any igloo user has this module enabled
-          anyEnabled = builtins.length allUsers > 0;
-          # generators for creating attribute sets with certain kinds of users
-          genAll = lib.genAttrs allUsers;
-          genEnabled = lib.genAttrs enabledUsers;
-          genDisabled = lib.genAttrs disabledUsers;
-          # functions for getting the state of a users igloo module
-          modules = userModules;
-          module = userModule;
+        # define useful functions for querying modules
+        # a function that returns true if the module `name` exists and is enabled
+        modEnabled = name: (lib.attrByPath ["${name}" "enable"] false modules);
+
+        # define keys to provide quick access to user information
+        # NOTE: On home targets, the users will always be empty and is basically useless
+        users = rec {
+          # returns the names of all users defined in the system
+          all = lib.attrNames (lib.attrByPath ["home-manager" "users"] {} args.config);
+          # returns the names of all users with the current module enabled on the system
+          enabled = lib.filter (userName: lib.attrByPath ["home-manager" "users" "${userName}" "igloo" "modules" "${name}" "enable"] false args.config) all;
+          # returns the names of all users with the current module disabled on the system
+          disabled = lib.subtractLists all enabled;
+          # returns true if any user has the current module enabled
+          anyEnabled = builtins.length enabled > 0;
+
+          # returns all igloo modules configuration for the specified `user`
+          modules = user: args.config.home-manager.users."${user}".igloo.modules;
+          # returns the current igloo modules configuration for the specified `user`
+          module = user: (modules user)."${name}";
+
+          # simple functions for generating user attribute sets
+          genAll = lib.genAttrs all;
+          genEnabled = lib.genAttrs enabled;
+          genDisabled = lib.genAttrs disabled;
         };
-      in {
-        inherit iglooModule iglooModules iglooUsers;
       };
 
       # if the imported content is a function, resolve it with the args
       resolvedContent =
         if lib.isFunction importedContent
-        then importedContent (args // extraArgs)
+        then importedContent (args // {inherit iglooCtx;}) # include the iglooCtx when resolving the module
         else importedContent;
 
       # ensure the content is an attribute set
@@ -112,8 +114,8 @@
           # merge the configurations to match their specified enable types
           config = lib.mkMerge [
             (attrContent.always or {})
-            (lib.mkIf extraArgs.iglooModule.enable (attrContent.enabled or {}))
-            (lib.mkIf (!extraArgs.iglooModule.enable) (attrContent.disabled or {}))
+            (lib.mkIf iglooCtx.module.enable (attrContent.enabled or {}))
+            (lib.mkIf (!iglooCtx.module.enable) (attrContent.disabled or {}))
           ];
         };
     in

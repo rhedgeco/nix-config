@@ -12,8 +12,8 @@ iglib.module {
     stlink-gui
   ];
 
-  nixos = {iglooUsers, ...}: {
-    always = lib.mkIf iglooUsers.anyEnabled {
+  nixos = {iglooCtx, ...}: {
+    always = lib.mkIf iglooCtx.users.anyEnabled {
       services.udev.packages = with pkgs; [
         saleae-logic-2
         stlink-gui
@@ -21,7 +21,7 @@ iglib.module {
 
       # any enabled user should have access to the dialout group
       # this is required for users to have access to the usb ports
-      users.users = iglooUsers.genEnabled (name: {
+      users.users = iglooCtx.users.genEnabled (name: {
         extraGroups = [
           "dialout"
         ];

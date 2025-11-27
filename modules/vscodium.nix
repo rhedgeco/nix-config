@@ -7,7 +7,26 @@
 iglib.module {
   name = "vscodium";
 
-  home = {iglooModule, ...}: {
+  home = {iglooCtx, ...}: let
+    # define the default extensions
+    defaultExtensions = with pkgs.vscode-extensions; [
+      jnoortheen.nix-ide
+      kamadorueda.alejandra
+      skellock.just
+      mkhl.direnv
+    ];
+
+    # define the extensions to enable if rust is enabled
+    rustExtensions = lib.optionals (iglooCtx.modEnabled "rust") (
+      with pkgs.nix-vscode-extensions.vscode-marketplace;
+      with pkgs.vscode-extensions; [
+        rust-lang.rust-analyzer
+        tamasfe.even-better-toml
+        vadimcn.vscode-lldb
+        barbosshack.crates-io
+      ]
+    );
+  in {
     options.extraExtensions = lib.mkOption {
       type = lib.types.listOf lib.types.anything;
       description = "Extra extension to add to vscodium";
@@ -23,17 +42,11 @@ iglib.module {
         package = pkgs.vscodium;
         mutableExtensionsDir = false;
 
-        # include base extensions for editing nix files
+        # merge all defined extensions into vscodium
         profiles.default.extensions =
-          # include extra extensions defined elsewhere in the config
-          iglooModule.extraExtensions
-          # include base extensions for editing nix files
-          ++ (with pkgs.vscode-extensions; [
-            jnoortheen.nix-ide
-            kamadorueda.alejandra
-            skellock.just
-            mkhl.direnv
-          ]);
+          defaultExtensions
+          ++ rustExtensions
+          ++ iglooCtx.module.extraExtensions;
       };
     };
   };

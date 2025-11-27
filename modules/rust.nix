@@ -33,14 +33,5 @@ iglib.module {
         ];
       })
     ];
-
-    # include extra vscodium extensions when rust is enabled
-    igloo.modules.vscodium.extraExtensions = with pkgs.nix-vscode-extensions.vscode-marketplace;
-    with pkgs.vscode-extensions; [
-      rust-lang.rust-analyzer
-      tamasfe.even-better-toml
-      vadimcn.vscode-lldb
-      barbosshack.crates-io
-    ];
   };
 }
