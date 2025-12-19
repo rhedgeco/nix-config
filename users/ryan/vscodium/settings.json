@@ -26,5 +26,7 @@
         "**/.svn": false,
         "**/Thumbs.db": false
     },
-    "terminal.integrated.stickyScroll.enabled": false
+    "terminal.integrated.stickyScroll.enabled": false,
+    "editor.fontLigatures": true,
+    "terminal.integrated.fontLigatures.enabled": true
 }

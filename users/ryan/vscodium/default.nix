@@ -6,17 +6,8 @@
 }: let
   impermanence = config.custom.impermanence;
 in {
-  # include formatters lsps for extensions
-  # home.packages = with pkgs; [
-  #   alejandra
-  #   nixd
-  # ];
-
-  # create the codium settings json file
-  home.file.".config/VSCodium/User/settings.json" = {
-    text = builtins.readFile ./settings.json;
-    force = true;
-  };
+  # link vscode settings as a raw file
+  igloo.create.".config/VSCodium/User/settings.json" = ./settings.json;
 
   # persist users codium global state database
   # remembers vscode window state between reboots
@@ -26,18 +17,4 @@ in {
       ".config/VSCodium/User/globalStorage/state.vscdb"
     ];
   };
-
-  # enable and configure the base install of vscodium
-  # programs.vscode = {
-  #   enable = true;
-  #   package = pkgs.vscodium;
-
-  #   # include extensions for editing nix files
-  #   profiles.default.extensions = with pkgs.vscode-extensions; [
-  #     jnoortheen.nix-ide
-  #     kamadorueda.alejandra
-  #     skellock.just
-  #     mkhl.direnv
-  #   ];
-  # };
 }
