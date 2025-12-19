@@ -28,5 +28,6 @@
     },
     "terminal.integrated.stickyScroll.enabled": false,
     "editor.fontLigatures": true,
-    "terminal.integrated.fontLigatures.enabled": true
+    "terminal.integrated.fontLigatures.enabled": true,
+    "editor.fontFamily": "'JetBrains Mono Nerd Font', 'monospace', monospace"
 }
