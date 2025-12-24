@@ -11,7 +11,7 @@ iglib.module {
   # apply the extensions overlay for more extension access
   overlays = [inputs.nix-vscode-extensions.overlays.default];
 
-  home = {iglooCtx, ...}: {
+  home = ctx: {
     options.extraExtensions = lib.mkOption {
       type = lib.types.listOf lib.types.anything;
       description = "Extra extension to add to vscodium";
@@ -28,7 +28,7 @@ iglib.module {
       ];
 
       # define the extensions to enable if rust is enabled
-      rustExtensions = lib.optionals (iglooCtx.modEnabled "rust") (
+      rustExtensions = lib.optionals (ctx.modEnabled "rust") (
         with pkgs.nix-vscode-extensions.vscode-marketplace;
         with pkgs.vscode-extensions; [
           rust-lang.rust-analyzer
@@ -50,7 +50,7 @@ iglib.module {
         profiles.default.extensions =
           defaultExtensions
           ++ rustExtensions
-          ++ iglooCtx.module.extraExtensions;
+          ++ ctx.module.extraExtensions;
       };
     };
   };

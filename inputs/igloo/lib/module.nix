@@ -56,7 +56,10 @@
         else content;
 
       # create the iglooCtx with useful shortcuts
-      iglooCtx = rec {
+      context = rec {
+        # include the system arguments in the context
+        inherit args;
+
         # define simple keys to provide quick acess to modules
         modules = args.config.igloo.modules;
         module = modules."${name}";
@@ -92,7 +95,7 @@
       # if the imported content is a function, resolve it with the args
       resolvedContent =
         if lib.isFunction importedContent
-        then importedContent (args // {inherit iglooCtx;}) # include the iglooCtx when resolving the module
+        then importedContent context # pass the context when resolving the module
         else importedContent;
 
       # ensure the content is an attribute set
@@ -116,8 +119,8 @@
           # merge the configurations to match their specified enable types
           config = lib.mkMerge [
             (attrContent.always or {})
-            (lib.mkIf iglooCtx.module.enable (attrContent.enabled or {}))
-            (lib.mkIf (!iglooCtx.module.enable) (attrContent.disabled or {}))
+            (lib.mkIf context.module.enable (attrContent.enabled or {}))
+            (lib.mkIf (!context.module.enable) (attrContent.disabled or {}))
           ];
         };
     in

@@ -46,7 +46,7 @@ in
   iglib.module {
     name = "persist";
 
-    nixos = {iglooCtx, ...}: {
+    nixos = ctx: {
       options = {
         location = lib.mkOption {
           description = "The persistent store to bind files from";
@@ -87,7 +87,7 @@ in
         bindScript = create: bind: let
           # map the target to its persistent source location
           target = lib.removePrefix "/" bind.target;
-          source = "${iglooCtx.module.location}/${target}";
+          source = "${ctx.module.location}/${target}";
         in ''
           # if the source and target exist
           # check if the bind mount is already complete
@@ -139,8 +139,8 @@ in
 
         # create a list of normalized bind options for files and dirs
         # this transforms each bind option into its longform version with permissions
-        fileBinds = map (item: normalizeBind item) iglooCtx.module.files;
-        dirBinds = map (item: normalizeBind item) iglooCtx.module.dirs;
+        fileBinds = map (item: normalizeBind item) ctx.module.files;
+        dirBinds = map (item: normalizeBind item) ctx.module.dirs;
 
         # create the scripts for all file binds
         fileBindScripts = lib.listToAttrs (map (bind: {
