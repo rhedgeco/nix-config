@@ -15,11 +15,6 @@
     # include the igloo lib in the special args
     specialArgs = extraSpecialArgs // {inherit iglib;};
 
-    # define system type specific set of special args
-    # this sets the `iglooTarget` argument allowing config switching
-    homeSpecialArgs = specialArgs // {iglooTarget = "home";};
-    nixosSpecialArgs = specialArgs // {iglooTarget = "nixos";};
-
     # build the system module for each user
     userModules =
       lib.mapAttrsToList (
@@ -40,7 +35,8 @@
     # build all nixos configurations from the system names found
     nixosConfigurations = lib.mapAttrs (name: module:
       lib.nixosSystem {
-        specialArgs = nixosSpecialArgs;
+        # set the `iglooTarget` at the system level to `nixos`
+        specialArgs = specialArgs // {iglooTarget = "nixos";};
         modules =
           # include this systems module content
           (lib.toList module)
@@ -58,8 +54,8 @@
               # set the networking hostname to match the system name by default
               networking.hostName = lib.mkDefault "${name}";
 
-              # pass the home special args that include `iglib` and `iglooTarget`
-              home-manager.extraSpecialArgs = homeSpecialArgs;
+              # pass special args and include `iglooTarget` as `home` instead
+              home-manager.extraSpecialArgs = specialArgs // {iglooTarget = "home";};
 
               # By default packages will be installed to $HOME/.nix-profile
               # this options puts them in /etc/profiles
