@@ -8,6 +8,14 @@
       enable = true;
       autoLogin = "ryan";
     };
+
+    persist = {
+      enable = true;
+      location = "/persist";
+      files = [
+        "/test-persist-file"
+      ];
+    };
   };
 
   igloo.users.ryan = {
