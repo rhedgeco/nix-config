@@ -1,6 +1,7 @@
 {...}: {
   igloo.modules = {
     grub.enable = true;
+    steam.enable = true;
     boot.device = "/dev/disk/by-label/BOOT";
 
     greetd = {
