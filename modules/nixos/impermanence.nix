@@ -43,12 +43,6 @@ in {
 
       users = lib.genAttrs impermanence.persistUsers (name: {
         directories = [
-          # basic user directories
-          "Downloads"
-          "Music"
-          "Pictures"
-          "Documents"
-          "Videos"
           # ssh and gpg keys
           {
             directory = ".ssh";
