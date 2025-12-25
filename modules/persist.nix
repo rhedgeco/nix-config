@@ -26,17 +26,17 @@
         };
         mode = lib.mkOption {
           description = "The permission mode to set for this bind";
-          type = lib.types.str;
+          type = lib.types.nullOr lib.types.str;
           default = null;
         };
         user = lib.mkOption {
           description = "The permission user to set for this bind";
-          type = lib.types.str;
+          type = lib.types.nullOr lib.types.str;
           default = null;
         };
         group = lib.mkOption {
           description = "The permission group to set for this bind";
-          type = lib.types.str;
+          type = lib.types.nullOr lib.types.str;
           default = null;
         };
       };
