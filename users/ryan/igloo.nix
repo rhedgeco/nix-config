@@ -8,5 +8,9 @@
     vscodium.enable = true;
     rust.enable = true;
     greetd.command = "${pkgs.niri}/bin/niri-session";
+
+    persist.files = [
+      "test-persist-file"
+    ];
   };
 }
