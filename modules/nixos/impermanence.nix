@@ -40,25 +40,6 @@ in {
         # systemd coredump info
         "/var/lib/systemd/coredump"
       ];
-
-      users = lib.genAttrs impermanence.persistUsers (name: {
-        directories = [
-          # ssh and gpg keys
-          {
-            directory = ".ssh";
-            mode = "0700";
-          }
-          {
-            directory = ".gnupg";
-            mode = "0700";
-          }
-          # keyring
-          {
-            directory = ".local/share/keyrings";
-            mode = "0700";
-          }
-        ];
-      });
     };
   };
 }

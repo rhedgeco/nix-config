@@ -31,4 +31,20 @@
     # enable GPG signing
     signing.signByDefault = true;
   };
+
+  # persist `.ssh` `.gnupg` and `keyring` directories
+  igloo.modules.persist.dirs = [
+    {
+      target = ".ssh";
+      mode = "0700";
+    }
+    {
+      target = ".gnupg";
+      mode = "0700";
+    }
+    {
+      target = ".local/share/keyrings";
+      mode = "0700";
+    }
+  ];
 }
