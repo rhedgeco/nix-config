@@ -12,9 +12,6 @@
     persist = {
       enable = true;
       location = "/persist";
-      files = [
-        "/test-persist-file"
-      ];
     };
   };
 
