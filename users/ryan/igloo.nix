@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   igloo.modules = {
+    steam.enable = true;
     color-picker.enable = true;
     embedded.enable = true;
     docker.enable = true;

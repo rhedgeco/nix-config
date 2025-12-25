@@ -7,4 +7,11 @@ iglib.module {
       enable = true;
     };
   };
+
+  home.enabled = {
+    igloo.modules.persist.dirs = [
+      ".local/share/Steam"
+      ".steam"
+    ];
+  };
 }
