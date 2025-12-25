@@ -132,15 +132,13 @@ in
           fi
 
           # check if the target and source are already bound together
-          if findmnt -n -o SOURCE --target "/${target}" | grep -F -q "[${source}]"; then
-            # if the mount is already correct, then we dont have to do anything
-            :
-          else
-            # if the target is not mounted, or the mount is incorrect we should do it now
-            # first, we need to unmount the file. we can ignore any failure here
+          if ! findmnt -n -o SOURCE --target "/${target}" | grep -F -q "[${source}]"; then
+            # if the target is not mounted, or the mount is incorrect we should mount it now
+            # first, we need to unmount any current binds. we can ignore any failures here
             umount "/${target}" 2>/dev/null || true
 
             # then we need to bind the source to the target
+            echo "binding /${target} ..."
             mount --bind "${source}" "/${target}"
           fi
         '';
