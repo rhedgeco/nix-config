@@ -1,13 +1,13 @@
 {
   lib,
   config,
-  inputs,
+  # inputs,
   ...
 }: let
   impermanence = config.myconfig.impermanence;
 in {
   imports = [
-    inputs.impermanence.nixosModules.impermanence
+    # inputs.impermanence.nixosModules.impermanence
   ];
 
   options.myconfig.impermanence = {
@@ -24,22 +24,22 @@ in {
     # allow non root users to fuse mount
     programs.fuse.userAllowOther = true;
 
-    # persist some system and user directories by default
-    environment.persistence."/persist" = {
-      hideMounts = true;
-      files = [
-        "/etc/machine-id"
-      ];
-      directories = [
-        # system log files
-        "/var/log"
+    # # persist some system and user directories by default
+    # environment.persistence."/persist" = {
+    #   hideMounts = true;
+    #   files = [
+    #     "/etc/machine-id"
+    #   ];
+    #   directories = [
+    #     # system log files
+    #     "/var/log"
 
-        # needed for nixos systems
-        "/var/lib/nixos"
+    #     # needed for nixos systems
+    #     "/var/lib/nixos"
 
-        # systemd coredump info
-        "/var/lib/systemd/coredump"
-      ];
-    };
+    #     # systemd coredump info
+    #     "/var/lib/systemd/coredump"
+    #   ];
+    # };
   };
 }
