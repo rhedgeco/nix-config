@@ -14,6 +14,8 @@ in
     # core cli tools included with any system by default
     packages = with pkgs; [
       bat
+      vim
+      nano
       direnv
       fd
       gum
