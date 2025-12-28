@@ -5,7 +5,8 @@ default:
 # updates the lockfile for this flake
 update:
     nix flake update --flake '.?submodules=1'
-    @echo -e "\033[1;32mFLAKE UPDATED\033[0m"
+    nix flake update --flake './inputs/igloo'
+    @echo -e "\033[1;32mFLAKES UPDATED\033[0m"
 
 # checks every item in the flake for errors
 check:
