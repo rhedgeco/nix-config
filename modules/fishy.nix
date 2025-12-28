@@ -8,6 +8,9 @@ iglib.module {
 
   nixos = ctx: {
     always = {
+      # enable the fish shell if any user has it enabled
+      programs.fish.enable = ctx.users.anyEnabled;
+
       # set the fish shell as default
       users.users = ctx.users.genEnabled (name: {
         shell = pkgs.fish;
