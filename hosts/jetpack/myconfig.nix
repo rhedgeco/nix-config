@@ -2,11 +2,6 @@
   myconfig = {
     dualBoot = true;
 
-    shell.fish = {
-      enable = true;
-      setDefault = true;
-    };
-
     filesystem = {
       btrfs = {
         enable = true;

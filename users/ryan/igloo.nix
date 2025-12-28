@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   igloo.modules = {
+    fishy.enable = true;
     steam.enable = true;
     color-picker.enable = true;
     embedded.enable = true;
