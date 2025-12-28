@@ -11,7 +11,7 @@ iglib.module {
       # enable the fish shell if any user has it enabled
       programs.fish.enable = ctx.users.anyEnabled;
 
-      # set the fish shell as default
+      # set the fish shell as default for any users with fishy enabled
       users.users = ctx.users.genEnabled (name: {
         shell = pkgs.fish;
       });
@@ -19,6 +19,23 @@ iglib.module {
   };
 
   home.enabled = {
+    # add some packages required by fishy
+    home.packages = with pkgs; [
+      grc # used by fish shell for colorizing
+    ];
+
+    # ensure some data for fish shell is persisted between boots
+    igloo.modules.persist.dirs = [
+      # persist fish history
+      # https://github.com/fish-shell/fish-shell/issues/10730
+      # ^ prevents syncing only fish_history file
+      ".local/share/fish"
+
+      # persist the direnv cache
+      # contains allow list, etc...
+      ".local/share/direnv"
+    ];
+
     # enable and configure fish shell
     programs.fish = {
       enable = true;
@@ -48,17 +65,5 @@ iglib.module {
         }
       ];
     };
-
-    # ensure some data for fish shell is persisted between boots
-    igloo.modules.persist.dirs = [
-      # persist fish history
-      # https://github.com/fish-shell/fish-shell/issues/10730
-      # ^ prevents syncing only fish_history file
-      ".local/share/fish"
-
-      # persist the direnv cache
-      # contains allow list, etc...
-      ".local/share/direnv"
-    ];
   };
 }
