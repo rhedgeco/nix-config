@@ -131,7 +131,7 @@ binds {
 
     // Material Shell Tools
     Mod+Space hotkey-overlay-title="Application Launcher" {
-        spawn "dms" "ipc" "call" "spotlight" "toggle";
+        spawn "fuzzel";
     }
     Mod+V hotkey-overlay-title="Clipboard" {
         spawn "dms" "ipc" "call" "clipboard" "toggle";
