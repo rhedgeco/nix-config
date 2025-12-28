@@ -8,10 +8,10 @@
   impermanence = config.custom.impermanence;
 in {
   # import the dank material shell home module
-  imports = [inputs.dankMaterialShell.homeModules.dankMaterialShell.default];
+  imports = [inputs.dankMaterialShell.homeModules.dank-material-shell];
 
   # enable dank material shell and launch with systemd
-  programs.dankMaterialShell = {
+  programs.dank-material-shell = {
     enable = true;
     systemd.enable = true;
   };
