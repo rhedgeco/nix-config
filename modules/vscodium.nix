@@ -41,6 +41,14 @@ iglib.module {
       # include nixd for language server
       home.packages = [pkgs.nixd];
 
+      # persist users codium global state database
+      # remembers vscode window state between reboots
+      # e.g. trusted folders, previously open projects, etc
+      igloo.modules.persist.files = [
+        ".config/VSCodium/User/globalStorage/state.vscdb"
+      ];
+
+      # enable and configure vscode
       programs.vscode = {
         enable = true;
         package = pkgs.vscodium;
