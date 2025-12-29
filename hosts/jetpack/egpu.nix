@@ -5,11 +5,11 @@
 }: let
   igpu-address = "0000:c1:00.0";
   egpu-id = "10de:2488";
-  egpu-timeout = 5;
+  egpu-timeout = 5; # seconds
 in {
   # create a service that unbinds the internal gpu if the egpu is detected at startup
   systemd.services.unbind-internal-gpu = {
-    description = "unbind the iGPU if an eGPU is detected at boot";
+    description = "Detect and configure eGPU";
 
     serviceConfig = {
       Type = "oneshot";
