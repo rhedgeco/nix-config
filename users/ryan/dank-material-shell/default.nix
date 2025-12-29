@@ -1,12 +1,8 @@
 {
-  lib,
   pkgs,
-  config,
   inputs,
   ...
-}: let
-  impermanence = config.custom.impermanence;
-in {
+}: {
   # import the dank material shell home module
   imports = [inputs.dankMaterialShell.homeModules.dank-material-shell];
 
@@ -32,13 +28,11 @@ in {
     };
   };
 
-  # persist the dms state directory if impermanence is enabled
+  # persist the dms state directory if needed
   # this persists notepad sessions and appusage
-  home.persistence = lib.mkIf impermanence.enable {
-    "${impermanence.userDir}".directories = [
-      ".local/state/DankMaterialShell"
-    ];
-  };
+  igloo.modules.persist.dirs = [
+    ".local/state/DankMaterialShell"
+  ];
 
   # create the dms settings json file
   home.file.".config/DankMaterialShell/settings.json" = {

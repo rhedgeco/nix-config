@@ -6,10 +6,6 @@
         initialPassword = "ryan";
         extraGroups = ["wheel"];
       };
-      home.custom.impermanence = {
-        enable = true;
-        userDir = "/persist/home/ryan";
-      };
     };
 
     modules = {
