@@ -1,0 +1,36 @@
+configuration {
+    modes: [ combi, drun, window ];
+}
+
+window {
+    border-radius: 12;
+    padding: 6px;
+    width: 640;
+}
+
+inputbar {
+  children: [ entry, overlay, case-indicator];
+}
+
+listview {
+    lines: 8;
+    columns: 1;
+}
+
+entry {
+    placeholder: "Type here";
+}
+
+element {
+    orientation: horizontal;
+    children: [ element-icon, element-text ];
+
+    padding: 4px;
+    spacing: 5px;
+
+    background-color: transparent;
+}
+
+element-icon {
+    size: 2em;
+}
