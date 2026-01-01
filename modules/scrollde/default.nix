@@ -59,38 +59,6 @@ in
           if item != null
           then (make item)
           else default;
-
-        niriConfig = ''
-          // include all the defaults for scrollde
-          include "${./niri.kdl}"
-
-          // custom startup apps defined in nix
-          ${lib.concatStringsSep "\n" (
-            map (cmd: "spawn-at-startup ${escapeKdl cmd}") ctx.module.spawn
-          )}
-
-          // custom output definitions defined in nix
-          ${lib.concatStrings (
-            map (set: ''
-              output ${escapeKdl set.name} {${lib.concatStrings [
-                (nullElse "" set.value.mode (mode: "\n  mode ${escapeKdl mode}"))
-                (nullElse "" set.value.scale (scale: "\n  scale ${toString scale}"))
-              ]}
-              }
-            '') (lib.attrsToList ctx.module.outputs)
-          )}
-
-          // custom key binds defined in nix
-          binds {
-            // spawn alacritty as the terminal emulator
-            Mod+T { spawn "${pkgs.alacritty}/bin/alacritty"; }
-
-            // spawn rofi as the application launcher
-            Mod+Space hotkey-overlay-title="Application Launcher" {
-                spawn "${pkgs.rofi}/bin/rofi" "-show" "combi" "-combi-modes" "drun,window" "-config" "${./rofi.rasi}";
-            }
-          }
-        '';
       in {
         home.packages = [
           # add alacritty since its used as the terminal emulator
@@ -100,7 +68,37 @@ in
         # set up and link niri config
         home.file.".config/niri/config.kdl" = {
           force = true;
-          text = niriConfig;
+          text = ''
+            // include all the defaults for scrollde
+            include "${./niri.kdl}"
+
+            // custom startup apps defined in nix
+            ${lib.concatStringsSep "\n" (
+              map (cmd: "spawn-at-startup ${escapeKdl cmd}") ctx.module.spawn
+            )}
+
+            // custom output definitions defined in nix
+            ${lib.concatStrings (
+              map (set: ''
+                output ${escapeKdl set.name} {${lib.concatStrings [
+                  (nullElse "" set.value.mode (mode: "\n  mode ${escapeKdl mode}"))
+                  (nullElse "" set.value.scale (scale: "\n  scale ${toString scale}"))
+                ]}
+                }
+              '') (lib.attrsToList ctx.module.outputs)
+            )}
+
+            // custom key binds defined in nix
+            binds {
+              // spawn alacritty as the terminal emulator
+              Mod+T { spawn "${pkgs.alacritty}/bin/alacritty"; }
+
+              // spawn rofi as the application launcher
+              Mod+Space hotkey-overlay-title="Application Launcher" {
+                  spawn "${pkgs.rofi}/bin/rofi" "-show" "combi" "-combi-modes" "drun,window" "-config" "${./rofi.rasi}";
+              }
+            }
+          '';
         };
       };
     };
