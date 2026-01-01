@@ -1,8 +1,12 @@
-{pkgs, ...}: {
+{...}: {
   igloo.modules.scrollde = {
     enable = true;
     spawn = [
-      "${pkgs.legcord}/bin/legcord"
+      "legcord"
     ];
+    binds = {
+      "Mod+W" = "firefox";
+      "Mod+D" = "legcord";
+    };
   };
 }

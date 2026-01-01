@@ -48,6 +48,11 @@ in
           type = lib.types.listOf lib.types.str;
           default = [];
         };
+        binds = lib.mkOption {
+          description = "Keybinds that map a key combo to a command";
+          type = with lib.types; attrsOf (oneOf [str (listOf str)]);
+          default = {};
+        };
       };
 
       enabled = let
@@ -65,39 +70,70 @@ in
           pkgs.alacritty
         ];
 
-        # set up and link niri config
-        home.file.".config/niri/config.kdl" = {
+        # set up niri builtin configuration file
+        home.file.".config/scrollde/niri-builtin.kdl" = {
           force = true;
           text = ''
-            // include all the defaults for scrollde
+            // include static defaults
             include "${./niri.kdl}"
 
-            // custom startup apps defined in nix
-            ${lib.concatStringsSep "\n" (
-              map (cmd: "spawn-at-startup ${escapeKdl cmd}") ctx.module.spawn
-            )}
+            // include some custom nix defined binds
+            binds {
+              // spawn alacritty as the terminal emulator
+              Mod+T { spawn "${pkgs.alacritty}/bin/alacritty"; }
 
-            // custom output definitions defined in nix
-            ${lib.concatStrings (
+              // use custom rofi as the default application launcher
+              Mod+Space hotkey-overlay-title="Application Launcher" {
+                  spawn "${pkgs.rofi}/bin/rofi" "-show" "combi" "-combi-modes" "drun,window" "-config" "${./rofi.rasi}";
+              }
+            }
+          '';
+        };
+
+        # set up user generated niri configuration
+        # this is split up so that the user can override builtins
+        home.file.".config/scrollde/niri.kdl" = {
+          force = true;
+          text = ''
+            // include the builtin scrollde niri config
+            include "./niri-builtin.kdl"
+
+            // set up custom output definitions defined by user and hosts
+            ${lib.concatStringsSep "\n" (
               map (set: ''
                 output ${escapeKdl set.name} {${lib.concatStrings [
                   (nullElse "" set.value.mode (mode: "\n  mode ${escapeKdl mode}"))
                   (nullElse "" set.value.scale (scale: "\n  scale ${toString scale}"))
                 ]}
-                }
-              '') (lib.attrsToList ctx.module.outputs)
+                }'') (lib.attrsToList ctx.module.outputs)
             )}
 
-            // custom key binds defined in nix
-            binds {
-              // spawn alacritty as the terminal emulator
-              Mod+T { spawn "${pkgs.alacritty}/bin/alacritty"; }
+            // spawn custom startup apps defined by user
+            ${lib.concatStringsSep "\n" (
+              map (cmd: "spawn-at-startup ${escapeKdl cmd}") ctx.module.spawn
+            )}
 
-              // spawn rofi as the application launcher
-              Mod+Space hotkey-overlay-title="Application Launcher" {
-                  spawn "${pkgs.rofi}/bin/rofi" "-show" "combi" "-combi-modes" "drun,window" "-config" "${./rofi.rasi}";
-              }
-            }
+            // set up custom key binds defined by users
+            binds {
+              ${lib.concatStrings (
+              map (set: ''
+                ${set.name} { spawn ${lib.concatStringsSep " " (
+                  map escapeKdl (
+                    if lib.isList set.value
+                    then set.value
+                    else [set.value]
+                  )
+                )}; }
+              '') (lib.attrsToList ctx.module.binds)
+            )}}
+          '';
+        };
+
+        # link to default niri config location for now
+        home.file.".config/niri/config.kdl" = {
+          force = true;
+          text = ''
+            include "../scrollde/niri.kdl"
           '';
         };
       };
