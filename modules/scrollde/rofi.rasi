@@ -1,36 +1,133 @@
 configuration {
-    modes: [ combi, drun, window ];
+    modes: [combi];
+    show-icons: true;
+    combi-modes: [drun, window];
+    display-drun: "▶";
+    display-window: "";
+	drun-display-format: "{name}";
+	window-format: "{c}: {t}";
+}
+
+* {
+    font: "JetBrains Mono Nerd Font 10";
+
+    background: #121212CC;
+    background-alt: #353535CC;
+
+    text-placeholder: #EBE3D1CC;
+    text-light: #EBE3D1FF;
+    text-dark: #1A1918FF;
+
+    primary: #F7954ECC;
+    secondary: #448BD9CC;
+    urgent: #FB4934CC;
 }
 
 window {
-    border-radius: 12;
-    padding: 6px;
-    width: 640;
+    background-color: @background;
+    border-radius: 12px;
+    width: 640px;
+    padding: 20px;
+    spacing: 10px;
+    border: 0px solid;
+    children: [inputbar, message, listview];
 }
 
 inputbar {
-  children: [ entry, overlay, case-indicator];
+    spacing: 10px;
+    padding: 6px;
+    border-radius: 6px;
+    text-color: @text-light;
+    background-color: @background-alt;
+    children: [textbox-prompt-colon, entry];
+}
+
+textbox-prompt-colon {
+    text-color: inherit;
+    margin: 0px;
+    padding: 4px 5px 4px 8px;
+    str: "";
+}
+entry {
+    padding: 4px 0px 4px 6px;
+    background-color: transparent;
+    text-color: inherit;
+    placeholder: "Search...";
+    placeholder-color: @text-placeholder;
 }
 
 listview {
     lines: 8;
-    columns: 1;
+    spacing: 5px;
+    background-color: transparent;
+    text-color: @text-light;
+    cursor: "default";
+    border: 0px solid;
 }
-
-entry {
-    placeholder: "Type here";
+scrollbar {
+    handle-width: 6px;
+    handle-color: @secondary;
+    border-radius: 3px;
+    background-color: @background-alt;
 }
 
 element {
-    orientation: horizontal;
-    children: [ element-icon, element-text ];
-
-    padding: 4px;
-    spacing: 5px;
-
-    background-color: transparent;
+    spacing: 10px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    text-color: @text-light;
+    cursor: pointer;
+}
+element-icon {
+    size: 24px;
+}
+element-text {
+    vertical-align: 0.5;
+}
+element normal.normal {
+    background-color: @background;
+    text-color: @text-light;
+}
+element normal.urgent {
+    background-color: @urgent;
+    text-color: @text-dark;
+}
+element normal.active {
+    background-color: @secondary;
+    text-color: @text-dark;
+}
+element alternate.normal {
+    background-color: @background;
+    text-color: @text-light;
+}
+element alternate.urgent {
+    background-color: @urgent;
+    text-color: @text-dark;
+}
+element alternate.active {
+    background-color: @secondary;
+    text-color: @text-dark;
+}
+element selected.normal {
+    background-color: @primary;
+    text-color: @text-dark;
+}
+element selected.urgent {
+    background-color: @urgent;
+    text-color: @text-dark;
+}
+element selected.active {
+    background-color: @secondary;
+    text-color: @text-dark;
 }
 
-element-icon {
-    size: 2em;
+message {
+    border: 0px solid;
+}
+textbox {
+    padding: 8px 10px;
+    border: 0px solid;
+    border-radius: 6px;
+    background-color: @background;
+    text-color: @urgent;
 }
