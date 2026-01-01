@@ -32,7 +32,7 @@ in
       options.outputs = outputsOption;
 
       # apply some nixos settings when scrollde is enabled
-      always = lib.mkIf ctx.users.anyEnabled {
+      always = {
         igloo.home = {
           # pass through any shared options to all igloo users
           igloo.modules.scrollde.outputs = ctx.module.outputs;
