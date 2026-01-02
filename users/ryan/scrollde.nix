@@ -7,6 +7,7 @@
     binds = {
       "Mod+W" = "firefox";
       "Mod+D" = "legcord";
+      "Mod+E" = "codium";
     };
   };
 }
