@@ -120,9 +120,9 @@ in
 
             // set up custom key binds defined by users
             binds {
-              ${lib.concatStrings (
+            ${lib.concatStrings (
               map (set: ''
-                ${set.name} { spawn ${lib.concatStringsSep " " (
+                ''\  ${set.name} { spawn ${lib.concatStringsSep " " (
                   map escapeKdl (
                     if lib.isList set.value
                     then set.value
