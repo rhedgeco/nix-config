@@ -33,6 +33,7 @@
     inotify-tools
     just
     python3
+    pciutils
     (inputs.yoink.packages.${system}.default)
   ];
 in
