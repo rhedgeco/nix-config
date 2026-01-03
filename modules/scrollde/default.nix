@@ -53,6 +53,11 @@ in
           type = with lib.types; attrsOf (oneOf [str (listOf str)]);
           default = {};
         };
+        niriConfig = lib.mkOption {
+          description = "Custom configuration to apply to niri";
+          type = with lib.types; oneOf [str path];
+          default = "";
+        };
       };
 
       enabled = let
@@ -126,6 +131,16 @@ in
                 )}; }
               '') (lib.attrsToList ctx.module.binds)
             )}}
+
+            // apply custom niri config last so it can override anything
+            include "${
+              let
+                config = ctx.module.niriConfig;
+              in
+                if lib.isString config
+                then pkgs.writeText "config.kdl" config
+                else config
+            }";
           '';
         };
 
