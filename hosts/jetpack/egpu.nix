@@ -3,6 +3,7 @@
   config,
   ...
 }: let
+  # to discover these values run `lspci -nnD | grep -E -i "vga|3d|display"`
   igpu-address = "0000:c1:00.0";
   egpu-id = "10de:2488";
   egpu-timeout = 5; # seconds
