@@ -71,7 +71,7 @@ in
         ];
 
         # set up niri builtin configuration file
-        home.file.".config/scrollde/niri-builtin.kdl" = {
+        home.file.".config/scrollde/niri-defaults.kdl" = {
           force = true;
           text = ''
             // include static defaults
@@ -95,8 +95,8 @@ in
         home.file.".config/scrollde/niri.kdl" = {
           force = true;
           text = ''
-            // include the builtin scrollde niri config
-            include "./niri-builtin.kdl"
+            // include the default scrollde niri config
+            include "./niri-defaults.kdl"
 
             // set up custom output definitions defined by user and hosts
             ${lib.concatStringsSep "\n" (
