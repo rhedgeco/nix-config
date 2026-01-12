@@ -2,11 +2,11 @@
   igloo.modules.scrollde = {
     enable = true;
     spawn = [
-      "legcord"
+      "discord"
     ];
     binds = {
       "Mod+W" = "firefox";
-      "Mod+D" = "legcord";
+      "Mod+D" = "discord";
       "Mod+E" = "codium";
     };
   };

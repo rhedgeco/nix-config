@@ -2,7 +2,7 @@
   igloo.modules = {
     fishy.enable = true;
     steam.enable = true;
-    legcord.enable = true;
+    discord.enable = true;
     color-picker.enable = true;
     embedded.enable = true;
     docker.enable = true;

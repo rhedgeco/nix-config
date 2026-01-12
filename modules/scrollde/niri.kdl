@@ -68,7 +68,7 @@ window-rule {
     open-floating true
     match app-id="org.gnome.Calculator"
     match app-id="firefox" title="Picture-in-Picture"
-    match app-id="legcord"
+    match app-id="discord"
 }
 
 // Make windows with no title float
