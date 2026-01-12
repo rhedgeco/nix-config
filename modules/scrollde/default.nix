@@ -75,6 +75,12 @@ in
           pkgs.alacritty
         ];
 
+        # persist rofi cache items
+        igloo.modules.persist.files = [
+          ".cache/rofi3.druncache"
+          ".cache/rofi-entry-history.txt"
+        ];
+
         # set up niri builtin configuration file
         home.file.".config/scrollde/niri-defaults.kdl" = {
           force = true;
