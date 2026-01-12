@@ -1,7 +1,5 @@
 configuration {
-    modes: [combi];
     show-icons: true;
-    combi-modes: [drun, window];
     display-drun: "▶";
     display-window: "";
 	drun-display-format: "{name}";
