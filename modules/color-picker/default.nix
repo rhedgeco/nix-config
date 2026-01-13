@@ -41,7 +41,7 @@ iglib.module {
         terminal = false;
 
         # use the color picker script as the exec target for the desktop entry
-        exec = "${color-picker}/bin/color-picker ${ctx.module.desktopEntry.delay}";
+        exec = "${color-picker}/bin/color-picker ${toString ctx.module.desktopEntry.delay}";
       };
     };
   };
