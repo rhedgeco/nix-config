@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   iglib,
   ...
@@ -6,35 +7,42 @@
 iglib.module {
   name = "color-picker";
 
-  home.enabled = let
-    # create a script that runs hyprpicker and copies it to the clipboard
-    color-picker = pkgs.writeShellScriptBin "color-picker" ''
-      # check for a delay value and sleep before running the picker
-      sleep "''${1:-0}"
+  home = ctx: {
+    options.desktopEntry.delay = lib.mkOption {
+      description = "The delay amount in seconds to use for the desktop entry";
+      type = lib.types.float;
+      default = 0.1;
+    };
 
-      # run hyprpicker and store its output
-      COLOR=$(${pkgs.hyprpicker}/bin/hyprpicker)
+    enabled = let
+      # create a script that runs hyprpicker and copies it to the clipboard
+      color-picker = pkgs.writeShellScriptBin "color-picker" ''
+        # check for a delay value and sleep before running the picker
+        sleep "''${1:-0}"
 
-      # if the COLOR variable is not empty, then copy it to the clipboard
-      if [ -n "$COLOR" ]; then
-        ${pkgs.wl-clipboard-rs}/bin/wl-copy --trim-newline $COLOR
-      fi
-    '';
-  in {
-    # include the script in packages so it can be run from the terminal
-    home.packages = [color-picker];
+        # run hyprpicker and store its output
+        COLOR=$(${pkgs.hyprpicker}/bin/hyprpicker)
 
-    # create a wrapper desktop entry that runs hyprpicker
-    xdg.desktopEntries."color-picker" = {
-      name = "Color Picker";
-      comment = "Runs a color picker and copies the hex to the clipboard";
-      icon = ./icon.png;
-      categories = ["Utility" "Core"];
-      terminal = false;
+        # if the COLOR variable is not empty, then copy it to the clipboard
+        if [ -n "$COLOR" ]; then
+          ${pkgs.wl-clipboard-rs}/bin/wl-copy --trim-newline $COLOR
+        fi
+      '';
+    in {
+      # include the script in packages so it can be run from the terminal
+      home.packages = [color-picker];
 
-      # use the color picker script as the exec target for the desktop entry
-      # pass a delay of half a second to skip any app launch animations
-      exec = "${color-picker}/bin/color-picker 0.5";
+      # create a wrapper desktop entry that runs hyprpicker
+      xdg.desktopEntries."color-picker" = {
+        name = "Color Picker";
+        comment = "Runs a color picker and copies the hex to the clipboard";
+        icon = ./icon.png;
+        categories = ["Utility" "Core"];
+        terminal = false;
+
+        # use the color picker script as the exec target for the desktop entry
+        exec = "${color-picker}/bin/color-picker ${ctx.module.desktopEntry.delay}";
+      };
     };
   };
 }
