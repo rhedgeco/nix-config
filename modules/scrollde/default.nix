@@ -75,10 +75,10 @@ in
           pkgs.alacritty
         ];
 
-        # persist rofi cache items
-        igloo.modules.persist.files = [
-          ".cache/rofi3.druncache"
-          ".cache/rofi-entry-history.txt"
+        # persist the vicinae directory for now
+        # programatic config can be done later
+        igloo.modules.persist.dirs = [
+          ".local/share/vicinae"
         ];
 
         # set up niri builtin configuration file
@@ -88,14 +88,18 @@ in
             // include static defaults
             include "${./niri.kdl}"
 
+            // use vicinae as the launcher for this environment
+            // the vicinae server has to be spawned at startup
+            spawn-sh-at-startup "${pkgs.vicinae}/bin/vicinae server"
+
             // include some custom nix defined binds
             binds {
               // spawn alacritty as the terminal emulator
               Mod+T { spawn "${pkgs.alacritty}/bin/alacritty"; }
 
-              // use custom rofi as the default application launcher
+              // use vicinae as the default application launcher
               Mod+Space hotkey-overlay-title="Application Launcher" {
-                  spawn "${pkgs.rofi}/bin/rofi" "-show" "combi" "-combi-modes" "drun,window" "-config" "${./rofi.rasi}";
+                  spawn "${pkgs.vicinae}/bin/vicinae" "toggle";
               }
             }
           '';
