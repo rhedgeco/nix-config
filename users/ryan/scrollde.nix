@@ -4,6 +4,10 @@
     spawn = [
       "discord"
     ];
+    float = [
+      "discord"
+      "org.gnome.Calculator"
+    ];
     binds = {
       "Mod+W" = "firefox";
       "Mod+D" = "discord";

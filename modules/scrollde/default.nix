@@ -48,15 +48,15 @@ in
           type = lib.types.listOf lib.types.str;
           default = [];
         };
+        float = lib.mkOption {
+          description = "Apps to set as floating by default";
+          type = with lib.types; listOf str;
+          default = [];
+        };
         binds = lib.mkOption {
           description = "Keybinds that map a key combo to a command";
           type = with lib.types; attrsOf (oneOf [str (listOf str)]);
           default = {};
-        };
-        niriConfig = lib.mkOption {
-          description = "Custom configuration to apply to niri";
-          type = with lib.types; oneOf [str path];
-          default = "";
         };
       };
 
@@ -69,6 +69,70 @@ in
           if item != null
           then (make item)
           else default;
+
+        # create a default configuration for niri
+        niriDefaultConfig = pkgs.writeText "niri-default.kdl" ''
+          // include static defaults
+          include "${./niri.kdl}"
+
+          // use vicinae as the launcher for this environment
+          // the vicinae server has to be spawned at startup
+          spawn-sh-at-startup "${pkgs.vicinae}/bin/vicinae server"
+
+          // include some custom nix defined binds
+          binds {
+            // spawn alacritty as the terminal emulator
+            Mod+T { spawn "${pkgs.alacritty}/bin/alacritty"; }
+
+            // use vicinae as the default application launcher
+            Mod+Space hotkey-overlay-title="Application Launcher" {
+                spawn "${pkgs.vicinae}/bin/vicinae" "toggle";
+            }
+          }
+        '';
+
+        niriUserConfig = pkgs.writeText "niri-user.kdl" ''
+          // include the default scrollde niri config
+          // anything in the default config can be overriden
+          include "${niriDefaultConfig}"
+
+          // set up custom output definitions defined by user and hosts
+          ${lib.concatStringsSep "\n" (
+            map (set: ''
+              output ${escapeKdl set.name} {${lib.concatStrings [
+                (nullElse "" set.value.mode (mode: "\n  mode ${escapeKdl mode}"))
+                (nullElse "" set.value.scale (scale: "\n  scale ${toString scale}"))
+              ]}
+              }'') (lib.attrsToList ctx.module.outputs)
+          )}
+
+          // spawn custom startup apps defined by user
+          ${lib.concatStringsSep "\n" (
+            map (cmd: "spawn-at-startup ${escapeKdl cmd}") ctx.module.spawn
+          )}
+
+          // set up floating window definitions
+          window-rule {
+            open-floating true
+          ${lib.concatStringsSep "\n" (
+            map (appId: "  match app-id=${escapeKdl appId}") ctx.module.float
+          )}
+          }
+
+          // set up custom key binds defined by users
+          binds {
+          ${lib.concatStrings (
+            map (set: ''
+              ''\  ${set.name} { spawn ${lib.concatStringsSep " " (
+                map escapeKdl (
+                  if lib.isList set.value
+                  then set.value
+                  else [set.value]
+                )
+              )}; }
+            '') (lib.attrsToList ctx.module.binds)
+          )}}
+        '';
       in {
         home.packages = [
           # add alacritty since its used as the terminal emulator
@@ -81,84 +145,11 @@ in
           ".local/share/vicinae"
         ];
 
-        # set up niri builtin configuration file
-        home.file.".config/scrollde/niri-defaults.kdl" = {
-          force = true;
-          text = ''
-            // include static defaults
-            include "${./niri.kdl}"
-
-            // use vicinae as the launcher for this environment
-            // the vicinae server has to be spawned at startup
-            spawn-sh-at-startup "${pkgs.vicinae}/bin/vicinae server"
-
-            // include some custom nix defined binds
-            binds {
-              // spawn alacritty as the terminal emulator
-              Mod+T { spawn "${pkgs.alacritty}/bin/alacritty"; }
-
-              // use vicinae as the default application launcher
-              Mod+Space hotkey-overlay-title="Application Launcher" {
-                  spawn "${pkgs.vicinae}/bin/vicinae" "toggle";
-              }
-            }
-          '';
-        };
-
-        # set up user generated niri configuration
-        # this is split up so that the user can override builtins
-        home.file.".config/scrollde/niri.kdl" = {
-          force = true;
-          text = ''
-            // include the default scrollde niri config
-            include "./niri-defaults.kdl"
-
-            // set up custom output definitions defined by user and hosts
-            ${lib.concatStringsSep "\n" (
-              map (set: ''
-                output ${escapeKdl set.name} {${lib.concatStrings [
-                  (nullElse "" set.value.mode (mode: "\n  mode ${escapeKdl mode}"))
-                  (nullElse "" set.value.scale (scale: "\n  scale ${toString scale}"))
-                ]}
-                }'') (lib.attrsToList ctx.module.outputs)
-            )}
-
-            // spawn custom startup apps defined by user
-            ${lib.concatStringsSep "\n" (
-              map (cmd: "spawn-at-startup ${escapeKdl cmd}") ctx.module.spawn
-            )}
-
-            // set up custom key binds defined by users
-            binds {
-            ${lib.concatStrings (
-              map (set: ''
-                ''\  ${set.name} { spawn ${lib.concatStringsSep " " (
-                  map escapeKdl (
-                    if lib.isList set.value
-                    then set.value
-                    else [set.value]
-                  )
-                )}; }
-              '') (lib.attrsToList ctx.module.binds)
-            )}}
-
-            // apply custom niri config last so it can override anything
-            include "${
-              let
-                config = ctx.module.niriConfig;
-              in
-                if lib.isString config
-                then pkgs.writeText "config.kdl" config
-                else config
-            }";
-          '';
-        };
-
         # link to default niri config location for now
         home.file.".config/niri/config.kdl" = {
           force = true;
           text = ''
-            include "../scrollde/niri.kdl"
+            include "${niriUserConfig}"
           '';
         };
       };
