@@ -25,7 +25,7 @@
   };
 in
   iglib.module {
-    name = "scrollde";
+    name = "niri";
 
     nixos = ctx: {
       # use the shared config settings at the nixos level
@@ -35,7 +35,7 @@ in
       always = {
         igloo.home = {
           # pass through any shared options to all igloo users
-          igloo.modules.scrollde.outputs = ctx.module.outputs;
+          igloo.modules.niri.outputs = ctx.module.outputs;
         };
       };
     };
@@ -45,6 +45,11 @@ in
         outputs = outputsOption;
         spawn = lib.mkOption {
           description = "Apps to spawn when the environment starts up";
+          type = lib.types.listOf lib.types.str;
+          default = [];
+        };
+        spawnSh = lib.mkOption {
+          description = "Shell commands to run when the environment starts up";
           type = lib.types.listOf lib.types.str;
           default = [];
         };
@@ -73,21 +78,12 @@ in
         # create a default configuration for niri
         niriDefaultConfig = pkgs.writeText "niri-default.kdl" ''
           // include static defaults
-          include "${./niri.kdl}"
-
-          // use vicinae as the launcher for this environment
-          // the vicinae server has to be spawned at startup
-          spawn-sh-at-startup "${pkgs.vicinae}/bin/vicinae server"
+          include "${./niri-static.kdl}"
 
           // include some custom nix defined binds
           binds {
             // spawn alacritty as the terminal emulator
             Mod+T { spawn "${pkgs.alacritty}/bin/alacritty"; }
-
-            // use vicinae as the default application launcher
-            Mod+Space hotkey-overlay-title="Application Launcher" {
-                spawn "${pkgs.vicinae}/bin/vicinae" "toggle";
-            }
           }
         '';
 
@@ -109,6 +105,11 @@ in
           // spawn custom startup apps defined by user
           ${lib.concatStringsSep "\n" (
             map (cmd: "spawn-at-startup ${escapeKdl cmd}") ctx.module.spawn
+          )}
+
+          // spawn custom startup commands defined by user
+          ${lib.concatStringsSep "\n" (
+            map (cmd: "spawn-sh-at-startup ${escapeKdl cmd}") ctx.module.spawnSh
           )}
 
           // set up floating window definitions
@@ -137,12 +138,6 @@ in
         home.packages = [
           # add alacritty since its used as the terminal emulator
           pkgs.alacritty
-        ];
-
-        # persist the vicinae directory for now
-        # programatic config can be done later
-        igloo.modules.persist.dirs = [
-          ".local/share/vicinae"
         ];
 
         # link to default niri config location for now

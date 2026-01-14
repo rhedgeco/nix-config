@@ -1,6 +1,6 @@
 {...}: {
-  # set up ryande monitors for this host
-  igloo.modules.scrollde.outputs = {
+  # set up niri monitors for this host
+  igloo.modules.niri.outputs = {
     # laptop monitor
     "eDP-1" = {
       scale = 1.8;
