@@ -35,7 +35,7 @@ iglib.module {
       # create a wrapper desktop entry that runs hyprpicker
       xdg.desktopEntries."color-picker" = {
         name = "Color Picker";
-        comment = "Runs a color picker and copies the hex to the clipboard";
+        comment = "pick hex values to the clipboard";
         icon = ./icon.png;
         categories = ["Utility" "Core"];
         terminal = false;
