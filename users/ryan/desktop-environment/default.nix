@@ -1,6 +1,11 @@
 {...}: {
   igloo.modules.vicinae = {
     enable = true;
+    favorites = [
+      "applications:codium"
+      "applications:org.gnome.Nautilus"
+      "applications:firefox"
+    ];
   };
 
   igloo.modules.niri = {

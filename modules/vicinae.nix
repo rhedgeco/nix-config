@@ -19,24 +19,23 @@ iglib.module {
         type = lib.types.bool;
         default = false;
       };
+      favorites = lib.mkOption {
+        description = "Adds strings to the vicinae favorites list";
+        type = with lib.types; listOf str;
+        default = [];
+      };
     };
 
     enabled = let
-      # keyboard interactivity needs to be set to on_demand
-      # if close on focus loss is set, otherwise it wont work
-      keyboardInteractivity =
-        if ctx.module.closeOnFocusLoss
-        then "on_demand"
-        else "exclusive";
-
-      # create another home config file that uses the settings file as an import
-      defaultSettings = pkgs.writeText "settings.json" ''
-        {
-          "imports": [
-            "igloo.json"
-          ]
-        }
-      '';
+      settings = {
+        favorites = ctx.module.favorites;
+        close_on_focus_loss = ctx.module.closeOnFocusLoss;
+        pop_to_root_on_close = ctx.module.popToRootOnClose;
+        launcher_window.layer_shell.keyboard_interactivity =
+          if ctx.module.closeOnFocusLoss
+          then "on_demand"
+          else "exclusive";
+      };
     in {
       # add the vicinae package
       home.packages = [pkgs.vicinae];
@@ -50,21 +49,20 @@ iglib.module {
       # generate a settings file with all igloo settings in the vicinae directory
       home.file.".config/vicinae/igloo.json" = {
         force = true;
-        text = ''
-          {
-            "close_on_focus_loss": ${lib.boolToString ctx.module.closeOnFocusLoss},
-            "pop_to_root_on_close": ${lib.boolToString ctx.module.popToRootOnClose},
-            "launcher_window": {
-              "layer_shell": {
-                "keyboard_interactivity": "${keyboardInteractivity}"
-              }
-            }
-          }
+        # this is not necessary, but we use jq here to force a pretty print on the json
+        source = pkgs.runCommand "settings.json" {} ''
+          echo '${builtins.toJSON settings}' | ${pkgs.jq}/bin/jq '.' > $out
         '';
       };
 
       # write the default settings file to the correct location
-      igloo.create.".config/vicinae/settings.json" = defaultSettings;
+      igloo.create.".config/vicinae/settings.json" = pkgs.writeText "settings.json" ''
+        {
+          "imports": [
+            "igloo.json"
+          ]
+        }
+      '';
     };
   };
 }
