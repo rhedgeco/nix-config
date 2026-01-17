@@ -9,6 +9,7 @@
       with pkgs.vscode-extensions; [
         kdl-org.kdl # kdl extension for niri config
         dlasagno.rasi # rasi extension for rofi config
+        myriad-dreamin.tinymist # edit typst files
       ]
     );
   };
