@@ -22,7 +22,7 @@
         if [ -e "$TARGET" ] || [ -L "$TARGET" ]; then
           echo "Found existing file at $TARGET. Removing..."
           rm -rf $TARGET
-        else
+        fi
 
         # create the directory if it doesnt exist
         mkdir -p "$(dirname "$TARGET")"
