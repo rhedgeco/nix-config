@@ -147,6 +147,12 @@ in
             include "${niriUserConfig}"
           '';
         };
+
+        # create the kdl file instead of linking
+        # this allows external config changes from other sources
+        igloo.create.".config/niri/config.kdl" = pkgs.writeText "config.kdl" ''
+          include "${niriUserConfig}"
+        '';
       };
     };
   }
