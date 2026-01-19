@@ -18,18 +18,19 @@
         TARGET="${config.home.homeDirectory}/${target}"
         SOURCE="${source}"
 
-        # skip creating the target if it already exists
+        # remove the target file if it already exists
         if [ -e "$TARGET" ] || [ -L "$TARGET" ]; then
-          echo "Skipping igloo create $TARGET. Already exists."
+          echo "Found existing file at $TARGET. Removing..."
+          rm -rf $TARGET
         else
-          # create the directory if it doesnt exist
-          mkdir -p "$(dirname "$TARGET")"
 
-          # copy the new file and set permissions
-          verboseEcho "Creating $TARGET"
-          run cp -r --no-preserve=mode "$SOURCE" "$TARGET"
-          run chmod -R u+w "$TARGET"
-        fi
+        # create the directory if it doesnt exist
+        mkdir -p "$(dirname "$TARGET")"
+
+        # copy the new file and set permissions
+        verboseEcho "Creating $TARGET"
+        run cp -r --no-preserve=mode "$SOURCE" "$TARGET"
+        run chmod -R u+w "$TARGET"
       '';
     in
       lib.hm.dag.entryAfter ["writeBoundary"] (lib.concatStringsSep "\n" (
