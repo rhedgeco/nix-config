@@ -1,8 +1,11 @@
-{...}: {
+{pkgs, ...}: {
   igloo.modules.niri = {
     enable = true;
     spawn = [
       "discord"
+
+      # meme activate linux overlay
+      "${pkgs.activate-linux}/bin/activate-linux"
     ];
     spawnSh = [
       # launch the vicinae server at startup
