@@ -11,9 +11,17 @@
     enable = true;
     enableDefaultConfig = false;
     matchBlocks = {
-      "github.com" = {
+      "github-personal" = {
+        hostname = "github.com";
         user = "git";
-        identityFile = "~/.ssh/id_ed25519_github";
+        identityFile = "~/.ssh/id_ed25519_personal";
+        identitiesOnly = true;
+      };
+      "github-ford" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/id_ed25519_ford";
+        identitiesOnly = true;
       };
     };
   };
