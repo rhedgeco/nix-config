@@ -30,6 +30,7 @@
     direnv
     fd
     gum
+    tree
     inotify-tools
     just
     python3
