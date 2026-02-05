@@ -5,8 +5,11 @@
   security.rtkit.enable = true;
 
   environment.systemPackages = with pkgs; [
-    # add qpwgraph package for custom audio routing
-    qpwgraph
+    pavucontrol
+    # add helvum package for custom audio routing
+    helvum
+    # use carla as a audio plugin host
+    carla
   ];
 
   services.pipewire = {
