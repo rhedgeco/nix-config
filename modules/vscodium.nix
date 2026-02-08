@@ -21,10 +21,12 @@ iglib.module {
     enabled = let
       # define the default extensions
       defaultExtensions = with pkgs.vscode-extensions; [
-        jnoortheen.nix-ide
-        kamadorueda.alejandra
-        skellock.just
-        mkhl.direnv
+        kamadorueda.alejandra # nix formatter
+        jnoortheen.nix-ide # other nix tooling
+        skellock.just # just syntax highlighter
+        mkhl.direnv # direnv integration
+        tomoki1207.pdf # pdf viewer
+        streetsidesoftware.code-spell-checker # spell checker
       ];
 
       # define the extensions to enable if rust is enabled
