@@ -1,5 +1,8 @@
 {
     "rust-analyzer.linkedProjects": [
         "./inputs/yoink/Cargo.toml"
+    ],
+    "cSpell.words": [
+        "hyprpaper"
     ]
 }
