@@ -35,6 +35,7 @@
     just
     python3
     pciutils
+    ffmpeg
     (inputs.yoink.packages.${system}.default)
   ];
 in
