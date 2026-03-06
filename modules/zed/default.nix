@@ -53,7 +53,10 @@ iglib.module {
         minimap.show = "always";
         indent_guides.coloring = "indent_aware";
         git_panel.tree_view = true;
-        lsp.package-version-server.binary.path = lib.getExe pkgs.package-version-server;
+        lsp = {
+          package-version-server.binary.path = lib.getExe pkgs.package-version-server;
+          crates-lsp.binary.path = lib.getExe pkgs.crates-lsp;
+        };
       };
     };
   };
