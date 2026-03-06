@@ -1,0 +1,55 @@
+{
+  lib,
+  pkgs,
+  iglib,
+  ...
+}:
+iglib.module {
+  name = "zed";
+
+  home.enabled = {
+    igloo.modules.persist.dirs = [
+      # persist zed local share for now
+      # TODO: add declarative local share content
+      ".local/share/zed"
+
+      # persist copilot authorization
+      ".config/github-copilot"
+    ];
+
+    # enable and configure the zed editor
+    programs.zed-editor = {
+      enable = true;
+      extensions = [
+        "nix"
+        "toml"
+        "rust"
+      ];
+      extraPackages = with pkgs; [
+        nil
+        nixd
+      ];
+      themes = {
+        "Dark Modern" = ./theme.json;
+      };
+      userSettings = {
+        ui_font_size = 16;
+        buffer_font_size = 14;
+        theme = {
+          mode = "system";
+          dark = "Dark Modern";
+          light = "One Light";
+        };
+        icon_theme = "Catppuccin Mocha";
+        agent.default_model = {
+          provider = "copilot_chat";
+          model = "claude-opus-4.6";
+        };
+        minimap.show = "always";
+        indent_guides.coloring = "indent_aware";
+        git_panel.tree_view = true;
+        lsp.package-version-server.binary.path = lib.getExe pkgs.package-version-server;
+      };
+    };
+  };
+}
