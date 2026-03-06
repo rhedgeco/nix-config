@@ -24,6 +24,10 @@ iglib.module {
         "nix"
         "toml"
         "rust"
+        "xml"
+        "html"
+        "catppuccin-icons"
+        "crates-lsp"
       ];
       extraPackages = with pkgs; [
         nil
