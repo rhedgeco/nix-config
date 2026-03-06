@@ -23,10 +23,6 @@
       url = "path:./inputs/igloo";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    zed-nightly = {
-      url = "github:zed-industries/zed/nightly";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs:
