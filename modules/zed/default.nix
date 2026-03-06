@@ -49,6 +49,7 @@ iglib.module {
           provider = "copilot_chat";
           model = "claude-opus-4.6";
         };
+        title_bar.show_menus = true;
         minimap.show = "always";
         indent_guides.coloring = "indent_aware";
         git_panel.tree_view = true;
