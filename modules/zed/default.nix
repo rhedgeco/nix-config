@@ -28,6 +28,7 @@ iglib.module {
         "html"
         "catppuccin-icons"
         "crates-lsp"
+        "git-firefly"
       ];
       extraPackages = with pkgs; [
         nil
