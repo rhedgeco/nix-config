@@ -28,7 +28,6 @@
     vim
     nano
     direnv
-    devenv
     fd
     gum
     tree
@@ -37,6 +36,7 @@
     python3
     pciutils
     ffmpeg
+    (inputs.devenv.packages.${system}.devenv)
     (inputs.yoink.packages.${system}.default)
   ];
 in
