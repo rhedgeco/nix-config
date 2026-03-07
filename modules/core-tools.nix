@@ -28,6 +28,7 @@
     vim
     nano
     direnv
+    devenv
     fd
     gum
     tree
