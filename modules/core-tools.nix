@@ -36,6 +36,7 @@
     python3
     pciutils
     ffmpeg
+    gnome-disk-utility
     (inputs.devenv.packages.${system}.devenv)
     (inputs.yoink.packages.${system}.default)
   ];
