@@ -23,7 +23,6 @@ iglib.module {
       extensions = [
         "nix"
         "toml"
-        "tombi"
         "rust"
         "xml"
         "html"
