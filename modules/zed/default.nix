@@ -32,6 +32,7 @@ iglib.module {
       extraPackages = with pkgs; [
         nil
         nixd
+        alejandra
       ];
       themes = {
         "Dark Modern" = ./theme.json;
@@ -62,6 +63,7 @@ iglib.module {
         lsp = {
           package-version-server.binary.path = lib.getExe pkgs.package-version-server;
           crates-lsp.binary.path = lib.getExe pkgs.crates-lsp;
+          nil.initialization_options.formatting.command = ["alejandra"];
         };
       };
     };
