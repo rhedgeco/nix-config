@@ -45,9 +45,15 @@ iglib.module {
           light = "One Light";
         };
         icon_theme = "Catppuccin Mocha";
-        agent.default_model = {
-          provider = "copilot_chat";
-          model = "claude-opus-4.6";
+        agent = {
+          default_model = {
+            provider = "copilot_chat";
+            model = "claude-opus-4.6";
+          };
+          thread_summary_model = {
+            provider = "copilot_chat";
+            model = "claude-sonnet-4.6";
+          };
         };
         title_bar.show_menus = true;
         minimap.show = "always";
