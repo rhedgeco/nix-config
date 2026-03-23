@@ -6,8 +6,8 @@
 
   environment.systemPackages = with pkgs; [
     pavucontrol
-    # add helvum package for custom audio routing
-    helvum
+    # add crosspipe package for custom audio routing
+    crosspipe
     # use carla as a audio plugin host
     carla
   ];
