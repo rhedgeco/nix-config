@@ -10,7 +10,6 @@
     printing-3d.enable = true;
     rust.enable = true;
     zed.enable = true;
-    ford-dev.enable = true;
     greetd.command = "${pkgs.niri}/bin/niri-session";
   };
 }
