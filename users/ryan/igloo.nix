@@ -10,6 +10,7 @@
     printing-3d.enable = true;
     rust.enable = true;
     zed.enable = true;
+    spotify.enable = true;
     greetd.command = "${pkgs.niri}/bin/niri-session";
   };
 }
