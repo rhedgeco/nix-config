@@ -26,6 +26,7 @@ iglib.module {
         "rust"
         "xml"
         "html"
+        "just"
         "catppuccin-icons"
         "crates-lsp"
         "git-firefly"
