@@ -12,6 +12,7 @@
       grub.enable = true;
       steam.enable = true;
       flatpak.enable = true;
+      kde-connect.enable = true;
       boot.device = "/dev/disk/by-label/BOOT";
 
       greetd = {
