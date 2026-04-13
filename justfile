@@ -15,26 +15,26 @@ check:
 
 # opens a nix repl shell with the current flake loaded
 inspect target=".":
-    nix repl '{{target}}?submodules=1'
+    nix repl '{{ target }}?submodules=1'
 
 # builds and enables the `host` configuration for next boot (defaults to the current host)
 boot host=(`hostname`):
-    sudo nixos-rebuild --flake '.?submodules=1#{{host}}' boot
+    sudo nixos-rebuild --flake '.?submodules=1#{{ host }}' boot
     @gum confirm "Reboot Now?" --default="No"
     @reboot
 
 # builds and activates the `host` configuration (defaults to the current host)
 switch host=(`hostname`):
-    sudo nixos-rebuild --flake '.?submodules=1#{{host}}' switch
+    sudo nixos-rebuild --flake '.?submodules=1#{{ host }}' switch
 
 # does a dry build of the `host` configuration (defaults to the current host)
 dry-build host=(`hostname`):
-    nixos-rebuild --flake '.?submodules=1#{{host}}' dry-build
+    nixos-rebuild --flake '.?submodules=1#{{ host }}' dry-build
 
 # collects all leftover nix garbage older than `period` (defaults to 30d)
 clean period="30d":
-    @gum confirm "Are you sure you want to delete nix content older than {{period}}?" --default="No"
-    nix-collect-garbage --delete-older-than {{period}}
+    @gum confirm "Are you sure you want to delete nix content older than {{ period }}?" --default="No"
+    nix-collect-garbage --delete-older-than {{ period }}
 
 # deletes and removes everything not related to the current running system
 purge:
@@ -43,4 +43,4 @@ purge:
 
 # yoinks all files related to `user` (defaults to the current user)
 yoink user=(`whoami`):
-    yoink -r ./users/{{user}}
+    yoink -r ./users/{{ user }}

@@ -1,0 +1,10 @@
+host := `hostname -s`
+
+help:
+    @just --list
+
+default:
+    @just help
+
+build host=host *args:
+    nixos-rebuild --flake '.?submodules=1#{{ host }}' dry-build {{ args }}
