@@ -8,6 +8,7 @@
       den.aspects.fish
       den.aspects.niri
       den.aspects.rust
+      den.aspects.zed
     ];
   };
 }
