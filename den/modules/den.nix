@@ -5,11 +5,6 @@
 }: {
   imports = [inputs.den.flakeModule];
 
-  den.ctx.user.includes = [
-    # Allows the user and host to contribute configuration to each other via `provides`
-    den.provides.mutual-provider
-  ];
-
   den.default = {
     includes = [
       # Automatically sets the host’s name to the one defined in den.hosts.<name>.hostName. Works on NixOS/Darwin/WSL.
