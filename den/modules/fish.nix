@@ -1,8 +1,7 @@
 {den, ...}: {
   den.aspects.fish = {
     includes = [
-      (den.provides.user-shell "fish") # set user shell to fish
-      den.aspects.direnv # fishy shell uses direnv
+      den.aspects.direnv
     ];
 
     persist-home.directories = [
