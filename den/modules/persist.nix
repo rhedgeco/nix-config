@@ -6,8 +6,8 @@
 }: let
   # import impermanence for a host if it defines a persist path
   impermanentHost = {host, ...}:
-    lib.optionalAttrs (host.persist.path != null) {
-      ${host.class} = {...}: {
+    lib.optionalAttrs (host.persist.path != null && host.class == "nixos") {
+      nixos = {...}: {
         imports = [inputs.impermanence.nixosModules.impermanence];
       };
     };
@@ -21,9 +21,9 @@
     };
 
   # create a class that forwards a hosts persistent system paths to impermanence
-  persistHost = {host, ...}: {aspect-chain, ...}:
+  persistNixosHost = {host, ...}: {aspect-chain, ...}:
     den.provides.forward {
-      each = lib.optional (host.persist.path != null) host;
+      each = lib.optional (host.persist.path != null && host.class == "nixos") host;
       fromClass = _: "persist-host";
       intoClass = _: host.class;
       intoPath = _: [
@@ -35,13 +35,13 @@
     };
 
   # create a class that forwards a users persistent home files to host impermanence
-  persistUser = {
+  persistNixosUser = {
     host,
     user,
     ...
   }: {aspect-chain, ...}:
     den.provides.forward {
-      each = lib.optional (user.persist && host.persist.path != null) user;
+      each = lib.optional (user.persist && host.persist.path != null && host.class == "nixos") user;
       fromClass = _: "persist-home";
       intoClass = _: host.class;
       intoPath = _: [
@@ -93,7 +93,7 @@ in {
     };
   };
 
-  den.ctx.host.includes = [impermanentHost persistHost];
+  den.ctx.host.includes = [impermanentHost persistNixosHost];
   den.ctx.home.includes = [impermanentHome persistHome];
-  den.ctx.user.includes = [persistUser];
+  den.ctx.user.includes = [persistNixosUser];
 }
