@@ -12,6 +12,7 @@
     zed.enable = true;
     spotify.enable = true;
     flatpak.enable = true;
+    noctalia.enable = true;
     greetd.command = "${pkgs.niri}/bin/niri-session";
   };
 }

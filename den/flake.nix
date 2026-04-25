@@ -6,8 +6,9 @@
     }).config.flake;
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    import-tree.url = "github:vic/import-tree";
     den.url = "github:vic/den";
+    impermanence.url = "github:nix-community/impermanence";
+    import-tree.url = "github:vic/import-tree";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 }

@@ -2,7 +2,7 @@
   den.aspects.ryan = {
     includes = [
       den.provides.primary-user
-      (den.provides.user-shell "fish")
+      den.aspects.fishy-shell
     ];
 
     homeManager = {pkgs, ...}: {

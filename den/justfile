@@ -7,4 +7,4 @@ default:
     @just help
 
 build host=host *args:
-    nixos-rebuild --flake '.?submodules=1#{{ host }}' dry-build {{ args }}
+    nixos-rebuild --flake '.#{{ host }}' dry-build {{ args }}
