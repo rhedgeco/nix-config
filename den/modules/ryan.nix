@@ -5,6 +5,7 @@
       (den.provides.user-shell "fish")
       den.aspects.fish
       den.aspects.niri
+      den.aspects.discord
     ];
   };
 }
