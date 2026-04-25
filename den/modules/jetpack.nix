@@ -11,6 +11,7 @@
       (den.provides.tty-autologin "ryan")
       den.aspects.grub
       den.aspects.niri
+      den.aspects.printing-3d
     ];
 
     nixos = {pkgs, ...}: {
