@@ -1,9 +1,5 @@
-{den, ...}: {
+{...}: {
   den.aspects.fish = {
-    includes = [
-      den.aspects.direnv
-    ];
-
     persist-home.directories = [
       # persist fish history
       # https://github.com/fish-shell/fish-shell/issues/10730
