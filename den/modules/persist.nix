@@ -6,7 +6,7 @@
 }: let
   # import impermanence for a host if it defines a persist path
   impermanentHost = {host, ...}:
-    lib.optionalAttrs (host.persist.path != null && host.class == "nixos") {
+    lib.optionalAttrs (host.persist.store != null && host.class == "nixos") {
       nixos = {...}: {
         imports = [inputs.impermanence.nixosModules.impermanence];
       };
@@ -14,7 +14,7 @@
 
   # import the home-manager impermanence module for standalone homes if it defines a persist path
   impermanentHome = {home, ...}:
-    lib.optionalAttrs (home.persist.path != null) {
+    lib.optionalAttrs (home.persist.store != null) {
       ${home.class} = {...}: {
         imports = [inputs.impermanence.homeManagerModules.impermanence];
       };
@@ -23,13 +23,13 @@
   # create a class that forwards a hosts persistent system paths to impermanence
   persistNixosHost = {host, ...}: {aspect-chain, ...}:
     den.provides.forward {
-      each = lib.optional (host.persist.path != null && host.class == "nixos") host;
+      each = lib.optional (host.persist.store != null && host.class == "nixos") host;
       fromClass = _: "persist-host";
       intoClass = _: host.class;
       intoPath = _: [
         "environment"
         "persistence"
-        host.persist.path
+        host.persist.store
       ];
       fromAspect = _: lib.head aspect-chain;
     };
@@ -41,13 +41,13 @@
     ...
   }: {aspect-chain, ...}:
     den.provides.forward {
-      each = lib.optional (user.persist && host.persist.path != null && host.class == "nixos") user;
+      each = lib.optional (user.persist && host.persist.store != null && host.class == "nixos") user;
       fromClass = _: "persist-home";
       intoClass = _: host.class;
       intoPath = _: [
         "environment"
         "persistence"
-        host.persist.path
+        host.persist.store
         "users"
         user.userName
       ];
@@ -58,20 +58,28 @@
   # this class name should match the one found in persistUser so that it picks up the same persist paths
   persistHome = {home, ...}: {aspect-chain, ...}:
     den.provides.forward {
-      each = lib.optional (home.persist.path != null) home;
+      each = lib.optional (home.persist.store != null) home;
       fromClass = _: "persist-home";
       intoClass = _: home.class;
       intoPath = _: [
         "home"
         "persistence"
-        home.persist.path
+        home.persist.store
       ];
       fromAspect = _: lib.head aspect-chain;
     };
 in {
   den.schema.host = {
-    options.persist.path = lib.mkOption {
-      description = "Path to persistent storage. Enables impermanence when set.";
+    options.persist.store = lib.mkOption {
+      description = "Path to persistent storage location.";
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+    };
+  };
+
+  den.schema.home = {
+    options.persist.store = lib.mkOption {
+      description = "Path to persistent storage location.";
       type = lib.types.nullOr lib.types.str;
       default = null;
     };
@@ -79,17 +87,9 @@ in {
 
   den.schema.user = {
     options.persist = lib.mkOption {
-      description = "Enables the user to persist its defined home directory items.";
+      description = "Enable user to persist its home directory items.";
       type = lib.types.bool;
       default = false;
-    };
-  };
-
-  den.schema.home = {
-    options.persist.path = lib.mkOption {
-      description = "Path to persistent storage. Enables impermanence when set.";
-      type = lib.types.nullOr lib.types.str;
-      default = null;
     };
   };
 

@@ -1,7 +1,7 @@
 {den, ...}: {
   # configure the jetpack system
   den.hosts.x86_64-linux.jetpack = {
-    persist.path = "/persist";
+    persist.store = "/persist";
     users.ryan.persist = true;
   };
 
