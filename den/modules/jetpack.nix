@@ -14,9 +14,6 @@
 
     nixos = {pkgs, ...}: {
       services.getty.loginProgram = "${pkgs.niri}/bin/niri-session";
-      environment.systemPackages = [pkgs.hello];
-      boot.loader.grub.enable = false; # TODO: remove for real hardware
-      fileSystems."/".device = "/dev/null";
     };
   };
 }
