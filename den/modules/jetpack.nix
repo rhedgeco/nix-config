@@ -8,8 +8,9 @@
   # include system specific configuration in the jetpack aspect
   den.aspects.jetpack = {
     includes = [
-      den.aspects.grub
       (den.provides.tty-autologin "ryan")
+      den.aspects.grub
+      den.aspects.niri
     ];
 
     nixos = {pkgs, ...}: {
