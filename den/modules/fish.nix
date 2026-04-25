@@ -1,5 +1,5 @@
 {den, ...}: {
-  den.aspects.fishy-shell = {
+  den.aspects.fish = {
     includes = [
       (den.provides.user-shell "fish") # set user shell to fish
       den.aspects.direnv # fishy shell uses direnv
