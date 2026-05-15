@@ -10,21 +10,15 @@
     homeManager = {pkgs, ...}: {
       programs.fish = {
         enable = true;
-
         interactiveShellInit = ''
           # disable the fish greeting
           set fish_greeting
 
           # load starship shell hook
           ${pkgs.starship}/bin/starship init fish | source
-
-          # load direnv shell hook
-          ${pkgs.direnv}/bin/direnv hook fish | source
-
-          # load devenv shell hook
-          ${pkgs.devenv}/bin/devenv hook fish | source
         '';
 
+        # include some fish plugins by default
         plugins = [
           # GRC: command colorizer
           {

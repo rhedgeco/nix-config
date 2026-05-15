@@ -10,14 +10,9 @@
       # use fish shell as primary shell
       (den.batteries.user-shell "fish")
       den.aspects.fish
+
+      # development tools
+      den.aspects.devenv
     ];
-
-    homeManager = {pkgs, ...}: {
-      home.packages = [pkgs.htop];
-    };
-
-    provides.to-hosts.nixos = {pkgs, ...}: {
-      environment.systemPackages = [pkgs.vim];
-    };
   };
 }
