@@ -13,6 +13,7 @@
 
       # development tools
       den.aspects.devenv
+      den.aspects.direnv
     ];
   };
 }
