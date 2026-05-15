@@ -15,6 +15,9 @@
       den.aspects.devenv
       den.aspects.direnv
       den.aspects.rust
+
+      # other tools
+      den.aspects.discord
     ];
   };
 }
