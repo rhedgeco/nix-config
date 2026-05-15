@@ -17,13 +17,13 @@
         options.persist = {
           directories = lib.mkOption {
             description = "User directories to persist.";
-            type = lib.types.listOf (lib.types.either lib.types.str lib.types.attrs);
+            type = lib.types.listOf lib.types.anything;
             default = [];
           };
 
           files = lib.mkOption {
             description = "User files to persist.";
-            type = lib.types.listOf (lib.types.either lib.types.str lib.types.attrs);
+            type = lib.types.listOf lib.types.anything;
             default = [];
           };
         };
@@ -39,21 +39,22 @@
         options.persist = {
           directories = lib.mkOption {
             description = "System directories to persist.";
-            type = lib.types.listOf (lib.types.either lib.types.str lib.types.attrs);
+            type = lib.types.listOf lib.types.anything;
             default = [];
           };
 
           files = lib.mkOption {
             description = "System files to persist.";
-            type = lib.types.listOf (lib.types.either lib.types.str lib.types.attrs);
+            type = lib.types.listOf lib.types.anything;
             default = [];
           };
         };
 
+        # pass all 'persist' configuration to impermanence
         config.environment.persistence.${host.persist.store} = {
           inherit (config.persist) directories files;
 
-          # propagate each home-manager user's persist options into impermanence
+          # propagate each home-manager user's persist options up to the system level
           users = lib.mapAttrs (_name: userCfg: {
             inherit (userCfg.persist) directories files;
           }) (lib.filterAttrs (_: userCfg: userCfg ? persist) (config.home-manager.users or {}));
