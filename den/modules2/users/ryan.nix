@@ -14,6 +14,7 @@
       # development tools
       den.aspects.devenv
       den.aspects.direnv
+      den.aspects.rust
     ];
   };
 }
