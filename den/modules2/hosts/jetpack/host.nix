@@ -7,7 +7,7 @@
   den.aspects.jetpack = {
     includes = [
       # automatically log in as the ryan user
-      (den.provides.tty-autologin "ryan")
+      (den.batteries.tty-autologin "ryan")
     ];
 
     nixos = {pkgs, ...}: {
