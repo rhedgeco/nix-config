@@ -1,13 +1,13 @@
 {
   den.aspects.fish = {
-    persist-home.directories = [
-      # persist fish history
-      # cannot persist only fish_history due to issue here
-      # https://github.com/fish-shell/fish-shell/issues/10730
-      ".local/share/fish"
-    ];
-
     homeManager = {pkgs, ...}: {
+      persist.directories = [
+        # persist fish history
+        # cannot persist only fish_history due to issue here
+        # https://github.com/fish-shell/fish-shell/issues/10730
+        ".local/share/fish"
+      ];
+
       programs.fish = {
         enable = true;
         interactiveShellInit = ''

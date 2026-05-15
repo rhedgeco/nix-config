@@ -1,56 +1,68 @@
 {
-  den,
   lib,
   inputs,
   ...
 }: let
-  # helper functions for inspecting host/user schemas
-  isNixos = host: host.class == "nixos";
+  # utility functions for getting schema info
   hasStore = host: host.persist.store != null;
 
-  # Import impermanence NixOS module when a host has persist configured
-  importImpermanence = {host, ...}: {
-    nixos = lib.optionalAttrs (isNixos host && hasStore host) {
-      imports = [inputs.impermanence.nixosModules.impermanence];
-    };
-  };
-
-  # Forward persist-nixos class into environment.persistence.<store> on NixOS hosts
-  persistNixos = {host, ...}:
-    den.batteries.forward {
-      each = lib.optional (isNixos host && hasStore host) host;
-      fromClass = _: "persist-nixos";
-      intoClass = _: host.class;
-      intoPath = _: [
-        "environment"
-        "persistence"
-        host.persist.store
-      ];
-      fromAspect = _: host.aspect;
-    };
-
-  # Forward persist-home class from user aspects into environment.persistence.<store>.users.<userName> on NixOS hosts
-  persistNixosUser = {
+  # define persist options on home-manager users
+  persistUser = {
     host,
     user,
     ...
   }:
-    den.batteries.forward {
-      each = lib.optional (isNixos host && hasStore host && user.persist) user;
-      fromClass = _: "persist-home";
-      intoClass = _: host.class;
-      intoPath = _: [
-        "environment"
-        "persistence"
-        host.persist.store
-        "users"
-        user.userName
-      ];
-      fromAspect = _: user.aspect;
+    lib.optionalAttrs (hasStore host && user.persist) {
+      homeManager = {
+        options.persist = {
+          directories = lib.mkOption {
+            description = "User directories to persist.";
+            type = lib.types.listOf (lib.types.either lib.types.str lib.types.attrs);
+            default = [];
+          };
+
+          files = lib.mkOption {
+            description = "User files to persist.";
+            type = lib.types.listOf (lib.types.either lib.types.str lib.types.attrs);
+            default = [];
+          };
+        };
+      };
+    };
+
+  # import impermanence and define persist options on nixos hosts
+  persistHost = {host, ...}:
+    lib.optionalAttrs (hasStore host) {
+      nixos = {config, ...}: {
+        imports = [inputs.impermanence.nixosModules.impermanence];
+
+        options.persist = {
+          directories = lib.mkOption {
+            description = "System directories to persist.";
+            type = lib.types.listOf (lib.types.either lib.types.str lib.types.attrs);
+            default = [];
+          };
+
+          files = lib.mkOption {
+            description = "System files to persist.";
+            type = lib.types.listOf (lib.types.either lib.types.str lib.types.attrs);
+            default = [];
+          };
+        };
+
+        config.environment.persistence.${host.persist.store} = {
+          inherit (config.persist) directories files;
+
+          # propagate each home-manager user's persist options into impermanence
+          users = lib.mapAttrs (_name: userCfg: {
+            inherit (userCfg.persist) directories files;
+          }) (lib.filterAttrs (_: userCfg: userCfg ? persist) (config.home-manager.users or {}));
+        };
+      };
     };
 in {
   den.schema.host = {
-    includes = [importImpermanence persistNixos];
+    includes = [persistHost];
     options.persist.store = lib.mkOption {
       description = "Path to persistent storage location.";
       type = lib.types.nullOr lib.types.str;
@@ -59,7 +71,7 @@ in {
   };
 
   den.schema.user = {
-    includes = [persistNixosUser];
+    includes = [persistUser];
     options.persist = lib.mkOption {
       description = "Enable user to persist its home directory items.";
       type = lib.types.bool;
