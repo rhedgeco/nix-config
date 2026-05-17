@@ -13,6 +13,9 @@
 
       # use niri as the main desktop environment
       den.aspects.niri
+
+      # include steam for gaming on this system
+      den.aspects.steam
     ];
 
     nixos = {pkgs, ...}: {
