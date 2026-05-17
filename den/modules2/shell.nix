@@ -1,4 +1,5 @@
 {
+  # include all shell settings and tools by default
   den.default = {
     nixos = {pkgs, ...}: {
       # add bash to the environment shells by default
