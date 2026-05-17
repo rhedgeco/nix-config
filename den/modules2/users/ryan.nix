@@ -8,7 +8,7 @@
       (den.batteries.user-shell "fish")
       den.aspects.fish
 
-      # development tools
+      # software dev tools
       den.aspects.devenv
       den.aspects.direnv
       den.aspects.embedded
@@ -16,6 +16,7 @@
 
       # other tools and apps
       den.aspects.discord
+      den.aspects.printing-3d
     ];
   };
 }
