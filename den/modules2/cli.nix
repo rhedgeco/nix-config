@@ -2,16 +2,16 @@
   cliTools = pkgs:
     with pkgs; [
       bat
-      vim
-      nano
       fd
+      ffmpeg
       gum
-      tree
       inotify-tools
       just
-      python3
+      nano
       pciutils
-      ffmpeg
+      python3
+      tree
+      vim
     ];
 in {
   den.default = {
