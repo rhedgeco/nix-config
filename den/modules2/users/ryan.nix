@@ -11,6 +11,7 @@
       # development tools
       den.aspects.devenv
       den.aspects.direnv
+      den.aspects.embedded
       den.aspects.rust
 
       # other tools and apps
