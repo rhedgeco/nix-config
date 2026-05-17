@@ -16,6 +16,10 @@
     ];
 
     nixos = {pkgs, ...}: {
+      # use framework13 hardware settings from nixos hardware repo
+      imports = [inputs.nixos-hardware.nixosModules.framework-13-7040-amd];
+
+      # other hardware settings
       time.timeZone = "America/Los_Angeles";
       hardware.bluetooth.enable = true;
       services.hardware.bolt.enable = true;
@@ -24,9 +28,6 @@
       boot.initrd.kernelModules = [];
       boot.kernelModules = ["kvm-amd"];
       boot.extraModulePackages = [];
-
-      # use framework13 hardware settings from nixos hardware repo
-      imports = [inputs.nixos-hardware.nixosModules.framework-13-7040-amd];
 
       # set the hardware clock to local time to play nicely with windows dual boot
       time.hardwareClockInLocalTime = true;
