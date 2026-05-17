@@ -1,5 +1,5 @@
 {...}: let
-  cliTools = pkgs:
+  mkTools = pkgs:
     with pkgs; [
       bat
       fd
@@ -16,11 +16,11 @@
 in {
   den.default = {
     nixos = {pkgs, ...}: {
-      environment.systemPackages = cliTools pkgs;
+      environment.systemPackages = mkTools pkgs;
     };
 
     homeManager = {pkgs, ...}: {
-      home.packages = cliTools pkgs;
+      home.packages = mkTools pkgs;
     };
   };
 }
