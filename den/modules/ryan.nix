@@ -11,6 +11,7 @@
       # software dev tools
       den.aspects.devenv
       den.aspects.direnv
+      den.aspects.docker
       den.aspects.embedded
       den.aspects.rust
       den.aspects.zed
