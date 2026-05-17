@@ -1,27 +1,24 @@
-{...}: {
+{
   den.aspects.fish = {
-    persist-home.directories = [
-      # persist fish history
-      # https://github.com/fish-shell/fish-shell/issues/10730
-      # ^ prevents syncing only fish_history file
-      ".local/share/fish"
-    ];
-
     homeManager = {pkgs, ...}: {
+      persist.directories = [
+        # persist fish history
+        # cannot persist only fish_history due to issue here
+        # https://github.com/fish-shell/fish-shell/issues/10730
+        ".local/share/fish"
+      ];
+
       programs.fish = {
         enable = true;
-
         interactiveShellInit = ''
           # disable the fish greeting
           set fish_greeting
 
           # load starship shell hook
           ${pkgs.starship}/bin/starship init fish | source
-
-          # load direnv shell hook
-          ${pkgs.direnv}/bin/direnv hook fish | source
         '';
 
+        # include some fish plugins by default
         plugins = [
           # GRC: command colorizer
           {

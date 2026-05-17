@@ -1,7 +1,7 @@
-{...}: {
+{
   den.aspects.printing-3d = {
-    nixos = {pkgs, ...}: {
-      environment.systemPackages = with pkgs; [
+    homeManager = {pkgs, ...}: {
+      home.packages = with pkgs; [
         prusa-slicer
         printrun
       ];

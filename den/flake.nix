@@ -1,7 +1,7 @@
 {
   outputs = inputs:
     (inputs.nixpkgs.lib.evalModules {
-      modules = [(inputs.import-tree ./modules2)];
+      modules = [(inputs.import-tree ./modules)];
       specialArgs = {inherit inputs;};
     }).config.flake;
 

@@ -1,4 +1,4 @@
-{...}: {
+{
   den.aspects.embedded = {user, ...}: {
     homeManager = {pkgs, ...}: {
       home.packages = with pkgs; [
@@ -7,7 +7,7 @@
       ];
     };
 
-    nixos = {pkgs, ...}: {
+    provides.to-hosts.nixos = {pkgs, ...}: {
       services.udev.packages = with pkgs; [
         saleae-logic-2
         stlink-gui

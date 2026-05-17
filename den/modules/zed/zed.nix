@@ -5,17 +5,17 @@
 }: {
   den.aspects.zed = {
     includes = [
-      # include copilot to persist auth
+      # include copilot for ai integration
       den.aspects.copilot
     ];
 
-    persist-home.directories = [
-      # persist zed local share for now
-      # TODO: add declarative local share content
-      ".local/share/zed"
-    ];
-
     homeManager = {pkgs, ...}: {
+      persist.directories = [
+        # persist zed local share for now
+        # TODO: add declarative local share content
+        ".local/share/zed"
+      ];
+
       # enable and configure the zed editor
       programs.zed-editor = {
         enable = true;

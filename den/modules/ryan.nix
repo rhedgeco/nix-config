@@ -1,14 +1,23 @@
 {den, ...}: {
   den.aspects.ryan = {
     includes = [
-      den.provides.primary-user
-      (den.provides.user-shell "fish")
-      den.aspects.discord
-      den.aspects.embedded
+      # make ryan always a primary user
+      den.batteries.primary-user
+
+      # use fish shell
+      (den.batteries.user-shell "fish")
       den.aspects.fish
-      den.aspects.niri
+
+      # software dev tools
+      den.aspects.devenv
+      den.aspects.direnv
+      den.aspects.embedded
       den.aspects.rust
       den.aspects.zed
+
+      # other tools and apps
+      den.aspects.discord
+      den.aspects.printing-3d
     ];
   };
 }
