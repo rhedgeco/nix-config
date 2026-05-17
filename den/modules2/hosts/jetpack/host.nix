@@ -8,6 +8,9 @@
     includes = [
       # automatically log in as the ryan user
       (den.batteries.tty-autologin "ryan")
+
+      # use grub for boot management
+      den.aspects.grub
     ];
 
     nixos = {pkgs, ...}: {
