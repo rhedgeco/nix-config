@@ -1,6 +1,17 @@
-{
+{den, ...}: {
   den.aspects.jetpack = {
-    nixos = {...}: {
+    includes = [
+      # use grub for boot management
+      den.aspects.grub
+
+      # automatically log in as the ryan user
+      (den.batteries.tty-autologin "ryan")
+
+      # use niri as the main desktop environment
+      den.aspects.niri
+    ];
+
+    nixos = {pkgs, ...}: {
       time.timeZone = "America/Los_Angeles";
       hardware.bluetooth.enable = true;
       services.hardware.bolt.enable = true;
@@ -13,7 +24,10 @@
       # set the hardware clock to local time to play nicely with windows dual boot
       time.hardwareClockInLocalTime = true;
 
-      # persist some system files
+      # use niri as the default getty login session
+      services.getty.loginProgram = "${pkgs.niri}/bin/niri-session";
+
+      # persist some system files between boots
       persist = {
         files = [
           "/etc/machine-id"
