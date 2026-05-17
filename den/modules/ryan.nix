@@ -19,6 +19,7 @@
       # other tools and apps
       den.aspects.discord
       den.aspects.printing-3d
+      den.aspects.spotify
     ];
   };
 }
