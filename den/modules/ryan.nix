@@ -17,6 +17,7 @@
       den.aspects.zed
 
       # other tools and apps
+      den.aspects.color-picker
       den.aspects.discord
       den.aspects.printing-3d
       den.aspects.spotify
