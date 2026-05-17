@@ -27,6 +27,9 @@ in {
 
     # apply duplicate settings to both nixos and home manager
     (apply ["nixos" "homeManager"] {
+      # always allow unfree packages by default
+      # i dont care enough to deal with that every time
+      nixpkgs.config.allowUnfree = true;
       # sets the system 'nixpkgs' path to match the one used in this flake
       # this means when the <nixpkgs> syntax is used it will match system packages
       nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
