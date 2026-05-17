@@ -13,6 +13,7 @@
       den.aspects.direnv
       den.aspects.embedded
       den.aspects.rust
+      den.aspects.zed
 
       # other tools and apps
       den.aspects.discord
