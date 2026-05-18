@@ -12,6 +12,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
     };
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      flake = false;
+    };
   };
 
   outputs = inputs: let

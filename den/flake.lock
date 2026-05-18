@@ -162,7 +162,8 @@
         "import-tree": "import-tree",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": "rust-overlay",
+        "vicinae-extensions": "vicinae-extensions"
       }
     },
     "rust-overlay": {
@@ -180,6 +181,22 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "vicinae-extensions": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779109629,
+        "narHash": "sha256-/51hp2uBHNE6V41IZZNlsgIY4mjplNWitv04W9qIGdw=",
+        "owner": "vicinaehq",
+        "repo": "extensions",
+        "rev": "758db79f7910b59350a91b633bb0b119ad8d0d21",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vicinaehq",
+        "repo": "extensions",
         "type": "github"
       }
     }
