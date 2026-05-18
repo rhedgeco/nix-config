@@ -1,9 +1,5 @@
 {
-  outputs = inputs:
-    (inputs.nixpkgs.lib.evalModules {
-      modules = [(inputs.import-tree ./modules)];
-      specialArgs = {inherit inputs;};
-    }).config.flake;
+  description = "ryan's nix system configuration";
 
   inputs = {
     den.url = "github:denful/den";
@@ -17,4 +13,14 @@
       url = "github:nix-community/home-manager";
     };
   };
+
+  outputs = inputs: let
+    lib =
+      inputs.nixpkgs.lib.extend
+      (final: prev: (import ./lib.nix final));
+  in
+    (lib.evalModules {
+      modules = [(inputs.import-tree [./hosts.nix ./modules])];
+      specialArgs = {inherit inputs;};
+    }).config.flake;
 }
