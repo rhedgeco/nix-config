@@ -21,18 +21,6 @@
       den.aspects.discord
       den.aspects.printing-3d
       den.aspects.spotify
-      den.aspects.vicinae
     ];
-
-    homeManager = {
-      # use some default favorites with vicinae
-      vicinae.favorites = [
-        "applications:dev.zed.Zed.desktop"
-        "applications:discord"
-        "applications:firefox"
-        "applications:org.gnome.Nautilus"
-        "applications:steam"
-      ];
-    };
   };
 }
