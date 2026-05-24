@@ -35,6 +35,10 @@ iglib.module {
       # persist the direnv cache
       # contains allow list, etc...
       ".local/share/direnv"
+
+      # persist the devenv cache
+      # contains allow list, etc...
+      ".local/share/devenv"
     ];
 
     # enable and configure fish shell
