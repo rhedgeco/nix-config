@@ -79,6 +79,7 @@ in
         niriDefaultConfig = pkgs.writeText "niri-default.kdl" ''
           // include static defaults
           include "${./niri-static.kdl}"
+          include "${./water-window.kdl}"
 
           // include some custom nix defined binds
           binds {
