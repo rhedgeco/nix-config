@@ -22,6 +22,7 @@ iglib.module {
     # add some packages required by fishy
     home.packages = with pkgs; [
       grc # used by fish shell for colorizing
+      devenv
     ];
 
     # ensure some data for fish shell is persisted between boots

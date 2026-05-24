@@ -27,7 +27,6 @@
     bat
     vim
     nano
-    devenv
     direnv
     fd
     gum
