@@ -55,6 +55,7 @@ in {
 
     # if impermanence is enabled, back up old root directories on boot
     # this will create a fresh root each time and store backups for 30 days
+    boot.initrd.systemd.enable = false; # TODO: update to systemd stage 1, force old version for now
     boot.initrd.postDeviceCommands = lib.mkIf impermanence.enable (lib.mkAfter ''
       mkdir /btrfs
       mount -o compress=zstd ${btrfs.device} /btrfs
