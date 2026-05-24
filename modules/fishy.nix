@@ -49,6 +49,9 @@ iglib.module {
 
         # load direnv shell hook
         ${pkgs.direnv}/bin/direnv hook fish | source
+
+        # load direnv shell hook
+        ${pkgs.devenv}/bin/devenv hook fish | source
       '';
 
       plugins = [
