@@ -42,13 +42,23 @@ iglib.module {
       userSettings = {
         ui_font_size = 16;
         buffer_font_size = 14;
+        minimap.show = "always";
+        title_bar.show_menus = true;
+        outline_panel.dock = "left";
+        project_panel.dock = "left";
+        icon_theme = "Catppuccin Mocha";
         theme = {
           mode = "system";
           dark = "Dark Modern";
           light = "One Light";
         };
-        icon_theme = "Catppuccin Mocha";
+        indent_guides.coloring = "indent_aware";
+        git_panel = {
+          dock = "left";
+          tree_view = true;
+        };
         agent = {
+          dock = "right";
           default_model = {
             provider = "copilot_chat";
             model = "claude-opus-4.6";
@@ -58,10 +68,6 @@ iglib.module {
             model = "claude-sonnet-4.6";
           };
         };
-        title_bar.show_menus = true;
-        minimap.show = "always";
-        indent_guides.coloring = "indent_aware";
-        git_panel.tree_view = true;
         lsp = {
           package-version-server.binary.path = lib.getExe pkgs.package-version-server;
           crates-lsp.binary.path = lib.getExe pkgs.crates-lsp;
