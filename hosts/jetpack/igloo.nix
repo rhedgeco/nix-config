@@ -11,6 +11,7 @@
     modules = {
       grub.enable = true;
       steam.enable = true;
+      flatpak.enable = true;
       boot.device = "/dev/disk/by-label/BOOT";
 
       greetd = {

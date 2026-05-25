@@ -11,6 +11,7 @@
     rust.enable = true;
     zed.enable = true;
     spotify.enable = true;
+    flatpak.enable = true;
     greetd.command = "${pkgs.niri}/bin/niri-session";
   };
 }
