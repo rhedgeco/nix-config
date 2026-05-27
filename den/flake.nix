@@ -24,7 +24,7 @@
       (final: prev: (import ./lib.nix final));
   in
     (lib.evalModules {
-      modules = [(inputs.import-tree [./hosts.nix ./modules])];
+      modules = [(inputs.import-tree [./hosts ./modules])];
       specialArgs = {inherit inputs;};
     }).config.flake;
 }
