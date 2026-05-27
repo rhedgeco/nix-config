@@ -3,4 +3,8 @@
     persist.store = "/persist";
     users.ryan.persist = true;
   };
+
+  den.aspects.jetpack = {
+    provides.ryan = {};
+  };
 }
