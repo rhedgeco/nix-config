@@ -6,18 +6,18 @@
       ...
     }: let
       mkSessionFiles = name: cfg: {
-        ".session/${name}/packages".source = pkgs.buildEnv {
+        ".sessions/${name}/packages".source = pkgs.buildEnv {
           name = "${name}-session-packages";
           paths = cfg.packages;
         };
 
-        ".session/${name}/env.sh".source =
+        ".sessions/${name}/env.sh".source =
           pkgs.writeShellScript "${name}-env"
           (lib.concatStringsSep "\n"
             (lib.mapAttrsToList (k: v: "export ${k}=${lib.escapeShellArg v}") cfg.env));
 
-        ".session/${name}/init.sh".source = pkgs.writeShellScript "${name}-init" cfg.init;
-        ".session/${name}/run.sh".source = pkgs.writeShellScript "${name}-run" cfg.run;
+        ".sessions/${name}/init.sh".source = pkgs.writeShellScript "${name}-init" cfg.init;
+        ".sessions/${name}/run.sh".source = pkgs.writeShellScript "${name}-run" cfg.run;
       };
     in {
       options.sessions = lib.mkOption {
