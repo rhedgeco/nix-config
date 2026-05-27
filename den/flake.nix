@@ -18,12 +18,8 @@
     };
   };
 
-  outputs = inputs: let
-    lib =
-      inputs.nixpkgs.lib.extend
-      (final: prev: (import ./lib.nix final));
-  in
-    (lib.evalModules {
+  outputs = inputs:
+    (inputs.nixpkgs.lib.evalModules {
       modules = [(inputs.import-tree ./modules)];
       specialArgs = {inherit inputs;};
     }).config.flake;
