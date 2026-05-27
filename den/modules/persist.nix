@@ -54,10 +54,10 @@
         config.environment.persistence.${host.persist.store} = {
           inherit (config.persist) directories files;
 
-          # propagate each home-manager user's persist options up to the system level
-          users = lib.mapAttrs (_name: userCfg: {
-            inherit (userCfg.persist) directories files;
-          }) (lib.filterAttrs (_: userCfg: userCfg ? persist) (config.home-manager.users or {}));
+          # propagate each user's persist options up to the system level
+          users = lib.mapAttrs (name: _: {
+            inherit (config.home-manager.users.${name}.persist) directories files;
+          }) (lib.filterAttrs (_: user: user.persist or false) host.users);
         };
       };
     };
