@@ -16,7 +16,7 @@
 
   # apply default settings across all classes
   den.default = {
-    includes = [den.batteries.hostname den.batteries.flake-scope];
+    includes = [den.batteries.hostname];
 
     # allow unfree packages globally
     nixos.nixpkgs.config.allowUnfree = true;
