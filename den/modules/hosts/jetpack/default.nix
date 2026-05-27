@@ -7,7 +7,7 @@
   den.aspects.jetpack = {
     includes = [
       den.aspects.grub
-      den.aspects.niri
+      den.aspects.glade
       den.aspects.steam
       (den.batteries.tty-autologin "ryan")
     ];
