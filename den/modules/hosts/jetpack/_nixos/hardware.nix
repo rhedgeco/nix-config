@@ -2,7 +2,6 @@
   imports = [
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
   ];
-
   # host specific settings
   nixpkgs.hostPlatform = "x86_64-linux";
   time.timeZone = "America/Los_Angeles";

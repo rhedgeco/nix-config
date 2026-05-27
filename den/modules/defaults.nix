@@ -12,12 +12,16 @@ in {
   # use home manager as a default class for all users
   den.schema.user.classes = lib.mkDefault ["homeManager"];
 
+  # auto-import _<class> directories under each host and user
+  den.schema.host.includes = [(den.batteries.import-tree.provides.host ./hosts)];
+  den.schema.user.includes = [(den.batteries.import-tree.provides.user ./users)];
+
   # apply default settings across all classes
   # we use a merge strategy to combine different sets of settings together
   den.default = lib.mkMerge [
     {
       # Sets the system hostname from den.hosts.<name>.hostName. Works on NixOS and Darwin.
-      includes = [den.batteries.hostname];
+      includes = [den.batteries.hostname den.batteries.flake-scope];
 
       # initial state versions for this configuration
       # these should not be changed unless you know what you are doing
