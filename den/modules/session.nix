@@ -20,7 +20,7 @@
         ".session/${name}/run.sh".source = pkgs.writeShellScript "${name}-run" cfg.run;
       };
     in {
-      options.session = lib.mkOption {
+      options.sessions = lib.mkOption {
         default = {};
         description = "Composable session parts that can be loaded by desktop environments";
         type = with lib.types;
@@ -52,7 +52,7 @@
       };
 
       config.home.file =
-        lib.mkMerge (lib.mapAttrsToList mkSessionFiles config.session);
+        lib.mkMerge (lib.mapAttrsToList mkSessionFiles config.sessions);
     };
   };
 }
