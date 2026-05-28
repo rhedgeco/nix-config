@@ -21,6 +21,7 @@
         fi
 
         # Set niri config (after env.sh so it can't be overridden)
+        # overriding niri config can be done through ~/.config/glade/niri.kdl
         export NIRI_CONFIG=${niri-config}
 
         # Start niri (run.sh is for post-compositor commands,
