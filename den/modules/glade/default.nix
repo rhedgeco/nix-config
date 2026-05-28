@@ -3,29 +3,8 @@
     nixos = {pkgs, ...}: let
       niri-config = ./_assets/niri-config.kdl;
       glade-session = pkgs.writeShellScript "glade-session" ''
-        SESSION_DIR="$HOME/.sessions/glade"
-
-        # Add session packages to PATH
-        if [ -d "$SESSION_DIR/packages/bin" ]; then
-          export PATH="$SESSION_DIR/packages/bin:$PATH"
-        fi
-
-        # Load session environment
-        if [ -f "$SESSION_DIR/env.sh" ]; then
-          source "$SESSION_DIR/env.sh"
-        fi
-
-        # Run pre-compositor init
-        if [ -f "$SESSION_DIR/init.sh" ]; then
-          source "$SESSION_DIR/init.sh"
-        fi
-
-        # Set niri config (after env.sh so it can't be overridden)
-        # overriding niri config can be done through ~/.config/glade/niri.kdl
+        export PATH="$HOME/.config/glade/packages/bin:$PATH"
         export NIRI_CONFIG=${niri-config}
-
-        # Start niri (run.sh is for post-compositor commands,
-        # which niri handles via spawn-at-startup in its config)
         exec niri-session
       '';
     in {
@@ -41,10 +20,28 @@
       ];
     };
 
-    provides.to-users.homeManager = {pkgs, ...}: {
-      sessions.glade.packages = with pkgs; [
-        niri
-      ];
+    provides.to-users.homeManager = {
+      pkgs,
+      lib,
+      config,
+      ...
+    }: {
+      options.glade.packages = lib.mkOption {
+        default = [];
+        description = "Packages available in the glade desktop environment";
+        type = lib.types.listOf lib.types.package;
+      };
+
+      config = {
+        glade.packages = with pkgs; [
+          niri
+        ];
+
+        home.file.".config/glade/packages".source = pkgs.buildEnv {
+          name = "glade-packages";
+          paths = config.glade.packages;
+        };
+      };
     };
   };
 }

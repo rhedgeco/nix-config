@@ -32,7 +32,7 @@ This is a NixOS system configuration using [Den](https://github.com/denful/den) 
 - Persistence: aspects set `persist.directories` / `persist.files` in their class config; `persist.nix` wires it to impermanence via schema options
 - `_assets/` directories hold static files (themes, images, configs)
 - Unfree packages allowed globally via `nixpkgs.config.allowUnfree = true`
-- The `sessions` HM option provides composable session parts at `~/.session/<name>/`
+- **Glade** is the custom desktop environment based on niri. It manages its own config/packages under `~/.config/glade/` and defines a wayland session entry. Users can add packages via the `glade.packages` HM option.
 
 ## Architecture Decisions
 
