@@ -162,6 +162,3 @@ binds {
 
     Mod+Shift+P { power-off-monitors; }
 }
-
-// Load user session overrides if present
-include optional=true "~/.config/glade/niri.kdl"
