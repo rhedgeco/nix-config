@@ -22,6 +22,12 @@
     "--cscale=bilinear" # use the same scaling for chroma scaling
     "--sws-scaler=fast-bilinear" # fallback to fast software scaler
     "--correct-downscaling=no" # tell the downscaler that it doesnt have to be "correct" and bilinear is fine
+
+    # Memory Management
+    "--cache=no" # disable stream cache (not needed for local files)
+    "--demuxer-max-bytes=50MiB" # cap demuxer buffer to prevent unbounded growth
+    "--demuxer-max-back-bytes=10MiB" # limit backward seek buffer
+    "--gpu-shader-cache-dir=/tmp/mpv-shader-cache" # avoid accumulating shader cache in memory
   ];
   wallpaperRunner = pkgs.writeShellScript "anim-wallpaper" ''
     # Run mpvpaper using an infinite anonymous streaming pipe
