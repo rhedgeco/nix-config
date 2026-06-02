@@ -29,6 +29,7 @@
     nano
     direnv
     fd
+    iw
     gum
     tree
     inotify-tools

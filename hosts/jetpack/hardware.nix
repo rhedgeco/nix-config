@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
   ];
@@ -13,4 +17,15 @@
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
+
+  # TODO: find better solution to network throttling
+  boot.extraModprobeConfig = ''
+    options iwlwifi swcrypto=1 bt_coex_active=1
+  '';
+  networking.networkmanager.settings.connection = {
+    "wifi.powersave" = 2;
+  };
+
+  # TODO: remove when networking bug is fixed
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
 }
