@@ -16,7 +16,12 @@
 
   # apply default settings across all classes
   den.default = {
-    includes = [den.batteries.hostname];
+    includes = [
+      # Sets the system hostname as defined in den.hosts.<name>.hostName
+      den.batteries.hostname
+      # Sets users.users.<name> on NixOS/Darwin and home.username/home.homeDirectory for Home Manager.
+      den.batteries.define-user
+    ];
 
     # allow unfree packages globally
     nixos.nixpkgs.config.allowUnfree = true;
