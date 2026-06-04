@@ -1,4 +1,8 @@
-{iglib, ...}:
+{
+  pkgs,
+  iglib,
+  ...
+}:
 iglib.module {
   name = "grub";
 
@@ -13,7 +17,19 @@ iglib.module {
 
         # theming
         splashImage = ./splash.png;
-        theme = ./solstice-theme;
+        theme = pkgs.stdenv.mkDerivation {
+          pname = "grub-solstice";
+          version = "0.1.0";
+          src = ./solstice-theme;
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out/
+            cp -r ./* "$out/"
+
+            runHook postInstall
+          '';
+        };
       };
     };
   };

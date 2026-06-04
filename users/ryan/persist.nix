@@ -6,6 +6,5 @@
     "Pictures"
     "Documents"
     "Videos"
-    ".local/state/wireplumber"
   ];
 }
