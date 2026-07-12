@@ -3,24 +3,20 @@
 
   inputs = {
     den.url = "github:denful/den";
-    impermanence.url = "github:nix-community/impermanence";
-    import-tree.url = "github:vic/import-tree";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    rust-overlay.url = "github:oxalica/rust-overlay";
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
     };
-    vicinae-extensions = {
-      url = "github:vicinaehq/extensions";
-      flake = false;
-    };
   };
 
-  outputs = inputs:
-    (inputs.nixpkgs.lib.evalModules {
-      modules = [(inputs.import-tree ./modules)];
+  outputs = inputs: let
+    # extend the nix lib with custom library content
+    lib = inputs.nixpkgs.lib.extend (import ./lib);
+  in
+    # eval all den modules and extract the generated flake configuration
+    (lib.evalModules {
       specialArgs = {inherit inputs;};
+      modules = [./modules ./hosts];
     }).config.flake;
 }
