@@ -1,3 +1,4 @@
 {lib, ...}: {
-  imports = lib.custom.read.nixModulePaths ./.;
+  # import all nix hosts in this directory
+  imports = lib.custom.read.nixPaths ./.;
 }

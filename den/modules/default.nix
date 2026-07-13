@@ -8,7 +8,7 @@
     # import flakeModule to generate top level flake structure
     [inputs.den.flakeModule]
     # then import all other den module files in this directory
-    ++ (lib.custom.read.nixModulePaths ./.);
+    ++ (lib.custom.read.nixPaths ./.);
 
   den.default = {
     includes = [den.aspects.test];
