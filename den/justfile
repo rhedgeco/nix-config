@@ -10,8 +10,8 @@ update:
     nix flake update --flake .
     @echo -e "\033[1;32mUPDATE COMPLETE\033[0m"
 
-inspect target=".":
-    nix repl '{{ target }}'
+inspect:
+    nix repl .
 
 build host=host *args:
     nixos-rebuild --flake '.#{{ host }}' dry-build {{ args }}
