@@ -4,19 +4,20 @@
   inputs = {
     den.url = "github:denful/den";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    import-tree.url = "github:denful/import-tree";
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
     };
   };
 
-  outputs = inputs: let
-    # extend the nix lib with custom library content
-    lib = inputs.nixpkgs.lib.extend (import ./lib);
-  in
-    # eval all den modules and extract the generated flake configuration
-    (lib.evalModules {
+  outputs = inputs:
+    (inputs.nixpkgs.lib.evalModules {
       specialArgs = {inherit inputs;};
-      modules = [./modules ./hosts];
+      modules = [
+        inputs.den.flakeModule # import flakeModule to generate top level flake config
+        (inputs.import-tree ./modules) # import all module configuration
+        ./hosts.nix # import all host configuration
+      ];
     }).config.flake;
 }
