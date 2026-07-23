@@ -16,8 +16,5 @@
     # this allows installing packages that are not FOSS
     # while I prefer FOSS applications, this restriction can be frustrating
     nixpkgs.config.allowUnfree = true;
-
-    # system state version: do not change unless absolutely necessary
-    system.stateVersion = "24.05";
   };
 }
