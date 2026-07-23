@@ -30,6 +30,7 @@
     direnv
     fd
     iw
+    jq
     gum
     tree
     inotify-tools
