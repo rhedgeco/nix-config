@@ -8,7 +8,8 @@
 
   den.default = {
     includes = [
-      den.batteries.define-user # Creates OS-level user accounts for each user entity
+      # create OS-level user accounts for each user entity
+      den.batteries.define-user
     ];
   };
 }
