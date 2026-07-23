@@ -1,5 +1,9 @@
 {
-  description = "ryan's nix system configuration";
+  outputs = inputs:
+    (inputs.nixpkgs.lib.evalModules {
+      modules = [(inputs.import-tree ./modules)];
+      specialArgs = {inherit inputs;};
+    }).config.flake;
 
   inputs = {
     den.url = "github:denful/den";
@@ -10,14 +14,4 @@
       url = "github:nix-community/home-manager";
     };
   };
-
-  outputs = inputs:
-    (inputs.nixpkgs.lib.evalModules {
-      specialArgs = {inherit inputs;};
-      modules = [
-        inputs.den.flakeModule # import flakeModule to generate top level flake config
-        (inputs.import-tree ./modules) # import all module configuration
-        ./hosts.nix # import all host configuration
-      ];
-    }).config.flake;
 }
