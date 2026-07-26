@@ -1,6 +1,6 @@
 {
   den.aspects.docker = {
-    groups = ["docker"];
+    user.extraGroups = ["docker"];
 
     nixos = {
       # enable docker on nixos

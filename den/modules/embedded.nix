@@ -1,6 +1,6 @@
 {
   den.aspects.embedded = {
-    groups = ["dialout"];
+    user.extraGroups = ["dialout"];
 
     nixos = {pkgs, ...}: {
       services.udev.packages = with pkgs; [
