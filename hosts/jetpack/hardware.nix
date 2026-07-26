@@ -26,6 +26,9 @@
     "wifi.powersave" = 2;
   };
 
+  # TODO: remove when stage1 scripts are migrated
+  boot.initrd.systemd.enable = false;
+
   # TODO: remove when networking bug is fixed
   boot.kernelPackages = pkgs.linuxPackages_6_12;
 }

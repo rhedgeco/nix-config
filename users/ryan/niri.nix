@@ -56,7 +56,7 @@ in {
     binds = {
       "Mod+W" = "firefox";
       "Mod+D" = "discord";
-      "Mod+E" = "codium";
+      "Mod+E" = "zeditor";
 
       # use vicinae as the launcher for scrollde
       "Mod+Space" = ["vicinae" "toggle"];
