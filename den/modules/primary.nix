@@ -8,8 +8,12 @@
     options.primary = lib.mkEnableOption "Make user the primary system user";
   };
 
-  # when the user is set as primary, include the primary-user battery
-  den.default.includes = [
-    ({user, ...}: {includes = lib.optional (user.primary) [den.batteries.primary-user];})
-  ];
+  # create an aspect that includes the primary user if primary schema is enabled
+  den.aspects.set-primary = {user, ...}:
+    lib.optional (user.primary) {
+      includes = [den.batteries.primary-user];
+    };
+
+  # include the set primary aspect by default
+  den.default.includes = [den.aspects.set-primary];
 }

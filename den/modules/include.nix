@@ -1,12 +1,8 @@
-{lib, ...}: {
-  # allow users to specify includes at the entity level
-  den.schema.user = {
-    options.includes = lib.mkOption {
-      type = with lib.types; listOf anything;
-      default = [];
-    };
-  };
-
+{
+  lib,
+  den,
+  ...
+}: {
   # allow users to specify includes at the entity level
   den.schema.host = {
     options.includes = lib.mkOption {
@@ -15,9 +11,27 @@
     };
   };
 
-  # pass through user and host includes from entities
+  # allow users to specify includes at the entity level
+  den.schema.user = {
+    options.includes = lib.mkOption {
+      type = with lib.types; listOf anything;
+      default = [];
+    };
+  };
+
+  # create an aspect to pass the host schema includes to the module system
+  den.aspects.host-schema-include = {host}: {
+    includes = host.includes;
+  };
+
+  # create an aspect to pass the user schema includes to the module system
+  den.aspects.user-schema-include = {user}: {
+    includes = user.includes;
+  };
+
+  # include the *-schema-include aspects by default
   den.default.includes = [
-    ({user}: {includes = user.includes;})
-    ({host}: {includes = host.includes;})
+    den.aspects.host-schema-include
+    den.aspects.user-schema-include
   ];
 }

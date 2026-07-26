@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  den,
+  ...
+}: {
   # define host option to set the system state version
   den.schema.host = {
     options.stateVersion = lib.mkOption {
@@ -8,12 +12,13 @@
     };
   };
 
-  # pass the host state version down to the contexts that use it
-  den.default.includes = [
-    ({host, ...}:
-      lib.optionalAttrs (host.stateVersion != null) {
-        nixos.system.stateVersion = lib.mkDefault host.stateVersion;
-        homeManage.home.stateVersion = lib.mkDefault host.stateVersion;
-      })
-  ];
+  # create an aspect that sets the default state version based on host schema
+  den.aspects.set-state-version = {host, ...}:
+    lib.optionalAttrs (host.stateVersion != null) {
+      nixos.system.stateVersion = lib.mkDefault host.stateVersion;
+      homeManage.home.stateVersion = lib.mkDefault host.stateVersion;
+    };
+
+  # include the set-state-version aspect by default
+  den.default.includes = [den.aspects.set-state-version];
 }
