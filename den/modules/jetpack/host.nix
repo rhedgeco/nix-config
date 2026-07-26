@@ -4,7 +4,10 @@
       stateVersion = "24.05";
       users.ryan = {
         primary = true;
-        includes = [den.aspects.docker];
+        includes = [
+          den.aspects.docker
+          den.aspects.embedded
+        ];
       };
     };
   };
