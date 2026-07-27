@@ -15,6 +15,7 @@
           (den.batteries.user-shell "fish")
           den.aspects.fish
           den.aspects.starship
+          den.aspects.direnv
           den.aspects.docker
           den.aspects.embedded
           den.aspects.rust
