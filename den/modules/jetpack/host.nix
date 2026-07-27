@@ -7,6 +7,7 @@
         includes = [
           den.aspects.docker
           den.aspects.embedded
+          den.aspects.rust
         ];
       };
     };
