@@ -7,7 +7,7 @@
   den.schema.host = {
     includes = [den.aspects.host-schema-include];
     options.includes = lib.mkOption {
-      type = with lib.types; listOf anything;
+      type = with lib.types; listOf raw;
       default = [];
     };
   };
@@ -16,7 +16,7 @@
   den.schema.user = {
     includes = [den.aspects.user-schema-include];
     options.includes = lib.mkOption {
-      type = with lib.types; listOf anything;
+      type = with lib.types; listOf raw;
       default = [];
     };
   };
@@ -25,7 +25,7 @@
   den.schema.home = {
     includes = [den.aspects.home-schema-include];
     options.includes = lib.mkOption {
-      type = with lib.types; listOf anything;
+      type = with lib.types; listOf raw;
       default = [];
     };
   };
