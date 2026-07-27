@@ -10,6 +10,7 @@
           den.aspects.docker
           den.aspects.embedded
           den.aspects.rust
+          den.aspects.spotify
         ];
       };
     };
