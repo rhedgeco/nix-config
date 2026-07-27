@@ -5,7 +5,7 @@
       stateVersion = "24.05";
       persist = "/persist";
       includes = [
-        (den.batteries.tty-autologin "ryan")
+        (den.aspects.autologin "ryan" "niri-session")
         den.aspects.steam
       ];
 
@@ -14,7 +14,6 @@
         persist = true;
         includes = [
           den.aspects.niri
-          (den.aspects.tty-launch "niri-session")
           den.aspects.fishy
           den.aspects.docker
           den.aspects.embedded
