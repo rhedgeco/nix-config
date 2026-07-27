@@ -15,6 +15,7 @@ inspect:
 
 vm host=host *args:
     nixos-rebuild --flake '.#{{ host }}' build-vm {{ args }}
+    ./result/bin/run-nixos-vm
 
 build host=host *args:
     nixos-rebuild --flake '.#{{ host }}' dry-build {{ args }}
