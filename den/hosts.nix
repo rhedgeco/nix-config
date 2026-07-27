@@ -16,6 +16,7 @@
           den.aspects.fish
           den.aspects.starship
           den.aspects.direnv
+          den.aspects.devenv
           den.aspects.docker
           den.aspects.embedded
           den.aspects.rust
