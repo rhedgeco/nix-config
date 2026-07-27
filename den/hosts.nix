@@ -1,8 +1,9 @@
 {den, ...}: {
   den.hosts.x86_64-linux = {
+    # personal laptop
     jetpack = {
-      persist = "/persist";
       stateVersion = "24.05";
+      persist = "/persist";
       users.ryan = {
         primary = true;
         persist = true;

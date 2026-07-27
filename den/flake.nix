@@ -1,8 +1,11 @@
 {
   outputs = inputs:
     (inputs.nixpkgs.lib.evalModules {
-      modules = [(inputs.import-tree ./modules)];
       specialArgs = {inherit inputs;};
+      modules = [
+        (inputs.import-tree ./modules) # import all modules
+        ./hosts.nix # and import hosts layout
+      ];
     }).config.flake;
 
   inputs = {
