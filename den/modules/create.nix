@@ -1,6 +1,10 @@
-{lib, ...}: {
+{
   den.default = {
-    homeManager = {config, ...}: {
+    homeManager = {
+      config,
+      lib,
+      ...
+    }: {
       options.create = lib.mkOption {
         description = "Files and folders to create for this user";
         type = lib.types.attrsOf lib.types.path;
@@ -30,7 +34,7 @@
           '';
         in
           lib.hm.dag.entryAfter ["writeBoundary"] (lib.concatStringsSep "\n" (
-            lib.mapAttrsToList writeFileScript config.igloo.create
+            lib.mapAttrsToList writeFileScript config.create
           ));
       };
     };
