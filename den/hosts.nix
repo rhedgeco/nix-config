@@ -4,6 +4,10 @@
     jetpack = {
       stateVersion = "24.05";
       persist = "/persist";
+      includes = [
+        den.aspects.steam
+      ];
+
       users.ryan = {
         primary = true;
         persist = true;
@@ -12,7 +16,6 @@
           den.aspects.embedded
           den.aspects.rust
           den.aspects.spotify
-          den.aspects.steam
           den.aspects.bambu
         ];
       };

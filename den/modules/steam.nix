@@ -1,13 +1,13 @@
-{
+{den, ...}: {
   den.aspects.steam = {
-    homeManager.persist.dirs = [
+    nixos.programs.steam.enable = true;
+    provides.to-users.homeManager.persist.dirs = [
       ".local/share/Steam"
       ".steam"
     ];
-
-    # steam has to be enabled at the nixos level
-    provides.to-hosts.nixos = {
-      programs.steam.enable = true;
-    };
   };
+
+  den.aspects.jetpack.includes = [
+    # den.aspects.steam
+  ];
 }
