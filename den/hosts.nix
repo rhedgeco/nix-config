@@ -17,6 +17,7 @@
           den.aspects.rust
           den.aspects.spotify
           den.aspects.bambu
+          den.aspects.discord
         ];
       };
     };
