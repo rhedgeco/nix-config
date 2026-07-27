@@ -69,12 +69,12 @@
         options = {
           dirs = lib.mkOption {
             description = "directories to persist";
-            type = with lib.types; listOf str;
+            type = with lib.types; listOf anything;
             default = [];
           };
           files = lib.mkOption {
             description = "directories to persist";
-            type = with lib.types; listOf str;
+            type = with lib.types; listOf anything;
             default = [];
           };
         };
