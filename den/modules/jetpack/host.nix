@@ -11,6 +11,7 @@
           den.aspects.embedded
           den.aspects.rust
           den.aspects.spotify
+          den.aspects.steam
         ];
       };
     };
