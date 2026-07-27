@@ -8,6 +8,7 @@
   inputs = {
     den.url = "github:denful/den";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    impermanence.url = "github:nix-community/impermanence";
     import-tree.url = "github:denful/import-tree";
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
