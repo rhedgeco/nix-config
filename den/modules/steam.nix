@@ -1,7 +1,7 @@
 {
   den.aspects.steam = {
     nixos.programs.steam.enable = true;
-    homeManager.persist.dirs = [
+    provides.to-users.homeManager.persist.dirs = [
       ".local/share/Steam"
       ".steam"
     ];
