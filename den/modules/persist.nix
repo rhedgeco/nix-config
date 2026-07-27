@@ -29,6 +29,18 @@
         # ensure the impermanence module is imported on nixos system
         imports = [inputs.impermanence.nixosModules.impermanence];
 
+        # persist some files by default always
+        persist = {
+          files = [
+            "/etc/machine-id"
+          ];
+          dirs = [
+            "/var/log" # system log files
+            "/var/lib/nixos" # needed for nixos systems
+            "/var/lib/systemd/coredump" # systemd coredump info
+          ];
+        };
+
         # use impermanence for persisting system data
         environment.persistence."${host.persist}" = {
           # hide bind mounts from things like the file explorer
