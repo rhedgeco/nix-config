@@ -1,14 +1,25 @@
 {den, ...}: {
-  # add a quirk that collects packages that need to be installed
+  # add quirks that collect packages/fonts that need to be installed
   den.quirks.extraPackages.description = "extra packages to install on every included system";
+  den.quirks.extraFonts.description = "extra fonts to install on every included system";
 
   # create an aspect that consumes the quirk and applies the packages
   den.aspects.install-extra-packages = {
-    nixos = {extraPackages ? [], ...}: {
+    nixos = {
+      extraPackages ? [],
+      extraFonts ? [],
+      ...
+    }: {
       environment.systemPackages = extraPackages;
+      fonts.packages = extraFonts;
     };
-    homeManager = {extraPackages ? [], ...}: {
-      home.packages = extraPackages;
+    homeManager = {
+      extraPackages ? [],
+      extraFonts ? [],
+      ...
+    }: {
+      home.packages = extraPackages ++ extraFonts;
+      fonts.fontconfig.enable = true;
     };
   };
 
