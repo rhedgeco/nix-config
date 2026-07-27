@@ -13,6 +13,8 @@
         primary = true;
         persist = true;
         includes = [
+          den.aspects.niri
+          (den.aspects.tty-launch "niri-session")
           den.aspects.fishy
           den.aspects.docker
           den.aspects.embedded
