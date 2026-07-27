@@ -5,6 +5,7 @@
       stateVersion = "24.05";
       persist = "/persist";
       includes = [
+        (den.batteries.tty-autologin "ryan")
         den.aspects.steam
       ];
 
