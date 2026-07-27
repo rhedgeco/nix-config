@@ -12,11 +12,7 @@
         primary = true;
         persist = true;
         includes = [
-          (den.batteries.user-shell "fish")
-          den.aspects.fish
-          den.aspects.starship
-          den.aspects.direnv
-          den.aspects.devenv
+          den.aspects.fishy
           den.aspects.docker
           den.aspects.embedded
           den.aspects.rust
