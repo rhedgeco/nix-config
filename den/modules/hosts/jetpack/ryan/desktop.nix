@@ -17,6 +17,8 @@
       nautilus
       gnome-calculator
       activate-linux
+      video-trimmer
+      typst
     ];
 
     persist.dirs = [
