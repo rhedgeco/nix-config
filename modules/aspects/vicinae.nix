@@ -46,7 +46,7 @@
             echo '${builtins.toJSON settings}' | ${pkgs.jq}/bin/jq '.' > $out
           '';
 
-        create.".config/vicinae/settings.json" = pkgs.writeText "setting.json" ''
+        create.".config/vicinae/settings.json" = ''
           {
             "imports": [
               "nix-settings.json"

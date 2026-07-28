@@ -5,22 +5,28 @@
   # adds infrastructure for writing files/folders instead of linking
   den.aspects.create = {
     homeManager = {
-      config,
       lib,
+      pkgs,
+      config,
       ...
     }: {
       options.create = lib.mkOption {
         description = "Files and folders to create for this user";
-        type = lib.types.attrsOf lib.types.path;
+        type = with lib.types; attrsOf (oneOf [path str]);
         default = {};
       };
 
       config = {
         home.activation.den-create = let
-          writeFileScript = target: source: ''
+          writeFileScript = target: source: let
+            sourcePath =
+              if lib.isString source
+              then pkgs.writeText target source
+              else source;
+          in ''
             # create variables to store target and source locations
             TARGET="${config.home.homeDirectory}/${target}"
-            SOURCE="${source}"
+            SOURCE="${sourcePath}"
 
             # remove the target file if it already exists
             if [ -e "$TARGET" ] || [ -L "$TARGET" ]; then
