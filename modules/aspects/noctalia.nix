@@ -4,15 +4,13 @@
       inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 
-    persist.files = [
-      # contains calendar and other state that should persist
-      ".local/state/noctalia/state.toml"
-    ];
+    persist.dirs = [
+      # TODO: slim this down to dedicated files/dirs
+      # contains calendar themes and other state that should persist
+      ".local/state/noctalia"
 
-    # set sensible defaults for noctalia here
-    create.".config/noctalia/den.toml" = ''
-      [general]
-      show_welcome = false
-    '';
+      # persist the cache so that various content sticks around
+      ".cache/noctalia"
+    ];
   };
 }
