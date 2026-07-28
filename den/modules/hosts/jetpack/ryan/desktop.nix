@@ -13,6 +13,7 @@
       # xwayland-satellite fills this gap
       # it hosts an xserver and simulates wayland clients
       xwayland-satellite
+      brightnessctl
       alacritty
       nautilus
       gnome-calculator
