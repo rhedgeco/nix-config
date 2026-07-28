@@ -1,65 +1,50 @@
 config_version = 8
 
 [bar.default]
-background_opacity = 0.59999998658895493
-center = [ "clock", "ram" ]
-concave_edge_corners = false
-margin_edge = 8
-margin_ends = 8
+center = [ "audio_visualizer_1", "clipboard", "clock", "notifications", "audio_visualizer_2" ]
+end = [ "tray", "bluetooth", "network", "volume", "brightness", "battery", "session" ]
+start = [ "workspaces", "cpu", "ram", "temp" ]
+widget_spacing = 14
 
-[lockscreen_widgets]
-enabled = false
-schema_version = 2
-widget_order = [ "lockscreen-login-box@DP-3" ]
-
-    [lockscreen_widgets.grid]
-    cell_size = 16
-    major_interval = 4
-    visible = true
-
-    [lockscreen_widgets.widget."lockscreen-login-box@DP-3"]
-    box_height = 229.0
-    box_width = 810.0
-    cx = 2560.0
-    cy = 1241.5
-    output = "DP-3"
-    rotation = 0.0
-    type = "login_box"
-
-        [lockscreen_widgets.widget."lockscreen-login-box@DP-3".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        center_password_text = false
-        input_opacity = 1.0
-        input_radius = 6.0
-        layout = "regular"
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_media = true
-        show_session_buttons = true
-        show_weather = true
+[control_center]
+sidebar = "full"
+sidebar_section = "full"
 
 [shell]
-button_borders = false
-card_borders = false
-input_borders = false
-popup_borders = false
+font_family = "JetBrainsMono NF"
+lang = "en"
 
-[theme]
-builtin = "Kanagawa"
-community_palette = "Cream"
-source = "community"
+    [shell.panel]
+    borders = false
+    control_center_placement = "floating"
+    open_near_click_control_center = true
+    transparency_mode = "soft"
 
-[wallpaper]
-enabled = false
+[widget.audio_visualizer]
+bands = 128
+show_when_idle = true
+width = 400
 
-    [wallpaper.default]
-    path = "/nix/store/85mhadiaq7c343rk75z14ym9vldx0pbf-noctalia-5.0.0/share/noctalia/assets/noctalia-wallpaper.png"
+[widget.audio_visualizer_1]
+bands = 128
+interactive = false
+type = "audio_visualizer"
+width = 400
 
-    [wallpaper.last]
-    path = "/nix/store/85mhadiaq7c343rk75z14ym9vldx0pbf-noctalia-5.0.0/share/noctalia/assets/noctalia-wallpaper.png"
+[widget.audio_visualizer_2]
+bands = 128
+interactive = false
+type = "audio_visualizer"
+width = 400
 
-[widget.ram]
+[widget.clock]
+format = "{:%A, %B %d - %H:%M:%S}"
+
+[widget.cpu]
 display = "graph"
+
+[widget.network]
+show_label = false
+
+[widget.workspaces]
+display = "none"
