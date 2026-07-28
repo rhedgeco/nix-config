@@ -13,12 +13,8 @@ update:
 inspect:
     nix repl .
 
-build-vm host=host *args:
+vm host=host *args:
     @nixos-rebuild --flake '.#{{ host }}' build-vm {{ args }}
-    @gum confirm "Launch VM now?" --default="No"
-    @just start-vm
-
-start-vm:
     ./result/bin/run-*-vm
 
 build host=host *args:
