@@ -23,6 +23,7 @@
       alacritty
       nautilus
       gnome-calculator
+      activate-linux
     ];
 
     # map all the kdl files in the niri directory to the cofig

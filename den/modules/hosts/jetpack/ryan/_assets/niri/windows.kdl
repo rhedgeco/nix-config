@@ -11,6 +11,8 @@ animations {
 // set up window rules for simple floating windows
 window-rule {
     open-floating true
+    match app-id="discord"
+    match app-id="org.gnome.Calculator"
     match app-id="firefox" title="Picture-in-Picture"
 }
 

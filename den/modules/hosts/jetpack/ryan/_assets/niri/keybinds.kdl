@@ -1,4 +1,5 @@
 binds {
+
     // basic utilities
     Mod+Space { spawn "vicinae" "toggle"; }
     Mod+T { spawn "alacritty"; }
@@ -7,6 +8,7 @@ binds {
     Mod+E { spawn "zeditor"; }
 
     // Window movement and navigation
+    Mod+Q { close-window; }
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
     Mod+Up    { focus-window-up; }
