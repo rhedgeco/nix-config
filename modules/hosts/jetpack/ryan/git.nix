@@ -11,7 +11,7 @@
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks = {
+      settings = {
         "github-personal" = {
           hostname = "github.com";
           user = "git";
