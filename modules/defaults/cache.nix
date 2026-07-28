@@ -1,5 +1,5 @@
 {
-  den.default.nix.settings = {
+  den.default.nixos.nix.settings = {
     substituters = [
       "https://nix-community.cachix.org"
       "https://cache.garnix.io"
