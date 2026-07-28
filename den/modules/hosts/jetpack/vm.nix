@@ -1,15 +1,25 @@
 {
   den.aspects.jetpack.nixos = {
-    # niri (smithay) needs a GL/GLES render node, which the default std VGA
-    # doesn't provide. Give the VM a virgl-capable virtio GPU instead.
+    # set up the vm filesystem with everything it needs
+    virtualisation.vmVariant.virtualisation = {
+      diskImage = null; # tmpfs
+      fileSystems."/persist" = {
+        device = "tmpfs";
+        fsType = "tmpfs";
+        options = ["mode=755"];
+        neededForBoot = true;
+      };
+    };
+
+    # niri (smithay) needs a GL/GLES render node
+    # proivide the VM a virgl-capable virtio GPU
     virtualisation.vmVariant.virtualisation.qemu.options = [
       "-vga none"
       "-device virtio-vga-gl"
       "-display gtk,gl=on"
     ];
 
-    # ensure mesa's DRI drivers land on /run/opengl-driver so EGL/GBM in the
-    # guest can find the virgl driver
+    # enable graphics so EGL/GBM can find the virgl driver
     virtualisation.vmVariant.hardware.graphics.enable = true;
   };
 }

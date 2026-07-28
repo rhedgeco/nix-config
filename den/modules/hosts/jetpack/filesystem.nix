@@ -2,17 +2,6 @@ let
   btrfsDevice = "/dev/disk/by-label/MAIN";
 in {
   den.aspects.jetpack.nixos = {
-    # vm filesystem setup
-    virtualisation.vmVariant.virtualisation = {
-      diskImage = null; # tmpfs
-      fileSystems."/persist" = {
-        device = "tmpfs";
-        fsType = "tmpfs";
-        options = ["mode=755"];
-        neededForBoot = true;
-      };
-    };
-
     fileSystems = {
       "/boot" = {
         device = "/dev/disk/by-label/BOOT";
