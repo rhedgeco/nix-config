@@ -22,10 +22,10 @@
             TARGET="${config.home.homeDirectory}/${target}"
             SOURCE="${source}"
 
-            # remove the target file if it already exists
+            # backup the target file if it already exists
             if [ -e "$TARGET" ] || [ -L "$TARGET" ]; then
-              echo "Found existing file at $TARGET. Removing..."
-              rm -rf $TARGET
+              echo "Found existing file at $TARGET. Making backup..."
+              mv "$TARGET" "$TARGET.$(date +%Y%m%d_%H%M%S).bak"
             fi
 
             # create the directory if it doesnt exist
