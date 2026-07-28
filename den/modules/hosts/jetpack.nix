@@ -14,6 +14,7 @@
         persist = true;
         includes = [
           den.aspects.niri
+          den.aspects.network
           den.aspects.fishy
           den.aspects.docker
           den.aspects.embedded
