@@ -7,7 +7,8 @@
     # to discover these values run `lspci -nnD | grep -E -i "vga|3d|display"`
     igpu-address = "0000:c1:00.0";
     egpu-id = "10de:2488";
-    egpu-timeout = 5; # seconds
+    egpu-timeout = 5; # seconds to wait for the eGPU to appear
+    unbind-timeout = 15; # seconds to keep retrying the unbind at boot
   in {
     # create a service that unbinds the internal gpu if the egpu is detected at startup
     systemd.services.unbind-internal-gpu = {
@@ -18,7 +19,13 @@
         # ensure the service stays up after it exits
         # this prevents the service from running again on `nixos-rebuild switch`
         RemainAfterExit = true;
+
+        # no sandboxing: this runs as root and writes host sysfs directly
       };
+
+      # Wait for Thunderbolt daemon to authorize devices first
+      wants = ["bolt.service"];
+      after = ["bolt.service"];
 
       # run is wanted by the graphical target,
       # but has to start before the display-manager
@@ -28,23 +35,44 @@
 
       script = ''
         echo "checking for eGPU '${egpu-id}'..."
-        # Loop for up to ${toString egpu-timeout} seconds.
+
+        # wait for the eGPU to appear (bolt may still be authorizing it)
+        egpu_present=0
         for i in $(seq 1 ${toString egpu-timeout}); do
-          # Use lspci to check if the eGPU's PCI ID is present
           if ${pkgs.pciutils}/bin/lspci -d "${egpu-id}" | grep -q .; then
-            echo "eGPU detected, unbinding iGPU at '${igpu-address}'..."
-            # Unbind the iGPU driver (the quotes are important)
-            echo "${igpu-address}" > "/sys/bus/pci/drivers/amdgpu/unbind"
-            # Exit successfully, allowing the display manager to start.
-            exit 0
+            egpu_present=1
+            break
           fi
-          # Wait one second before checking again.
-          echo "eGPU not found trying again..."
+          echo "eGPU not found, trying again..."
           sleep 1
         done
 
-        echo "eGPU not detected after ${toString egpu-timeout}s, proceeding with iGPU."
-        # Exit successfully, allowing the display manager to start.
+        if [ "$egpu_present" -ne 1 ]; then
+          echo "eGPU not detected after ${toString egpu-timeout}s, proceeding with iGPU."
+          exit 0
+        fi
+
+        echo "eGPU detected."
+
+        # nothing to do if the iGPU is not bound to amdgpu
+        if [ ! -d "/sys/bus/pci/drivers/amdgpu/${igpu-address}" ]; then
+          echo "iGPU '${igpu-address}' is not bound to amdgpu, nothing to unbind."
+          exit 0
+        fi
+
+        # during early boot the kernel briefly refuses the unbind (EACCES) while
+        # amdgpu is still settling as the primary console device. it succeeds a
+        # moment later, so retry the write on a fixed interval until it takes.
+        echo "unbinding iGPU at '${igpu-address}'..."
+        for i in $(seq 1 ${toString unbind-timeout}); do
+          if echo "${igpu-address}" > "/sys/bus/pci/drivers/amdgpu/unbind" 2>/dev/null; then
+            echo "successfully unbound ${igpu-address} from amdgpu."
+            exit 0
+          fi
+          sleep 1
+        done
+
+        echo "failed to unbind ${igpu-address} after ${toString unbind-timeout}s, proceeding with iGPU."
         exit 0
       '';
     };
