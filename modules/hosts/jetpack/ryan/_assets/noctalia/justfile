@@ -1,0 +1,3 @@
+extract:
+    nix-shell -p yq-go --run 'yq eval-all -o toml ". as \$item ireduce ({}; . * \$item)" ~/.local/state/noctalia/settings.toml ./settings.toml' > merged.toml
+    mv merged.toml settings.toml

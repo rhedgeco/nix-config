@@ -1,26 +1,57 @@
 config_version = 8
 
+[shell]
+button_borders = false
+card_borders = false
+input_borders = false
+popup_borders = false
+font_family = "JetBrainsMono NF"
+lang = "en"
+
+[shell.panel]
+borders = false
+control_center_placement = "floating"
+open_near_click_control_center = true
+transparency_mode = "soft"
+
+[widget.audio_visualizer_1]
+show_when_idle = true
+bands = 128
+interactive = false
+type = "audio_visualizer"
+width = 400
+
+[widget.audio_visualizer_2]
+show_when_idle = true
+bands = 128
+interactive = false
+type = "audio_visualizer"
+width = 400
+
+[widget.audio_visualizer]
+bands = 128
+show_when_idle = true
+width = 400
+
+[widget.clock]
+format = "{:%A, %B %d - %H:%M:%S}"
+
+[widget.cpu]
+display = "graph"
+
+[widget.network]
+show_label = false
+
+[widget.workspaces]
+display = "none"
+
 [bar.default]
 background_opacity = 0.5999999865889549
 concave_edge_corners = false
 margin_edge = 6
 margin_ends = 6
-center = [
-  "audio_visualizer_1",
-  "clipboard",
-  "clock",
-  "notifications",
-  "audio_visualizer_2"
-]
-end = [
-  "tray",
-  "bluetooth",
-  "network",
-  "volume",
-  "brightness",
-  "battery",
-  "session"
-]
+center = ["audio_visualizer_1", "clipboard", "clock", "notifications", "audio_visualizer_2"]
+end = ["tray", "bluetooth", "network", "volume", "brightness", "battery", "session"]
 start = ["workspaces", "cpu", "ram", "temp"]
 widget_spacing = 14
 
@@ -76,48 +107,9 @@ position = "top_center"
 [osd]
 border = false
 
-[shell]
-font_family = "JetBrainsMono NF"
-lang = "en"
-
-[shell.panel]
-borders = false
-control_center_placement = "floating"
-open_near_click_control_center = true
-transparency_mode = "soft"
-
 [theme]
 community_palette = "Cream"
 source = "community"
-
-[widget.audio_visualizer]
-bands = 128
-show_when_idle = true
-width = 400
-
-[widget.audio_visualizer_1]
-bands = 128
-interactive = false
-type = "audio_visualizer"
-width = 400
-
-[widget.audio_visualizer_2]
-bands = 128
-interactive = false
-type = "audio_visualizer"
-width = 400
-
-[widget.clock]
-format = "{:%A, %B %d - %H:%M:%S}"
-
-[widget.cpu]
-display = "graph"
-
-[widget.network]
-show_label = false
-
-[widget.workspaces]
-display = "none"
 
 [control_center]
 sidebar = "full"
