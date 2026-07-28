@@ -12,6 +12,7 @@
       users.ryan = {
         primary = true;
         persist = true;
+        password = "ryan";
         includes = [
           den.aspects.niri
           den.aspects.network
