@@ -8,6 +8,5 @@
     boot.initrd.kernelModules = [];
     boot.kernelModules = ["kvm-amd"];
     boot.extraModulePackages = [];
-    services.gnome.gnome-keyring.enable = true;
   };
 }
