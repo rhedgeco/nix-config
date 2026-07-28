@@ -1,6 +1,6 @@
 binds {
     // basic utilities
-    Mod+Space { spawn "vicinae" "toggle" }
+    Mod+Space { spawn "vicinae" "toggle"; }
     Mod+T { spawn "alacritty"; }
     Mod+W { spawn "firefox"; }
     Mod+D { spawn "discord"; }
