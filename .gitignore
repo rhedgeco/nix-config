@@ -1,2 +1,5 @@
+# ignore nix generated files
+/result
+
 # ignore rust generated files
 /target
