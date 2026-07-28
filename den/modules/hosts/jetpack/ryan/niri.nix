@@ -46,8 +46,8 @@
         ".config/niri/config.kdl" = pkgs.writeText "config.kdl" ''
           ${
             lib.concatMapAttrsStringSep "\n"
-            (name: _: ''include "${name}"'')
-            createSet
+            (name: _: ''include "./${name}"'')
+            kdlFiles
           }
         '';
       };
