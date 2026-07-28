@@ -26,6 +26,11 @@
       config = {
         home.packages = [pkgs.vicinae];
 
+        persist.dirs = [
+          # TODO: declaratively store vicinae extensions etc...
+          ".local/share/vicinae"
+        ];
+
         create.".config/vicinae/nix-settings.json" = let
           settings = {
             favorites = config.vicinae.favorites;
