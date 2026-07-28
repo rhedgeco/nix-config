@@ -62,7 +62,10 @@
           niriKdlFiles
         }
       '';
+
+      noctaliaConfig.".config/noctalia/settings.toml" =
+        ./_assets/noctalia/settings.toml;
     in
-      niriCreate // niriConfig;
+      niriCreate // niriConfig // noctaliaConfig;
   };
 }
