@@ -9,11 +9,11 @@
         device = "nodev";
 
         # theming
-        splashImage = ./_assets/splash.png;
+        splashImage = ./_assets/grub/splash.png;
         theme = pkgs.stdenv.mkDerivation {
           pname = "grub-solstice";
           version = "0.1.0";
-          src = ./_assets/solstice-theme;
+          src = ./_assets/grub/solstice-theme;
           installPhase = ''
             runHook preInstall
 
