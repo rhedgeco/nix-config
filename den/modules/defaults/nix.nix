@@ -1,5 +1,5 @@
 {inputs, ...}: {
-  den.default.nixos = {
+  den.default = {
     # enables expetimental flakes and nix command features on this system by default
     # without this, many flake based commands would need `--extra-experimental-features flakes`
     nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -15,6 +15,6 @@
     # allow unfree packages by default
     # this allows installing packages that are not FOSS
     # while I prefer FOSS applications, this restriction can be frustrating
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.allowUnfree = true;
   };
 }
