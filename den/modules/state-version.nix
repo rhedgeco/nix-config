@@ -16,7 +16,7 @@
   den.aspects.set-state-version = {host, ...}:
     lib.optionalAttrs (host.stateVersion != null) {
       nixos.system.stateVersion = lib.mkDefault host.stateVersion;
-      homeManage.home.stateVersion = lib.mkDefault host.stateVersion;
+      homeManager.home.stateVersion = lib.mkDefault host.stateVersion;
     };
 
   # include the set-state-version aspect by default
