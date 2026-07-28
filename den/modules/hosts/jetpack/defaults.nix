@@ -8,5 +8,7 @@
     boot.initrd.kernelModules = [];
     boot.kernelModules = ["kvm-amd"];
     boot.extraModulePackages = [];
+    # set the hardware clock to local time to play nicely with windows
+    time.hardwareClockInLocalTime = true;
   };
 }
