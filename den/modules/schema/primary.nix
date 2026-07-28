@@ -9,11 +9,11 @@
   };
 
   # create an aspect that includes the primary user if primary schema is enabled
-  den.aspects.set-primary = {user, ...}:
+  den.aspects.schema-primary = {user, ...}:
     lib.optional (user.primary) {
       includes = [den.batteries.primary-user];
     };
 
-  # include the set primary aspect by default
-  den.default.includes = [den.aspects.set-primary];
+  # include the schema-primary aspect by default
+  den.default.includes = [den.aspects.schema-primary];
 }
