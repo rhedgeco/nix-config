@@ -40,6 +40,7 @@
           ui_font_size = 16;
           buffer_font_size = 14;
           minimap.show = "always";
+          format_on_save = "on";
           title_bar.show_menus = true;
           outline_panel.dock = "left";
           project_panel.dock = "left";
