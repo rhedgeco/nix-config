@@ -3,6 +3,10 @@
     # enable hardware accelerated graphics
     hardware.graphics.enable = true;
 
+    # the VM root is a tmpfs and there is no MAIN-labeled btrfs disk
+    # without this the initrd hangs forever waiting on that device unit
+    boot.initrd.systemd.services.wipe-btrfs-root.enable = false;
+
     virtualisation = {
       # use a tmpfs disk image
       diskImage = null;
