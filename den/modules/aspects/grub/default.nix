@@ -1,12 +1,5 @@
 {
-  pkgs,
-  iglib,
-  ...
-}:
-iglib.module {
-  name = "grub";
-
-  nixos.enabled = {
+  den.aspects.grub.nixos = {pkgs, ...}: {
     boot.loader = {
       timeout = 1;
       efi.canTouchEfiVariables = true;
@@ -16,11 +9,11 @@ iglib.module {
         device = "nodev";
 
         # theming
-        splashImage = ./splash.png;
+        splashImage = ./_assets/splash.png;
         theme = pkgs.stdenv.mkDerivation {
           pname = "grub-solstice";
           version = "0.1.0";
-          src = ./solstice-theme;
+          src = ./_assets/solstice-theme;
           installPhase = ''
             runHook preInstall
 

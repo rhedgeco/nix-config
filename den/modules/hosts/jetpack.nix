@@ -4,6 +4,7 @@
       stateVersion = "24.05";
       persist = "/persist";
       includes = [
+        den.aspects.grub
         (den.aspects.autologin "ryan" "niri-session")
         den.aspects.steam
       ];
