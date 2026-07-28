@@ -10,7 +10,7 @@ help:
 
 # updates the lockfile for this flake
 update:
-    nix flake update --flake .
+    nix flake update --flake '.?submodules=1'
     @echo -e "\033[1;32mUPDATE COMPLETE\033[0m"
 
 # checks every item in the flake for errors
@@ -18,18 +18,18 @@ check:
     nix flake check '.?submodules=1'
     @echo -e "\033[1;32mALL CHECKS PASSED\033[0m"
 
-# opens a nix repl shell with the current flake loaded
-inspect:
-    nix repl .
+# opens a nix repl shell with the `target` flake loaded
+inspect target=".":
+    nix repl '{{ target }}?submodules=1'
 
 # builds the `host` configuration and launches it in a vm
 vm host=host *args:
-    @nixos-rebuild --flake '.#{{ host }}' build-vm {{ args }}
+    @nixos-rebuild --flake '.?submodules=1#{{ host }}' build-vm {{ args }}
     ./result/bin/run-*-vm
 
 # does a dry build of the `host` configuration (defaults to the current host)
 dry-build host=host *args:
-    nixos-rebuild --flake '.#{{ host }}' dry-build {{ args }}
+    nixos-rebuild --flake '.?submodules=1#{{ host }}' dry-build {{ args }}
 
 # builds and activates the `host` configuration (defaults to the current host)
 switch host=host:
