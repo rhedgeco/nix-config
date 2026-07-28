@@ -1,6 +1,5 @@
 {den, ...}: {
   den.hosts.x86_64-linux = {
-    # personal laptop
     jetpack = {
       stateVersion = "24.05";
       persist = "/persist";
