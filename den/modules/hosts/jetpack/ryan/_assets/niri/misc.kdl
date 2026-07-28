@@ -1,0 +1,7 @@
+// Dont show hotkey overlay at startup
+hotkey-overlay {
+    skip-at-startup
+}
+
+// Set screenshot location
+screenshot-path "~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H-%M-%S.png"

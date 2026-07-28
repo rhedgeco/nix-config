@@ -22,6 +22,7 @@
           den.aspects.spotify
           den.aspects.bambu
           den.aspects.discord
+          den.aspects.vicinae
         ];
       };
     };

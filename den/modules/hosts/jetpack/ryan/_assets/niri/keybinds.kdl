@@ -1,141 +1,10 @@
-// use natural touchpad scrolling
-input {
-    touchpad {
-        natural-scroll
-    }
-}
-
-// disable middle click paste
-clipboard {
-    disable-primary
-}
-
-layout {
-    // Set gap between windows and borders to be 8 logical pixels
-    gaps 8
-
-    // set column width presets
-    // this allows windows to automatically fit together in various configuratons
-    preset-column-widths {
-        proportion 0.25
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-        proportion 0.75
-    }
-
-    // make new windows default to 25% screen width
-    default-column-width { proportion 0.25; }
-
-    // make larger focus ring around window
-    focus-ring {
-        width 3
-        active-color "#ff8000e0"
-    }
-
-    // add 1 pixel border for style
-    border {
-        width 1
-        active-color "#ffcfa0e0"
-        inactive-color "#202020ff"
-        urgent-color "#9b0000"
-    }
-
-    // Window drop shadows
-    shadow {
-        on
-        softness 10
-        spread 0
-        offset x=0 y=0
-    }
-}
-
-// Ask windows to not draw decorations
-prefer-no-csd
-
-// Set screenshot location
-screenshot-path "~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H-%M-%S.png"
-
-// Speed up animations slightly
-// 'slowdown' is a scaling value,
-// so values less than 1 actually speed animations up
-animations {
-    slowdown 0.75
-}
-
-// set up window rules for simple floating windows
-window-rule {
-    open-floating true
-    match app-id="firefox" title="Picture-in-Picture"
-}
-
-// Make windows with no title float
-// this happens with vscode when dragging/dropping items in xwayland-satellite
-window-rule {
-    match title="^$"
-    open-floating true
-    focus-ring {
-        off
-    }
-}
-
-// Force all window corners to be rounded
-window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
-}
-
-// Dont show hotkey overlay at startup
-hotkey-overlay {
-    skip-at-startup
-}
-
-// turn off hot corners
-gestures {
-    hot-corners {
-        off
-    }
-}
-
 binds {
-    // Close windows quickly with Mod+Q
-    Mod+Q { close-window; }
-
-    // Material Shell Tools
-    Mod+V hotkey-overlay-title="Clipboard" {
-        spawn "dms" "ipc" "call" "clipboard" "toggle";
-    }
-    Mod+K hotkey-overlay-title="Task Manager" {
-        spawn "dms" "ipc" "call" "processlist" "toggle";
-    }
-    Mod+N hotkey-overlay-title="Notepad" {
-        spawn "dms" "ipc" "call" "notepad" "toggle";
-    }
-    Super+L hotkey-overlay-title="Lock Screen" {
-        spawn "dms" "ipc" "call" "lock" "lock";
-    }
-
-    // Volume controls
-    XF86AudioRaiseVolume allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "increment" "3";
-    }
-    XF86AudioLowerVolume allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "decrement" "3";
-    }
-    XF86AudioMute allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "mute";
-    }
-    XF86AudioMicMute allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "micmute";
-    }
-
-    // Brightness controls
-    XF86MonBrightnessUp allow-when-locked=true {
-        spawn "dms" "ipc" "call" "brightness" "increment" "5" "";
-    }
-    XF86MonBrightnessDown allow-when-locked=true {
-        spawn "dms" "ipc" "call" "brightness" "decrement" "5" "";
-    }
+    // basic utilities
+    Mod+Space { spawn "vicinae" "toggle" }
+    Mod+T { spawn "alacritty"; }
+    Mod+W { spawn "firefox"; }
+    Mod+D { spawn "discord"; }
+    Mod+E { spawn "zeditor"; }
 
     // Window movement and navigation
     Mod+Left  { focus-column-left; }
@@ -189,9 +58,6 @@ binds {
     Mod+Ctrl+8 { move-column-to-workspace 8; }
     Mod+Ctrl+9 { move-column-to-workspace 9; }
 
-    // Use this to move windows instead of columns
-    // Mod+Ctrl+1 { move-window-to-workspace 1; }
-
     // Switches focus between the current and the previous workspace.
     Mod+Tab { focus-workspace-previous; }
 
@@ -213,6 +79,7 @@ binds {
     // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
 
+    // Centers the window on the screen
     Mod+C { center-column; }
 
     // Center all fully visible columns on screen.
@@ -224,6 +91,7 @@ binds {
     // Toggle tabbed column display mode.
     Mod+W { toggle-column-tabbed-display; }
 
+    // screenshot tools
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }

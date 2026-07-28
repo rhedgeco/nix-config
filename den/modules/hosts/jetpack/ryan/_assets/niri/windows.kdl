@@ -1,0 +1,31 @@
+// Ask windows to not draw decorations
+prefer-no-csd
+
+// Speed up animations slightly
+// 'slowdown' is a scaling value,
+// so values less than 1 actually speed animations up
+animations {
+    slowdown 0.75
+}
+
+// set up window rules for simple floating windows
+window-rule {
+    open-floating true
+    match app-id="firefox" title="Picture-in-Picture"
+}
+
+// Make windows with no title float
+// this happens with vscode when dragging/dropping items in xwayland-satellite
+window-rule {
+    match title="^$"
+    open-floating true
+    focus-ring {
+        off
+    }
+}
+
+// Force all window corners to be rounded
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
