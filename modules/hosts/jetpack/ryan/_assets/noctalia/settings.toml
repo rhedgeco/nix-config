@@ -28,6 +28,9 @@ interactive = false
 type = "audio_visualizer"
 width = 400
 
+[widget.ram]
+display = "graph"
+
 [widget.audio_visualizer]
 bands = 128
 show_when_idle = true
