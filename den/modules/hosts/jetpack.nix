@@ -25,6 +25,7 @@
           den.aspects.discord
           den.aspects.vicinae
           den.aspects.noctalia
+          den.aspects.color-picker
         ];
       };
     };
