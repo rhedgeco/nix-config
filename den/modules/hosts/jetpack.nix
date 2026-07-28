@@ -26,6 +26,7 @@
           den.aspects.vicinae
           den.aspects.noctalia
           den.aspects.color-picker
+          den.aspects.firefox
         ];
       };
     };
