@@ -1,4 +1,4 @@
-{lib, ...}: {
+{
   den.aspects.jetpack.provides.ryan.homeManager = {pkgs, ...}: {
     # enable keyring related items
     services.gnome-keyring.enable = true;
@@ -39,33 +39,19 @@
       "Videos"
     ];
 
-    # create core desktop assets
-    create = let
-      # filter niri files with extension `.kdl`
-      niriKdlFiles =
-        lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".kdl" name)
-        (builtins.readDir ./_assets/niri);
+    # write the noctalia settings configuration
+    create.".config/noctalia/settings.toml" = ./_assets/noctalia/settings.toml;
 
-      # map niri files to their create routes
-      niriCreate =
-        lib.mapAttrs' (name: _: {
-          name = ".config/niri/${name}";
-          value = ./_assets/niri/${name};
-        })
-        niriKdlFiles;
-
-      # create the base niri config that links everything together
-      niriConfig.".config/niri/config.kdl" = pkgs.writeText "config.kdl" ''
-        ${
-          lib.concatMapAttrsStringSep "\n"
-          (name: _: ''include "./${name}"'')
-          niriKdlFiles
-        }
+    # have niri spawn a video wallpaper at startup
+    niri.include."mpvpaper.kdl" = let
+      wallpaperPath = ./_assets/wallpapers/LazyRiver.mp4;
+      wallpaperScript = pkgs.writeShellScript "launch-wallpaper" ''
+        ${pkgs.mpvpaper}/bin/mpvpaper \
+        -o "aid=no --loop-playlist --hwdec=nvdec --video-sync=audio --panscan=1.0" \
+        "*" ${wallpaperPath}
       '';
-
-      noctaliaConfig.".config/noctalia/settings.toml" =
-        ./_assets/noctalia/settings.toml;
-    in
-      niriCreate // niriConfig // noctaliaConfig;
+    in ''
+      spawn-at-startup "${wallpaperScript}"
+    '';
   };
 }
