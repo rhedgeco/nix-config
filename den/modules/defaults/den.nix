@@ -6,8 +6,10 @@
   # generate top level flake config
   imports = [inputs.den.flakeModule];
 
-  den.schema.user.includes = [
+  den.schema.user = {
     # create OS-level user accounts for each user entity
-    den.batteries.define-user
-  ];
+    includes = [den.batteries.define-user];
+    # enable homeManager by default for all users
+    classes = ["homeManager"];
+  };
 }

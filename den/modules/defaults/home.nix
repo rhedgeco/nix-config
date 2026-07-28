@@ -1,7 +1,4 @@
 {inputs, ...}: {
-  # enable homeManager by default for all users
-  den.schema.user.classes = ["homeManager"];
-
   den.default.homeManager = {
     # enables expetimental flakes and nix command features on this system by default
     # without this, many flake based commands would need `--extra-experimental-features flakes`
