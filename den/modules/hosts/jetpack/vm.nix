@@ -16,7 +16,7 @@
     virtualisation.vmVariant.virtualisation.qemu.options = [
       "-vga none"
       "-device virtio-vga-gl"
-      "-display gtk,gl=on"
+      "-display gtk,gl=on,grab-on-hover=on"
     ];
 
     # enable graphics so EGL/GBM can find the virgl driver
