@@ -14,7 +14,6 @@
       # it hosts an xserver and simulates wayland clients
       xwayland-satellite
       brightnessctl
-      power-profiles-daemon
       alacritty
       nautilus
       gnome-calculator
