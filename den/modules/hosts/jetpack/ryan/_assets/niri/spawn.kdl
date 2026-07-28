@@ -1,3 +1,4 @@
 spawn-sh-at-startup "vicinae server"
 spawn-at-startup "discord"
 spawn-at-startup "activate-linux"
+spawn-at-startup "noctalia"
