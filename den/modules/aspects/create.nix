@@ -1,5 +1,9 @@
-{
-  den.default = {
+{den, ...}: {
+  # include the create aspect by default for all users
+  den.schema.user.includes = [den.aspects.create];
+
+  # adds infrastructure for writing files/folders instead of linking
+  den.aspects.create = {
     homeManager = {
       config,
       lib,
