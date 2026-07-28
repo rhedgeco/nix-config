@@ -88,9 +88,6 @@ binds {
     // Move the focused window between the floating and the tiling layout.
     Mod+S { toggle-window-floating; }
 
-    // Toggle tabbed column display mode.
-    Mod+W { toggle-column-tabbed-display; }
-
     // screenshot tools
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
