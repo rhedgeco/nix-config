@@ -76,7 +76,7 @@
       wallpaperPath = ./_assets/wallpapers/LazyRiver.mp4;
       wallpaperScript = pkgs.writeShellScript "launch-wallpaper" ''
         ${pkgs.mpvpaper}/bin/mpvpaper \
-        -o "aid=no --loop-playlist --hwdec=nvdec --video-sync=audio --panscan=1.0" \
+        -o "aid=no --loop-file=inf --hwdec=vaapi --video-sync=display-resample --panscan=1.0" \
         "*" ${wallpaperPath}
       '';
     in ''
