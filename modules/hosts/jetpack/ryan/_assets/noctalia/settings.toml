@@ -57,8 +57,23 @@ background_opacity = 0.5999999865889549
 concave_edge_corners = false
 margin_edge = 6
 margin_ends = 6
-center = ["audio_visualizer_1", "power_profile", "clock", "notifications", "audio_visualizer_2"]
-end = ["tray", "settings", "bluetooth", "network", "volume", "brightness", "battery", "session"]
+center = [
+  "audio_visualizer_1",
+  "power_profile",
+  "clock",
+  "notifications",
+  "audio_visualizer_2"
+]
+end = [
+  "tray",
+  "settings",
+  "bluetooth",
+  "network",
+  "volume",
+  "brightness",
+  "battery",
+  "session"
+]
 start = ["workspaces", "cpu", "ram", "temp"]
 widget_spacing = 14
 
@@ -76,7 +91,22 @@ blurred_desktop = true
 [lockscreen_widgets]
 enabled = true
 schema_version = 2
-widget_order = ["lockscreen-login-box@eDP-1", "lockscreen-login-box@DP-3", "lockscreen-widget-0000000000000001", "lockscreen-widget-0000000000000002", "lockscreen-widget-0000000000000003", "lockscreen-widget-0000000000000004", "lockscreen-widget-0000000000000005", "lockscreen-widget-0000000000000006", "lockscreen-widget-0000000000000007", "lockscreen-widget-0000000000000008", "lockscreen-widget-0000000000000009", "lockscreen-widget-000000000000000a", "lockscreen-widget-000000000000000b", "lockscreen-widget-000000000000000c"]
+widget_order = [
+  "lockscreen-login-box@eDP-1",
+  "lockscreen-login-box@DP-3",
+  "lockscreen-widget-0000000000000001",
+  "lockscreen-widget-0000000000000002",
+  "lockscreen-widget-0000000000000003",
+  "lockscreen-widget-0000000000000004",
+  "lockscreen-widget-0000000000000005",
+  "lockscreen-widget-0000000000000006",
+  "lockscreen-widget-0000000000000007",
+  "lockscreen-widget-0000000000000008",
+  "lockscreen-widget-0000000000000009",
+  "lockscreen-widget-000000000000000a",
+  "lockscreen-widget-000000000000000b",
+  "lockscreen-widget-000000000000000c"
+]
 
 [lockscreen_widgets.grid]
 cell_size = 16
@@ -305,20 +335,17 @@ custom_palette = "Cream"
 source = "custom"
 
 [idle]
-behavior_order = ["lock", "screen-off", "lock-and-suspend"]
+behavior_order = ["lock", "Screen Off (On Battery)"]
+pre_action_fade_seconds = 5
 
 [idle.behavior.lock]
 action = "lock"
 enabled = true
 timeout = 600.0
 
-[idle.behavior.lock-and-suspend]
-action = "lock_and_suspend"
-enabled = false
-timeout = 900.0
-
-[idle.behavior.screen-off]
-action = "screen_off"
+[idle.behavior."Screen Off (On Battery)"]
+action = "command"
+command = "sh -c 'if [ $(cat /sys/class/power_supply/AC*/online 2>/dev/null | grep -c 1) -eq 0 ]; then niri msg action power-off-monitors; fi'"
 enabled = true
 timeout = 660.0
 
