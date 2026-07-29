@@ -76,7 +76,7 @@ blurred_desktop = true
 [lockscreen_widgets]
 enabled = true
 schema_version = 2
-widget_order = ["lockscreen-login-box@eDP-1", "lockscreen-login-box@DP-3", "lockscreen-widget-0000000000000001", "lockscreen-widget-0000000000000002", "lockscreen-widget-0000000000000003", "lockscreen-widget-0000000000000004", "lockscreen-widget-0000000000000005", "lockscreen-widget-0000000000000006"]
+widget_order = ["lockscreen-login-box@eDP-1", "lockscreen-login-box@DP-3", "lockscreen-widget-0000000000000001", "lockscreen-widget-0000000000000002", "lockscreen-widget-0000000000000003", "lockscreen-widget-0000000000000004", "lockscreen-widget-0000000000000005", "lockscreen-widget-0000000000000006", "lockscreen-widget-0000000000000007", "lockscreen-widget-0000000000000008", "lockscreen-widget-0000000000000009", "lockscreen-widget-000000000000000a", "lockscreen-widget-000000000000000b", "lockscreen-widget-000000000000000c"]
 
 [lockscreen_widgets.grid]
 cell_size = 16
@@ -87,7 +87,7 @@ visible = true
 box_height = 229.0
 box_width = 810.0
 cx = 2560.0
-cy = 1241.5
+cy = 720.0
 output = "DP-3"
 rotation = 0.0
 type = "login_box"
@@ -210,6 +210,82 @@ background = false
 color = "primary"
 format = "{:%A, %B %d %Y}"
 shadow = false
+
+[lockscreen_widgets.widget.lockscreen-widget-0000000000000007]
+box_height = 336.0
+box_width = 5120.0
+cx = 2560.0
+cy = 1272.0
+output = "DP-3"
+rotation = 0.0
+type = "audio_visualizer"
+
+[lockscreen_widgets.widget.lockscreen-widget-0000000000000007.settings]
+background = false
+bands = 128
+centered = false
+mirrored = true
+show_when_idle = true
+
+[lockscreen_widgets.widget.lockscreen-widget-0000000000000008]
+box_height = 224.0
+box_width = 800.0
+cx = 2560.0
+cy = 528.0
+output = "DP-3"
+rotation = 0.0
+type = "clock"
+
+[lockscreen_widgets.widget.lockscreen-widget-0000000000000008.settings]
+background = false
+format = "{:%H:%M:%S}"
+shadow = true
+
+[lockscreen_widgets.widget.lockscreen-widget-0000000000000009]
+box_height = 64.0
+box_width = 672.0
+cx = 2560.0
+cy = 432.0
+output = "DP-3"
+rotation = 0.0
+type = "clock"
+
+[lockscreen_widgets.widget.lockscreen-widget-0000000000000009.settings]
+background = false
+color = "primary"
+format = "{:%A, %B %d %Y}"
+shadow = true
+
+[lockscreen_widgets.widget.lockscreen-widget-000000000000000a]
+box_height = 160.0
+box_width = 368.0
+cx = 2560.0
+cy = 928.0
+output = "DP-3"
+rotation = 0.0
+type = "media_player"
+
+[lockscreen_widgets.widget.lockscreen-widget-000000000000000b]
+box_height = 160.0
+box_width = 208.0
+cx = 2861.0
+cy = 928.0
+output = "DP-3"
+rotation = 0.0
+type = "sysmon"
+
+[lockscreen_widgets.widget.lockscreen-widget-000000000000000b.settings]
+stat = "cpu_usage"
+stat2 = "cpu_temp"
+
+[lockscreen_widgets.widget.lockscreen-widget-000000000000000c]
+box_height = 160.0
+box_width = 208.0
+cx = 2259.0
+cy = 928.0
+output = "DP-3"
+rotation = 0.0
+type = "volume"
 
 [notification]
 background_opacity = 0.7499999832361937
