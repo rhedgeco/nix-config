@@ -14,5 +14,9 @@
     # set the hardware clock to local time to play nicely with windows
     time.hardwareClockInLocalTime = true;
     time.timeZone = "America/Los_Angeles";
+
+    persist.dirs = [
+      "/var/lib/power-profiles-daemon"
+    ];
   };
 }

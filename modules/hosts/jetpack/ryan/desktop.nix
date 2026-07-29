@@ -31,6 +31,9 @@
       # persist user keyring stores between boots
       ".local/share/keyring"
 
+      # persist sound and mic settings
+      ".local/state/wireplumber"
+
       # persist common user folders
       "Downloads"
       "Music"
