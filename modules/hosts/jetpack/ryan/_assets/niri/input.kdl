@@ -1,0 +1,18 @@
+// use natural touchpad scrolling
+input {
+    touchpad {
+        natural-scroll
+    }
+}
+
+// disable middle click paste
+clipboard {
+    disable-primary
+}
+
+// turn off hot corners
+gestures {
+    hot-corners {
+        off
+    }
+}

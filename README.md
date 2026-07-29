@@ -1,3 +1,1 @@
-# Ryan's Nixos Configurations
-
-don't look at my config im sensitive 🥺👉👈
+![AAAHHHH WHY ARE YOU LOOKING](./assets/banner.png)

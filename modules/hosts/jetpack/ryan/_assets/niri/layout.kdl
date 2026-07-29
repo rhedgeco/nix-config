@@ -1,0 +1,39 @@
+layout {
+    // Set gap between windows and borders to be 8 logical pixels
+    gaps 8
+
+    // set column width presets
+    // this allows windows to automatically fit together in various configuratons
+    preset-column-widths {
+        proportion 0.25
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 0.75
+    }
+
+    // make new windows default to 25% screen width
+    default-column-width { proportion 0.25; }
+
+    // make larger focus ring around window
+    focus-ring {
+        width 3
+        active-color "#ff8000e0"
+    }
+
+    // add 1 pixel border for style
+    border {
+        width 1
+        active-color "#ffcfa0e0"
+        inactive-color "#202020ff"
+        urgent-color "#9b0000"
+    }
+
+    // Window drop shadows
+    shadow {
+        on
+        softness 10
+        spread 0
+        offset x=0 y=0
+    }
+}
