@@ -41,6 +41,7 @@
 
     # write the noctalia settings configuration
     create.".config/noctalia/settings.toml" = ./_assets/noctalia/settings.toml;
+    create.".config/noctalia/palettes/Cream.json" = ./_assets/noctalia/Cream.json;
 
     # have niri spawn a video wallpaper at startup
     niri.include."mpvpaper.kdl" = let
