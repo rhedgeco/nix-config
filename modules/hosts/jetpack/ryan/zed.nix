@@ -63,7 +63,7 @@
             };
             thread_summary_model = {
               provider = "copilot_chat";
-              model = "claude-sonnet-4.6";
+              model = "claude-sonnet-4.8";
             };
           };
           lsp = {
