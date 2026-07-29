@@ -17,6 +17,9 @@ open_near_click_control_center = true
 transparency_mode = "soft"
 open_near_click_session = true
 
+[shell.screen_corners]
+enabled = true
+
 [widget.audio_visualizer_1]
 show_when_idle = false
 bands = 64
