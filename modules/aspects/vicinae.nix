@@ -21,6 +21,11 @@
           type = with lib.types; listOf str;
           default = [];
         };
+        opacity = lib.mkOption {
+          description = "Sets the vicinae window opacity";
+          type = lib.types.float;
+          default = 1.0;
+        };
       };
 
       config = {
@@ -34,6 +39,7 @@
         create.".config/vicinae/nix-settings.json" = let
           settings = {
             favorites = config.vicinae.favorites;
+            launcher_window.opacity = config.vicinae.opacity;
             close_on_focus_loss = config.vicinae.closeOnFocusLoss;
             pop_to_root_on_close = config.vicinae.popToRootOnClose;
             launcher_window.layer_shell.keyboard_interactivity =

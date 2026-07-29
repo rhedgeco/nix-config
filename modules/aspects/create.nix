@@ -31,6 +31,7 @@
             # back up the target file if it already exists
             if [ -e "$TARGET" ] || [ -L "$TARGET" ]; then
               echo "Found existing file at $TARGET. Backing up..."
+              rm -rf "$TARGET.backup"
               mv "$TARGET" "$TARGET.backup"
             fi
 
