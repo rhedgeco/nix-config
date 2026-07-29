@@ -7,6 +7,32 @@ binds {
     Mod+D { spawn "discord"; }
     Mod+E { spawn "zeditor"; }
 
+    // system controls
+    Mod+V { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
+    Mod+L { spawn "noctalia" "msg" "session" "lock"; }
+
+    // Volume controls
+    XF86AudioRaiseVolume allow-when-locked=true {
+        spawn "noctalia" "msg" "volume-up";
+    }
+    XF86AudioLowerVolume allow-when-locked=true {
+        spawn "noctalia" "msg" "volume-down";
+    }
+    XF86AudioMute allow-when-locked=true {
+        spawn "noctalia" "msg" "volume-mute";
+    }
+    XF86AudioMicMute allow-when-locked=true {
+        spawn "noctalia" "msg" "mic-mute";
+    }
+
+    // Brightness controls
+    XF86MonBrightnessUp allow-when-locked=true {
+        spawn "noctalia" "msg" "brightness-up";
+    }
+    XF86MonBrightnessDown allow-when-locked=true {
+        spawn "noctalia" "msg" "brightness-down";
+    }
+
     // Window movement and navigation
     Mod+Q { close-window; }
     Mod+Left  { focus-column-left; }
