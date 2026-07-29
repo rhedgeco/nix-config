@@ -1,5 +1,4 @@
 binds {
-
     // basic utilities
     Mod+Space { spawn "vicinae" "toggle"; }
     Mod+T { spawn "alacritty"; }
@@ -9,6 +8,7 @@ binds {
 
     // system controls
     Mod+V { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
+    Mod+P { spawn "noctalia" "msg" "panel-toggle" "session"; }
     Mod+L { spawn "noctalia" "msg" "session" "lock"; }
 
     // Volume controls
