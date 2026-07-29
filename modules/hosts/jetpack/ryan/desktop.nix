@@ -8,6 +8,29 @@
       gcr
     ];
 
+    # enable the xdg desktop portal
+    xdg.portal = {
+      enable = true;
+
+      # Extra portals required for Niri screen recording / screenshots
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gnome # Recommended backend for Niri screencasting
+        xdg-desktop-portal-gtk # Standard fallback for file pickers/dialogs
+      ];
+
+      # Map portal implementations specifically for Niri
+      config = {
+        niri = {
+          default = ["gnome" "gtk"];
+          "org.freedesktop.impl.portal.Screencast" = ["gnome"];
+          "org.freedesktop.impl.portal.Screenshot" = ["gnome"];
+        };
+        common = {
+          default = ["gtk"];
+        };
+      };
+    };
+
     home.packages = with pkgs; [
       # niri does not have a built in x server
       # xwayland-satellite fills this gap
@@ -19,6 +42,7 @@
       gnome-calculator
       activate-linux
       video-trimmer
+      obs-studio
       typst
     ];
 
