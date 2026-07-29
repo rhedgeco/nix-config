@@ -140,6 +140,7 @@ border = false
 [control_center]
 sidebar = "full"
 sidebar_section = "full"
+hidden_tabs = ["weather", "screen-time"]
 
 [theme]
 custom_palette = "Cream"
