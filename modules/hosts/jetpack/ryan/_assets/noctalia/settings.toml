@@ -57,23 +57,8 @@ background_opacity = 0.5999999865889549
 concave_edge_corners = false
 margin_edge = 6
 margin_ends = 6
-center = [
-  "audio_visualizer_1",
-  "power_profile",
-  "clock",
-  "notifications",
-  "audio_visualizer_2"
-]
-end = [
-  "tray",
-  "settings",
-  "bluetooth",
-  "network",
-  "volume",
-  "brightness",
-  "battery",
-  "session"
-]
+center = ["power_profile", "clock", "notifications"]
+end = ["tray", "settings", "bluetooth", "network", "volume", "brightness", "battery", "session"]
 start = ["workspaces", "cpu", "ram", "temp"]
 widget_spacing = 14
 
@@ -91,22 +76,7 @@ blurred_desktop = true
 [lockscreen_widgets]
 enabled = true
 schema_version = 2
-widget_order = [
-  "lockscreen-login-box@eDP-1",
-  "lockscreen-login-box@DP-3",
-  "lockscreen-widget-0000000000000001",
-  "lockscreen-widget-0000000000000002",
-  "lockscreen-widget-0000000000000003",
-  "lockscreen-widget-0000000000000004",
-  "lockscreen-widget-0000000000000005",
-  "lockscreen-widget-0000000000000006",
-  "lockscreen-widget-0000000000000007",
-  "lockscreen-widget-0000000000000008",
-  "lockscreen-widget-0000000000000009",
-  "lockscreen-widget-000000000000000a",
-  "lockscreen-widget-000000000000000b",
-  "lockscreen-widget-000000000000000c"
-]
+widget_order = ["lockscreen-login-box@eDP-1", "lockscreen-login-box@DP-3", "lockscreen-widget-0000000000000001", "lockscreen-widget-0000000000000002", "lockscreen-widget-0000000000000003", "lockscreen-widget-0000000000000004", "lockscreen-widget-0000000000000005", "lockscreen-widget-0000000000000006", "lockscreen-widget-0000000000000007", "lockscreen-widget-0000000000000008", "lockscreen-widget-0000000000000009", "lockscreen-widget-000000000000000a", "lockscreen-widget-000000000000000b", "lockscreen-widget-000000000000000c"]
 
 [lockscreen_widgets.grid]
 cell_size = 16
@@ -352,3 +322,27 @@ timeout = 660.0
 [plugins]
 auto_update = false
 enabled = ["noctalia/notes"]
+
+[desktop_widgets]
+schema_version = 2
+widget_order = ["desktop-widget-0000000000000001"]
+
+[desktop_widgets.grid]
+cell_size = 16
+major_interval = 4
+visible = true
+
+[desktop_widgets.widget.desktop-widget-0000000000000001]
+box_height = 208.0
+box_width = 1584.0
+cx = 800.0
+cy = 963.0
+output = "eDP-1"
+rotation = 0.0
+type = "audio_visualizer"
+
+[desktop_widgets.widget.desktop-widget-0000000000000001.settings]
+background = false
+bands = 128
+centered = false
+show_when_idle = false
