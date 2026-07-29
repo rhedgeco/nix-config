@@ -245,3 +245,7 @@ timeout = 900.0
 action = "screen_off"
 enabled = true
 timeout = 660.0
+
+[plugins]
+auto_update = false
+enabled = ["noctalia/notes"]
