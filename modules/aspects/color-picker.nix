@@ -21,7 +21,7 @@
     xdg.desktopEntries."color-picker" = {
       name = "Color Picker";
       comment = "pick hex values to the clipboard";
-      icon = ./_assets/color-picker/icon.png;
+      icon = ./_assets/color-picker.png;
       categories = ["Utility" "Core"];
       terminal = false;
 
