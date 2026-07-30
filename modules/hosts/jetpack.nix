@@ -27,6 +27,7 @@
           den.aspects.noctalia
           den.aspects.color-picker
           den.aspects.firefox
+          den.aspects.dolphin
         ];
       };
     };
