@@ -37,12 +37,26 @@ in {
         neededForBoot = true;
       };
 
+      "/swap" = {
+        device = btrfsDisk;
+        fsType = "btrfs";
+        options = ["subvol=swap" "noatime"];
+      };
+
       "/btrfs" = {
         device = btrfsDisk;
         fsType = "btrfs";
         options = ["compress=zstd"];
       };
     };
+
+    swapDevices = [
+      # create the default swapfile with 16GB
+      {
+        device = "/swap/swapfile";
+        size = 16 * 1024;
+      }
+    ];
 
     # Thank you BryceBeagle!
     # based on https://github.com/BryceBeagle/nixos-config/blob/5a0ca440118488d427410ce49a06c3aca376509f/modules/config/impermanence.nix#L57
