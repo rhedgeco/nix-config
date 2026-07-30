@@ -21,13 +21,13 @@
           den.aspects.embedded
           den.aspects.rust
           den.aspects.spotify
-          den.aspects.bambu
           den.aspects.discord
           den.aspects.vicinae
           den.aspects.noctalia
           den.aspects.color-picker
           den.aspects.firefox
           den.aspects.dolphin
+          den.aspects.bambu
         ];
       };
     };
