@@ -59,7 +59,7 @@
             dock = "right";
             default_model = {
               provider = "copilot_chat";
-              model = "claude-opus-4.6";
+              model = "claude-opus-4.8";
             };
             thread_summary_model = {
               provider = "copilot_chat";
