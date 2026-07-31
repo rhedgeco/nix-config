@@ -5,12 +5,9 @@
     ];
 
     persist.dirs = [
-      # TODO: slim this down to dedicated files/dirs
-      # contains calendar themes and other state that should persist
-      ".local/state/noctalia"
-
-      # persist the cache so that various content sticks around
-      ".cache/noctalia"
+      # only persist the calendar part of the cache
+      # so calendar events persist without network
+      ".cache/noctalia/calendar"
     ];
   };
 }
