@@ -45,6 +45,9 @@
           outline_panel.dock = "left";
           project_panel.dock = "left";
           icon_theme = "Catppuccin Mocha";
+          file_types = {
+            "TOML" = ["**/*.yoink"];
+          };
           theme = {
             mode = "system";
             dark = "Dark Modern";
