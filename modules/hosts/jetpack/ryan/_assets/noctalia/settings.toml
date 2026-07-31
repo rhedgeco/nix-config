@@ -22,6 +22,8 @@ margin_edge = 6
 margin_ends = 6
 start = [
     "workspaces",
+    "network_rx",
+    "network_tx",
     "cpu",
     "ram",
     "temp",
@@ -382,6 +384,12 @@ display = "graph"
 
 [widget.network]
 show_label = false
+
+[widget.network_rx]
+display = "graph"
+
+[widget.network_tx]
+display = "graph"
 
 [widget.ram]
 display = "graph"
