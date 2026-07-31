@@ -20,6 +20,11 @@
     };
     noctalia = {
       url = "github:noctalia-dev/noctalia/cachix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    yoink = {
+      url = "path:./inputs/yoink";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }

@@ -1,4 +1,5 @@
 host := `hostname -s`
+user := `whoami`
 
 # lists the available `just` commands
 default:
@@ -50,3 +51,6 @@ clean period="30d":
 purge:
     @gum confirm "Are you sure you want to delete *all* old nix content?" --default="No"
     nix-collect-garbage -d
+
+yoink user=user host=host:
+    @yoink -r ./modules/hosts/{{ host }}/{{ user }}

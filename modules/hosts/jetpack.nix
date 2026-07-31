@@ -28,6 +28,7 @@
           den.aspects.firefox
           den.aspects.dolphin
           den.aspects.bambu
+          den.aspects.yoink
         ];
       };
     };
