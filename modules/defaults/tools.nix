@@ -16,6 +16,7 @@ let
       python3
       pciutils
       ffmpeg
+      nixfmt
     ];
 in
 {
