@@ -1,9 +1,9 @@
 {
-  den.aspects.fish.homeManager = {pkgs, ...}: {
+  den.aspects.fish.homeManager = { pkgs, ... }: {
     # persist fish history
     # https://github.com/fish-shell/fish-shell/issues/10730
     # ^ prevents syncing only fish_history file
-    persist.dirs = [".local/share/fish"];
+    persist.dirs = [ ".local/share/fish" ];
 
     home.packages = [
       pkgs.grc # used by fish shell for colorizing

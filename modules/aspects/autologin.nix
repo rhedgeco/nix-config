@@ -1,5 +1,5 @@
 let
-  autologin-module = user: command: {pkgs, ...}: {
+  autologin-module = user: command: { pkgs, ... }: {
     services.greetd = {
       enable = true;
       settings = {
@@ -18,7 +18,8 @@ let
     name = "autologin(${user}:${command})";
     nixos = autologin-module user command;
   };
-in {
+in
+{
   den.aspects.autologin = {
     inherit __functor;
   };

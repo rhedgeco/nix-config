@@ -1,5 +1,5 @@
 {
-  den.aspects.jetpack.nixos = {pkgs, ...}: {
+  den.aspects.jetpack.nixos = { pkgs, ... }: {
     # enable rtkit
     # allows Pipewire to use the realtime scheduler for increased performance.
     # this is useful in audio production scenarios, but is normally optional

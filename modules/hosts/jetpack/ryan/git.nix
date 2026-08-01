@@ -1,5 +1,5 @@
 {
-  den.aspects.jetpack.provides.ryan.homeManager = {pkgs, ...}: {
+  den.aspects.jetpack.provides.ryan.homeManager = { pkgs, ... }: {
     # set up the gpg agent
     services.gpg-agent = {
       enable = true;

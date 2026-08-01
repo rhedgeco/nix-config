@@ -1,5 +1,5 @@
 {
-  den.aspects.grub.nixos = {pkgs, ...}: {
+  den.aspects.grub.nixos = { pkgs, ... }: {
     boot.loader = {
       timeout = 1;
       efi.canTouchEfiVariables = true;

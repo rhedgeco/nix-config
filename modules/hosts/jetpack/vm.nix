@@ -19,7 +19,7 @@
       fileSystems."/persist" = {
         device = "tmpfs";
         fsType = "tmpfs";
-        options = ["mode=755"];
+        options = [ "mode=755" ];
         neededForBoot = true;
       };
 

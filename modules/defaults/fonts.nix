@@ -1,7 +1,7 @@
 let
   # fonts that should be available on every system
-  mkFonts = pkgs:
-    with pkgs; [
+  mkFonts =
+    pkgs: with pkgs; [
       nerd-fonts.noto
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
@@ -10,18 +10,19 @@ let
 
   # default font settings for every system
   defaultFonts = {
-    serif = ["Noto Serif Nerd Font"];
-    sansSerif = ["Noto Sans Nerd Font"];
-    emoji = ["Noto Color Emoji"];
-    monospace = ["JetBrains Mono Nerd Font"];
+    serif = [ "Noto Serif Nerd Font" ];
+    sansSerif = [ "Noto Sans Nerd Font" ];
+    emoji = [ "Noto Color Emoji" ];
+    monospace = [ "JetBrains Mono Nerd Font" ];
   };
-in {
+in
+{
   den.default = {
-    nixos = {pkgs, ...}: {
+    nixos = { pkgs, ... }: {
       fonts.packages = mkFonts pkgs;
       fonts.fontconfig.defaultFonts = defaultFonts;
     };
-    homeManager = {pkgs, ...}: {
+    homeManager = { pkgs, ... }: {
       home.packages = mkFonts pkgs;
       fonts.fontconfig.defaultFonts = defaultFonts;
     };

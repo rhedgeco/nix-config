@@ -1,4 +1,4 @@
-{den, ...}: {
+{ den, ... }: {
   # alias fishy as a collection of shell aspects
   den.aspects.fishy.includes = [
     (den.batteries.user-shell "fish")

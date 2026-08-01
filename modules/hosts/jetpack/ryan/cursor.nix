@@ -1,5 +1,5 @@
 {
-  den.aspects.jetpack.provides.ryan.homeManager = {pkgs, ...}: {
+  den.aspects.jetpack.provides.ryan.homeManager = { pkgs, ... }: {
     home.pointerCursor = {
       enable = true;
       gtk.enable = true;

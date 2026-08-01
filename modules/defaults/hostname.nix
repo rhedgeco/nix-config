@@ -1,5 +1,5 @@
-{lib, ...}: {
-  den.default.nixos = {host, ...}: {
+{ lib, ... }: {
+  den.default.nixos = { host, ... }: {
     networking.hostName = lib.mkDefault host.name;
   };
 }

@@ -1,7 +1,7 @@
 {
   den.aspects.network = {
     # any user that needs to use the network needs to be in this group
-    user.extraGroups = ["networkmanager"];
+    user.extraGroups = [ "networkmanager" ];
 
     nixos = {
       networking.networkmanager.enable = true;

@@ -1,7 +1,7 @@
 let
   # tools that should be available on every system
-  mkTools = pkgs:
-    with pkgs; [
+  mkTools =
+    pkgs: with pkgs; [
       bat
       vim
       nano
@@ -17,12 +17,13 @@ let
       pciutils
       ffmpeg
     ];
-in {
+in
+{
   den.default = {
-    nixos = {pkgs, ...}: {
+    nixos = { pkgs, ... }: {
       environment.systemPackages = mkTools pkgs;
     };
-    homeManager = {pkgs, ...}: {
+    homeManager = { pkgs, ... }: {
       home.packages = mkTools pkgs;
     };
   };

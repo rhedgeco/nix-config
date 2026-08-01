@@ -2,12 +2,13 @@
   lib,
   den,
   ...
-}: {
+}:
+{
   den.aspects.jetpack.provides.ryan = {
     # zed relies on the ai-tooling
-    includes = [den.aspects.ai-tools];
+    includes = [ den.aspects.ai-tools ];
 
-    homeManager = {pkgs, ...}: {
+    homeManager = { pkgs, ... }: {
       home.packages = with pkgs; [
         # include the main editor
         zed-editor
@@ -29,15 +30,15 @@
       # apply the zed settings
       create.".config/zed/settings.json" = builtins.toJSON (
         lib.recursiveUpdate
-        # load the existing json file
-        (builtins.fromJSON (builtins.readFile ./_assets/zed/settings.json))
-        # then merge some custom nix values into it
-        {
-          lsp = {
-            package-version-server.binary.path = lib.getExe pkgs.package-version-server;
-            crates-lsp.binary.path = lib.getExe pkgs.crates-lsp;
-          };
-        }
+          # load the existing json file
+          (builtins.fromJSON (builtins.readFile ./_assets/zed/settings.json))
+          # then merge some custom nix values into it
+          {
+            lsp = {
+              package-version-server.binary.path = lib.getExe pkgs.package-version-server;
+              crates-lsp.binary.path = lib.getExe pkgs.crates-lsp;
+            };
+          }
       );
     };
   };

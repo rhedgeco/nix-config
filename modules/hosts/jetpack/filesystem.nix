@@ -1,52 +1,69 @@
 let
   btrfsDisk = "/dev/disk/by-label/MAIN";
-in {
-  den.aspects.jetpack.nixos = {utils, ...}: {
+in
+{
+  den.aspects.jetpack.nixos = { utils, ... }: {
     # set docker to use the btrfs filesystem as its storage driver
     virtualisation.docker.storageDriver = "btrfs";
 
     # auto scrub btrfs filesystem
     services.btrfs.autoScrub = {
       enable = true;
-      fileSystems = ["/btrfs"];
+      fileSystems = [ "/btrfs" ];
     };
 
     fileSystems = {
       "/" = {
         device = btrfsDisk;
         fsType = "btrfs";
-        options = ["subvol=root" "compress=zstd"];
+        options = [
+          "subvol=root"
+          "compress=zstd"
+        ];
       };
 
       "/boot" = {
         device = "/dev/disk/by-label/BOOT";
         fsType = "vfat";
-        options = ["fmask=0022" "dmask=0022"];
+        options = [
+          "fmask=0022"
+          "dmask=0022"
+        ];
       };
 
       "/nix" = {
         device = btrfsDisk;
         fsType = "btrfs";
-        options = ["subvol=nix" "compress=zstd" "noatime"];
+        options = [
+          "subvol=nix"
+          "compress=zstd"
+          "noatime"
+        ];
       };
 
       "/persist" = {
         device = btrfsDisk;
         fsType = "btrfs";
-        options = ["subvol=persist" "compress=zstd"];
+        options = [
+          "subvol=persist"
+          "compress=zstd"
+        ];
         neededForBoot = true;
       };
 
       "/swap" = {
         device = btrfsDisk;
         fsType = "btrfs";
-        options = ["subvol=swap" "noatime"];
+        options = [
+          "subvol=swap"
+          "noatime"
+        ];
       };
 
       "/btrfs" = {
         device = btrfsDisk;
         fsType = "btrfs";
-        options = ["compress=zstd"];
+        options = [ "compress=zstd" ];
       };
     };
 
@@ -66,50 +83,52 @@ in {
 
     # create a systemd stage 1 service that backs up old root directories on boot
     # this will create a fresh root each time and will wipe backups older than 30 days
-    boot.initrd.systemd.services.wipe-btrfs-root = let
-      btrfsDiskSystemdUnit = "${utils.escapeSystemdPath btrfsDisk}.device";
-    in {
-      description = "Wipe root btrfs subvolume for impermanence";
-      wantedBy = ["initrd.target"];
+    boot.initrd.systemd.services.wipe-btrfs-root =
+      let
+        btrfsDiskSystemdUnit = "${utils.escapeSystemdPath btrfsDisk}.device";
+      in
+      {
+        description = "Wipe root btrfs subvolume for impermanence";
+        wantedBy = [ "initrd.target" ];
 
-      # This must match the actual btfrs device label
-      after = [btrfsDiskSystemdUnit];
-      requires = [btrfsDiskSystemdUnit];
+        # This must match the actual btfrs device label
+        after = [ btrfsDiskSystemdUnit ];
+        requires = [ btrfsDiskSystemdUnit ];
 
-      # Must happen after the device is ready, but before /sysroot is mounted.
-      before = ["sysroot.mount"];
+        # Must happen after the device is ready, but before /sysroot is mounted.
+        before = [ "sysroot.mount" ];
 
-      unitConfig.DefaultDependencies = "no";
-      serviceConfig.Type = "oneshot";
+        unitConfig.DefaultDependencies = "no";
+        serviceConfig.Type = "oneshot";
 
-      script = ''
-        mkdir /btrfs
-        mount -o compress=zstd ${btrfsDisk} /btrfs
-        if [[ -e /btrfs/root ]]; then
-            echo "Found old root directory, creating backup..."
-            mkdir -p /btrfs/backup/root
-            timestamp=$(date --date="@$(stat -c %Y /btrfs/root)" "+%Y-%m-%-d_%H:%M:%S")
-            mv /btrfs/root "/btrfs/backup/root/$timestamp"
-        fi
+        script = ''
+          mkdir /btrfs
+          mount -o compress=zstd ${btrfsDisk} /btrfs
+          if [[ -e /btrfs/root ]]; then
+              echo "Found old root directory, creating backup..."
+              mkdir -p /btrfs/backup/root
+              timestamp=$(date --date="@$(stat -c %Y /btrfs/root)" "+%Y-%m-%-d_%H:%M:%S")
+              mv /btrfs/root "/btrfs/backup/root/$timestamp"
+          fi
 
-        delete_subvolume_recursively() {
-            IFS=$'\n'
-            for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-                delete_subvolume_recursively "/btrfs/$i"
-            done
-            echo "Found old backup at $1, deleting..."
-            btrfs subvolume delete "$1"
-        }
+          delete_subvolume_recursively() {
+              IFS=$'\n'
+              for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                  delete_subvolume_recursively "/btrfs/$i"
+              done
+              echo "Found old backup at $1, deleting..."
+              btrfs subvolume delete "$1"
+          }
 
-        echo "Scanning root backups for roots older than 30 days..."
-        for i in $(find /btrfs/backup/root/* -maxdepth 0 -mtime +30); do
-            delete_subvolume_recursively "$i"
-        done
+          echo "Scanning root backups for roots older than 30 days..."
+          for i in $(find /btrfs/backup/root/* -maxdepth 0 -mtime +30); do
+              delete_subvolume_recursively "$i"
+          done
 
-        echo "Building fresh root directory..."
-        btrfs subvolume create /btrfs/root
-        umount /btrfs
-      '';
-    };
+          echo "Building fresh root directory..."
+          btrfs subvolume create /btrfs/root
+          umount /btrfs
+        '';
+      };
   };
 }
