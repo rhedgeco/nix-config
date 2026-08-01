@@ -1,0 +1,68 @@
+{
+    "agent": {
+        "default_model": {
+            "model": "claude-opus-4.8",
+            "provider": "copilot_chat"
+        },
+        "dock": "right",
+        "thread_summary_model": {
+            "model": "claude-sonnet-4.8",
+            "provider": "copilot_chat"
+        }
+    },
+    "auto_install_extensions": {
+        "catppuccin-icons": true,
+        "crates-lsp": true,
+        "git-firefly": true,
+        "html": true,
+        "kdl": true,
+        "nix": true,
+        "rust": true,
+        "toml": true,
+        "xml": true
+    },
+    "buffer_font_size": 14,
+    "file_types": {
+        "TOML": [
+            "**/*.yoink"
+        ]
+    },
+    "format_on_save": "on",
+    "git_panel": {
+        "dock": "left",
+        "tree_view": true
+    },
+    "icon_theme": "Catppuccin Mocha",
+    "indent_guides": {
+        "coloring": "indent_aware"
+    },
+    "lsp": {
+        "nil": {
+            "initialization_options": {
+                "formatting": {
+                    "command": [
+                        "alejandra"
+                    ]
+                }
+            }
+        }
+    },
+    "minimap": {
+        "show": "always"
+    },
+    "outline_panel": {
+        "dock": "left"
+    },
+    "project_panel": {
+        "dock": "left"
+    },
+    "theme": {
+        "dark": "Dark Modern",
+        "light": "One Light",
+        "mode": "system"
+    },
+    "title_bar": {
+        "show_menus": true
+    },
+    "ui_font_size": 16
+}
