@@ -1,3 +1,3 @@
-[target.toml]
+target = "toml"
 path = "./settings.toml"
 overrides = ["/home/ryan/.local/state/noctalia/settings.toml"]
