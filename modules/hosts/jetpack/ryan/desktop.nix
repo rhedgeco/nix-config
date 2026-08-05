@@ -1,4 +1,4 @@
-{
+{ lib, ... }: {
   den.aspects.jetpack.provides.ryan.homeManager = { pkgs, ... }: {
     # enable keyring related items
     services.gnome-keyring.enable = true;
@@ -78,9 +78,21 @@
     niri.include."mpvpaper.kdl" =
       let
         wallpaperPath = ./_assets/wallpapers/LazyRiver.mp4;
+        mpvOptions = [
+          "aid=no" # no audio
+          "--loop-file=inf" # loop the video forever
+          "--hwdec=auto-safe" # pick best available hw decoder, fall back to software
+          "--video-sync=display-resample" # sync playback to display refresh
+          "--panscan=1.0" # crop to fill the screen
+          "--profile=fast" # lighter rendering, quality irrelevant for a wallpaper
+          "--cache=no" # no streaming cache needed for a local file
+          "--demuxer-max-bytes=64MiB" # cap forward demuxer buffer (prevents leak)
+          "--demuxer-max-back-bytes=32MiB" # cap back-buffer (prevents leak)
+        ];
+
         wallpaperScript = pkgs.writeShellScript "launch-wallpaper" ''
           ${pkgs.mpvpaper}/bin/mpvpaper \
-          -o "aid=no --loop-file=inf --hwdec=vaapi --video-sync=display-resample --panscan=1.0" \
+          -o "${lib.concatStringsSep " " mpvOptions}" \
           "*" ${wallpaperPath}
         '';
       in
