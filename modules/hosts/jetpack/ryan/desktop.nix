@@ -91,6 +91,8 @@
         ];
 
         wallpaperScript = pkgs.writeShellScript "launch-wallpaper" ''
+          # run under jemalloc to avoid glibc arena fragmentation over long sessions
+          export LD_PRELOAD="${pkgs.jemalloc}/lib/libjemalloc.so"
           ${pkgs.mpvpaper}/bin/mpvpaper \
           -o "${lib.concatStringsSep " " mpvOptions}" \
           "*" ${wallpaperPath}
