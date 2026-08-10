@@ -25,7 +25,7 @@ inspect target=".":
 
 # builds the `host` configuration and launches it in a vm
 vm host=current_host *args:
-    @nixos-rebuild --flake '.?submodules=1#{{ host }}' build-vm {{ args }}
+    nixos-rebuild --flake '.?submodules=1#{{ host }}' build-vm {{ args }}
     ./result/bin/run-*-vm
 
 # does a dry build of the `host` configuration (defaults to the current host)
@@ -54,4 +54,4 @@ purge:
 
 # yoinks specific `user` content from a `host` (defaults to the current user and host)
 yoink user=current_user host=current_host:
-    @yoink -r ./modules/hosts/{{ host }}/{{ user }}
+    yoink -r ./modules/hosts/{{ host }}/{{ user }}
