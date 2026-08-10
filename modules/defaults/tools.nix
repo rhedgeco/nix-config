@@ -17,6 +17,7 @@ let
       pciutils
       ffmpeg
       nixfmt
+      speedtest-cli
     ];
 in
 {
