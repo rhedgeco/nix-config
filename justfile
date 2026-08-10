@@ -1,5 +1,5 @@
-host := `hostname -s`
-user := `whoami`
+current_host := `hostname -s`
+current_user := `whoami`
 
 # lists the available `just` commands
 default:
@@ -24,20 +24,20 @@ inspect target=".":
     nix repl '{{ target }}?submodules=1'
 
 # builds the `host` configuration and launches it in a vm
-vm host=host *args:
+vm host=current_host *args:
     @nixos-rebuild --flake '.?submodules=1#{{ host }}' build-vm {{ args }}
     ./result/bin/run-*-vm
 
 # does a dry build of the `host` configuration (defaults to the current host)
-dry-build host=host *args:
+dry-build host=current_host *args:
     nixos-rebuild --flake '.?submodules=1#{{ host }}' dry-build {{ args }}
 
 # builds and activates the `host` configuration (defaults to the current host)
-switch host=host:
+switch host=current_host:
     sudo nixos-rebuild --flake '.?submodules=1#{{ host }}' switch
 
 # builds and enables the `host` configuration for next boot (defaults to the current host)
-boot host=host:
+boot host=current_host:
     sudo nixos-rebuild --flake '.?submodules=1#{{ host }}' boot
     @gum confirm "Reboot Now?" --default="No"
     @reboot
@@ -52,5 +52,6 @@ purge:
     @gum confirm "Are you sure you want to delete *all* old nix content?" --default="No"
     nix-collect-garbage -d
 
-yoink user=user host=host:
+# yoinks specific `user` content from a `host` (defaults to the current user and host)
+yoink user=current_user host=current_host:
     @yoink -r ./modules/hosts/{{ host }}/{{ user }}
