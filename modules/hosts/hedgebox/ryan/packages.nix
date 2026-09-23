@@ -61,6 +61,7 @@
       home.sessionVariables = {
         LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
         LIBRARY_PATH = pkgs.lib.makeLibraryPath nativeLibs;
+        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath nativeLibs;
         BINDGEN_EXTRA_CLANG_ARGS = "-I${pkgs.linuxHeaders}/include -I${pkgs.glibc.dev}/include -isystem ${pkgs.llvmPackages.clang}/resource-root/include";
         PKG_CONFIG_PATH = pkgs.lib.makeSearchPathOutput "dev" "lib/pkgconfig" nativeLibs;
       };
