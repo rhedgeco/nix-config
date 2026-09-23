@@ -36,6 +36,7 @@
           persist.dirs = [
             # TODO: declaratively store vicinae extensions etc...
             ".local/share/vicinae"
+            ".local/state/vicinae"
           ];
 
           den.create.".config/vicinae/nix-settings.json" =
