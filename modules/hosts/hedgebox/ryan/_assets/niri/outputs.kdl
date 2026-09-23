@@ -1,0 +1,4 @@
+// main monitor
+output "Dell Inc. DELL U3417W FR3PK85B0FTL" {
+  mode "3440x1440@59.973"
+}

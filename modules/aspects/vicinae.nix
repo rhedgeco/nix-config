@@ -7,7 +7,7 @@
         ...
       }:
       {
-        options.vicinae = {
+        options.den.vicinae = {
           closeOnFocusLoss = lib.mkOption {
             description = "Sets the vicinae window to close itself when focus is lost";
             type = lib.types.bool;
@@ -38,22 +38,22 @@
             ".local/share/vicinae"
           ];
 
-          create.".config/vicinae/nix-settings.json" =
+          den.create.".config/vicinae/nix-settings.json" =
             let
               settings = {
-                favorites = config.vicinae.favorites;
-                launcher_window.opacity = config.vicinae.opacity;
-                close_on_focus_loss = config.vicinae.closeOnFocusLoss;
-                pop_to_root_on_close = config.vicinae.popToRootOnClose;
+                favorites = config.den.vicinae.favorites;
+                launcher_window.opacity = config.den.vicinae.opacity;
+                close_on_focus_loss = config.den.vicinae.closeOnFocusLoss;
+                pop_to_root_on_close = config.den.vicinae.popToRootOnClose;
                 launcher_window.layer_shell.keyboard_interactivity =
-                  if config.vicinae.closeOnFocusLoss then "on_demand" else "exclusive";
+                  if config.den.vicinae.closeOnFocusLoss then "on_demand" else "exclusive";
               };
             in
             pkgs.runCommand "nix-settings.json" { } ''
               echo '${builtins.toJSON settings}' | ${pkgs.jq}/bin/jq '.' > $out
             '';
 
-          create.".config/vicinae/settings.json" = ''
+          den.create.".config/vicinae/settings.json" = ''
             {
               "imports": [
                 "nix-settings.json"

@@ -1,4 +1,4 @@
-config_version = 8
+config_version = 14
 
 [bar.default]
 background_opacity = 0.5999999865889549
@@ -10,11 +10,11 @@ center = [
 concave_edge_corners = false
 end = [
     "tray",
-    "settings",
     "bluetooth",
     "network",
-    "volume",
+    "settings",
     "brightness",
+    "volume",
     "battery",
     "session",
 ]
@@ -70,6 +70,9 @@ bands = 128
 centered = false
 show_when_idle = false
 
+[hooks]
+session_locked = "lock-keyring"
+
 [idle]
 behavior_order = [
     "lock",
@@ -117,11 +120,13 @@ major_interval = 4
 visible = true
 
 [lockscreen_widgets.widget."lockscreen-login-box@DP-3"]
-box_height = 229.0
+box_height = 128.0
 box_width = 810.0
 cx = 2560.0
 cy = 720.0
 output = "DP-3"
+placement_height = 1440.0
+placement_width = 5120.0
 rotation = 0.0
 type = "login_box"
 
@@ -135,17 +140,20 @@ input_radius = 6.0
 layout = "regular"
 show_caps_lock = true
 show_keyboard_layout = true
-show_login_button = true
-show_media = true
+show_login_button = false
+show_media = false
 show_session_buttons = true
-show_weather = true
+show_unlock_hint = false
+show_weather = false
 
 [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
-box_height = 229.0
+box_height = 196.0
 box_width = 810.0
 cx = 800.0
 cy = 533.5
 output = "eDP-1"
+placement_height = 0.0
+placement_width = 0.0
 rotation = 0.0
 type = "login_box"
 
@@ -162,6 +170,7 @@ show_keyboard_layout = true
 show_login_button = true
 show_media = true
 show_session_buttons = true
+show_unlock_hint = true
 show_weather = true
 
 [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
@@ -170,6 +179,8 @@ box_width = 608.0
 cx = 800.0
 cy = 357.5
 output = "eDP-1"
+placement_height = 0.0
+placement_width = 0.0
 rotation = 0.0
 type = "clock"
 
@@ -185,6 +196,8 @@ box_width = 1584.0
 cx = 800.0
 cy = 955.0
 output = "eDP-1"
+placement_height = 0.0
+placement_width = 0.0
 rotation = 0.0
 type = "audio_visualizer"
 
@@ -200,6 +213,8 @@ box_width = 336.0
 cx = 800.0
 cy = 733.5
 output = "eDP-1"
+placement_height = 0.0
+placement_width = 0.0
 rotation = 0.0
 type = "media_player"
 
@@ -213,6 +228,8 @@ box_width = 224.0
 cx = 1093.0
 cy = 733.5
 output = "eDP-1"
+placement_height = 0.0
+placement_width = 0.0
 rotation = 0.0
 type = "sysmon"
 
@@ -226,6 +243,8 @@ box_width = 224.0
 cx = 507.0
 cy = 733.5
 output = "eDP-1"
+placement_height = 0.0
+placement_width = 0.0
 rotation = 0.0
 type = "volume"
 
@@ -235,6 +254,8 @@ box_width = 432.0
 cx = 800.0
 cy = 285.5
 output = "eDP-1"
+placement_height = 0.0
+placement_width = 0.0
 rotation = 0.0
 type = "clock"
 
@@ -250,6 +271,8 @@ box_width = 5120.0
 cx = 2560.0
 cy = 1272.0
 output = "DP-3"
+placement_height = 1440.0
+placement_width = 5120.0
 rotation = 0.0
 type = "audio_visualizer"
 
@@ -264,8 +287,10 @@ show_when_idle = true
 box_height = 224.0
 box_width = 800.0
 cx = 2560.0
-cy = 528.0
+cy = 576.0
 output = "DP-3"
+placement_height = 1440.0
+placement_width = 5120.0
 rotation = 0.0
 type = "clock"
 
@@ -278,14 +303,16 @@ shadow = true
 box_height = 64.0
 box_width = 672.0
 cx = 2560.0
-cy = 432.0
+cy = 480.0
 output = "DP-3"
+placement_height = 1440.0
+placement_width = 5120.0
 rotation = 0.0
 type = "clock"
 
 [lockscreen_widgets.widget.lockscreen-widget-0000000000000009.settings]
 background = false
-color = "primary"
+color = "on_surface"
 format = "{:%A, %B %d %Y}"
 shadow = true
 
@@ -293,8 +320,10 @@ shadow = true
 box_height = 160.0
 box_width = 368.0
 cx = 2560.0
-cy = 928.0
+cy = 880.0
 output = "DP-3"
+placement_height = 1440.0
+placement_width = 5120.0
 rotation = 0.0
 type = "media_player"
 
@@ -302,8 +331,10 @@ type = "media_player"
 box_height = 160.0
 box_width = 208.0
 cx = 2861.0
-cy = 928.0
+cy = 880.0
 output = "DP-3"
+placement_height = 1440.0
+placement_width = 5120.0
 rotation = 0.0
 type = "sysmon"
 
@@ -315,10 +346,17 @@ stat2 = "cpu_temp"
 box_height = 160.0
 box_width = 208.0
 cx = 2259.0
-cy = 928.0
+cy = 880.0
 output = "DP-3"
+placement_height = 1440.0
+placement_width = 5120.0
 rotation = 0.0
 type = "volume"
+
+[nightlight]
+enabled = true
+force = true
+temperature_night = 3000
 
 [notification]
 background_opacity = 0.7499999832361937
@@ -329,7 +367,7 @@ position = "top_center"
 border = false
 
 [plugins]
-auto_update = false
+auto_update = "none"
 enabled = ["noctalia/notes"]
 
 [shell]
@@ -358,6 +396,7 @@ source = "custom"
 
 [widget.audio_visualizer]
 bands = 128
+mirrored = false
 show_when_idle = true
 width = 400
 
@@ -380,19 +419,28 @@ anchor = true
 format = "{:%A, %B %d - %H:%M:%S}"
 
 [widget.cpu]
-display = "graph"
+label_min_width = 32
+visualization = "graph"
 
 [widget.network]
 show_label = false
 
 [widget.network_rx]
-display = "graph"
+label_min_width = 48
+network_speed_compact = true
+network_speed_unit = "mb"
+visualization = "graph"
 
 [widget.network_tx]
-display = "graph"
+label_min_width = 48
+network_speed_compact = true
+visualization = "graph"
 
 [widget.ram]
-display = "graph"
+visualization = "graph"
+
+[widget.tray]
+hidden = ["vicinae"]
 
 [widget.workspaces]
-display = "none"
+show_labels = false

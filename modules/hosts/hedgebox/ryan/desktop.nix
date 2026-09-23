@@ -1,5 +1,5 @@
 { lib, ... }: {
-  den.aspects.jetpack.provides.ryan.homeManager = { pkgs, config, ... }: {
+  den.aspects.hedgebox.provides.ryan.homeManager = { pkgs, config, ... }: {
     # enable the xdg desktop portal
     xdg.portal = {
       enable = true;
@@ -79,9 +79,6 @@
       "Documents"
       "Videos"
     ];
-
-    # write the mimeapps file
-    den.create.".config/mimeapps.list" = ./_assets/mime/mimeapps.list;
 
     # write the noctalia settings configuration
     den.create.".config/noctalia/settings.toml" = ./_assets/noctalia/settings.toml;

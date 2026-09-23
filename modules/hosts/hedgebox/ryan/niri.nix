@@ -1,6 +1,6 @@
 { lib, ... }: {
-  den.aspects.jetpack.provides.ryan.homeManager = {
-    # include all custom niri files
+  den.aspects.hedgebox.provides.ryan.homeManager = {
+    # include all custom niri files by default
     den.niri.include =
       let
         kdlFiles = lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".kdl" name) (

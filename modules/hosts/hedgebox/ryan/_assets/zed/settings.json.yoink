@@ -1,0 +1,6 @@
+target = "json"
+path = "/home/ryan/.config/zed/settings.json"
+
+[actions]
+lsp.crates-lsp.binary.path = "exclude"
+lsp.package-version-server.binary.path = "exclude"

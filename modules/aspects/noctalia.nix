@@ -6,7 +6,7 @@
 
     # create the empty setup complete file
     # this prevents the welcome banner from appearing
-    create.".local/state/noctalia/.setup-complete" = "";
+    den.create.".local/state/noctalia/.setup-complete" = "";
 
     persist.dirs = [
       # only persist the calendar part of the cache

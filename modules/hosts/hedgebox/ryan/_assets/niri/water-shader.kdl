@@ -1,0 +1,158 @@
+animations {
+    window-open {
+        duration-ms 500
+        curve "ease-out-cubic"
+
+        custom-shader r"
+            float pf_hash(vec2 p) {
+                return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+            }
+
+            float pf_noise(vec2 p) {
+                vec2 i = floor(p);
+                vec2 f = fract(p);
+                f = f * f * (3.0 - 2.0 * f);
+                return mix(mix(pf_hash(i), pf_hash(i + vec2(1.0, 0.0)), f.x),
+                        mix(pf_hash(i + vec2(0.0, 1.0)), pf_hash(i + vec2(1.0, 1.0)), f.x), f.y);
+            }
+
+            vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+                float p = niri_clamped_progress;
+                vec2 uv = coords_geo.xy;
+
+                // Scale up from center
+                float scale = mix(0.9, 1.0, p);
+                vec2 scaled_uv = (uv - 0.5) / scale + 0.5;
+
+                // Soft flowing reveal with a touch of detail
+                float noise = pf_noise(scaled_uv * 4.0 + vec2(50.0, 80.0)) * 0.75
+                            + pf_noise(scaled_uv * 9.0 + vec2(30.0, 60.0)) * 0.25;
+                float edge = noise - p;
+
+                // Warble concentrated at the edge — calm at start and end
+                float edge_proximity = 1.0 - smoothstep(0.0, 0.2, abs(edge));
+                float turbulence = sin(p * 3.14159);
+                float ripples = 8.0;
+                vec2 flow = vec2(
+                    pf_noise(scaled_uv * ripples + vec2(p * 3.0, 0.0)),
+                    pf_noise(scaled_uv * ripples + vec2(0.0, p * 3.0))
+                ) - 0.5;
+                vec2 distorted = scaled_uv + flow * edge_proximity * turbulence * 0.1;
+
+                // Chromatic aberration at the edge
+                vec2 aberration = flow * edge_proximity * turbulence * 0.06;
+
+                vec3 tc_r = niri_geo_to_tex * vec3(distorted + aberration, 1.0);
+                vec3 tc_g = niri_geo_to_tex * vec3(distorted, 1.0);
+                vec3 tc_b = niri_geo_to_tex * vec3(distorted - aberration, 1.0);
+
+                float r = texture2D(niri_tex, tc_r.st).r;
+                float g = texture2D(niri_tex, tc_g.st).g;
+                float b = texture2D(niri_tex, tc_b.st).b;
+                float a = texture2D(niri_tex, tc_g.st).a;
+                vec4 win = vec4(r, g, b, a);
+
+                float reveal = smoothstep(0.08, -0.08, edge);
+
+                // Depth-based desaturation: pixels near the edge are submerged
+                // -edge represents how deep into revealed territory (bigger = more settled)
+                float depth = smoothstep(0.0, 0.4, -edge);
+                float luma = dot(win.rgb, vec3(0.3, 0.6, 0.1));
+                // Desaturate heavily near edge, full color when settled
+                win.rgb = mix(vec3(luma), win.rgb, depth * 0.7 + 0.3);
+                // Fade toward a pale blue-white near the edge
+                win.rgb = mix(win.rgb, vec3(0.75, 0.85, 0.9) * luma + vec3(0.15, 0.18, 0.22), (1.0 - depth) * 0.5 * turbulence);
+
+                // Edge tint — blue-green caustic fringe
+                float edge_band = smoothstep(0.25, 0.0, abs(edge)) * turbulence;
+                vec3 tint = mix(vec3(1.0), vec3(0.5, 0.85, 0.95), edge_band * 0.7);
+
+                // Bright fringe just inside the revealed area
+                float inner_fringe = smoothstep(0.0, -0.08, edge) * smoothstep(-0.22, -0.08, edge) * turbulence;
+                vec3 glow = vec3(1.0) + vec3(0.35, 0.45, 0.55) * inner_fringe;
+
+                win.rgb *= tint * glow;
+                win.rgb = min(win.rgb, vec3(win.a));
+                return win * reveal;
+            }
+        "
+    }
+
+    window-close {
+        duration-ms 500
+        curve "ease-out-cubic"
+
+        custom-shader r"
+            float pf_hash(vec2 p) {
+                return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+            }
+
+            float pf_noise(vec2 p) {
+                vec2 i = floor(p);
+                vec2 f = fract(p);
+                f = f * f * (3.0 - 2.0 * f);
+                return mix(mix(pf_hash(i), pf_hash(i + vec2(1.0, 0.0)), f.x),
+                        mix(pf_hash(i + vec2(0.0, 1.0)), pf_hash(i + vec2(1.0, 1.0)), f.x), f.y);
+            }
+
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                float p = 1.0 - niri_clamped_progress;
+                vec2 uv = coords_geo.xy;
+
+                // Scale down toward center
+                float scale = mix(0.9, 1.0, p);
+                vec2 scaled_uv = (uv - 0.5) / scale + 0.5;
+
+                // Soft flowing reveal with a touch of detail
+                float noise = pf_noise(scaled_uv * 4.0 + vec2(50.0, 80.0)) * 0.75
+                            + pf_noise(scaled_uv * 9.0 + vec2(30.0, 60.0)) * 0.25;
+                float edge = noise - p;
+
+                // Warble concentrated at the edge — calm at start and end
+                float edge_proximity = 1.0 - smoothstep(0.0, 0.2, abs(edge));
+                float turbulence = sin(p * 3.14159);
+                float ripples = 8.0;
+                vec2 flow = vec2(
+                    pf_noise(scaled_uv * ripples + vec2(p * 3.0, 0.0)),
+                    pf_noise(scaled_uv * ripples + vec2(0.0, p * 3.0))
+                ) - 0.5;
+                vec2 distorted = scaled_uv + flow * edge_proximity * turbulence * 0.1;
+
+                // Chromatic aberration at the edge
+                vec2 aberration = flow * edge_proximity * turbulence * 0.06;
+
+                vec3 tc_r = niri_geo_to_tex * vec3(distorted + aberration, 1.0);
+                vec3 tc_g = niri_geo_to_tex * vec3(distorted, 1.0);
+                vec3 tc_b = niri_geo_to_tex * vec3(distorted - aberration, 1.0);
+
+                float r = texture2D(niri_tex, tc_r.st).r;
+                float g = texture2D(niri_tex, tc_g.st).g;
+                float b = texture2D(niri_tex, tc_b.st).b;
+                float a = texture2D(niri_tex, tc_g.st).a;
+                vec4 win = vec4(r, g, b, a);
+
+                float reveal = smoothstep(0.08, -0.08, edge);
+
+                // Depth-based desaturation: pixels near the edge are submerged
+                float depth = smoothstep(0.0, 0.4, -edge);
+                float luma = dot(win.rgb, vec3(0.3, 0.6, 0.1));
+                // Desaturate heavily near edge, full color when settled
+                win.rgb = mix(vec3(luma), win.rgb, depth * 0.7 + 0.3);
+                // Fade toward a pale blue-white near the edge
+                win.rgb = mix(win.rgb, vec3(0.75, 0.85, 0.9) * luma + vec3(0.15, 0.18, 0.22), (1.0 - depth) * 0.5 * turbulence);
+
+                // Edge tint — blue-green caustic fringe
+                float edge_band = smoothstep(0.25, 0.0, abs(edge)) * turbulence;
+                vec3 tint = mix(vec3(1.0), vec3(0.5, 0.85, 0.95), edge_band * 0.7);
+
+                // Bright fringe just inside the revealed area
+                float inner_fringe = smoothstep(0.0, -0.08, edge) * smoothstep(-0.22, -0.08, edge) * turbulence;
+                vec3 glow = vec3(1.0) + vec3(0.35, 0.45, 0.55) * inner_fringe;
+
+                win.rgb *= tint * glow;
+                win.rgb = min(win.rgb, vec3(win.a));
+                return win * reveal;
+            }
+        "
+    }
+}

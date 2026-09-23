@@ -3,7 +3,7 @@
   ...
 }:
 {
-  den.aspects.jetpack.provides.ryan.homeManager = { pkgs, ... }: {
+  den.aspects.hedgebox.provides.ryan.homeManager = { pkgs, ... }: {
     home.packages = with pkgs; [
       # include the main editor
       zed-editor

@@ -9,11 +9,15 @@
   inputs = {
     den.url = "github:denful/den";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    impermanence.url = "github:nix-community/impermanence";
     import-tree.url = "github:denful/import-tree";
     home-manager = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
     rust-overlay = {
       url = "github:oxalica/rust-overlay";

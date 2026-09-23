@@ -7,6 +7,7 @@ let
       nano
       direnv
       fd
+      gnupg
       iw
       jq
       gum

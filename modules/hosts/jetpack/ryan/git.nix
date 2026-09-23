@@ -18,12 +18,6 @@
           identityFile = "~/.ssh/id_ed25519_personal";
           identitiesOnly = true;
         };
-        "github-ford" = {
-          hostname = "github.com";
-          user = "git";
-          identityFile = "~/.ssh/id_ed25519_ford";
-          identitiesOnly = true;
-        };
       };
     };
 
@@ -49,10 +43,6 @@
       }
       {
         directory = ".gnupg";
-        mode = "0700";
-      }
-      {
-        directory = ".local/share/keyrings";
         mode = "0700";
       }
     ];

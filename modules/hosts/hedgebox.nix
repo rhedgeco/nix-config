@@ -1,13 +1,12 @@
 { den, ... }: {
   den.hosts.x86_64-linux = {
-    jetpack = {
+    hedgebox = {
       stateVersion = "24.05";
       persist = "/persist";
       includes = [
         den.aspects.grub
         (den.aspects.autologin "ryan" "niri-session")
         den.aspects.bluetooth
-        den.aspects.steam
       ];
 
       users.ryan = {
@@ -20,16 +19,12 @@
           den.aspects.network
           den.aspects.fishy
           den.aspects.docker
-          den.aspects.embedded
           den.aspects.rust
           den.aspects.spotify
-          den.aspects.discord
           den.aspects.vicinae
           den.aspects.noctalia
           den.aspects.color-picker
           den.aspects.firefox
-          den.aspects.dolphin
-          den.aspects.bambu
           den.aspects.yoink
         ];
       };

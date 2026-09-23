@@ -1,0 +1,231 @@
+config_version = 14
+
+[bar.default]
+background_opacity = 0.5999999865889549
+center = [
+    "clock",
+    "notifications",
+]
+concave_edge_corners = false
+end = [
+    "tray",
+    "bluetooth",
+    "network",
+    "settings",
+    "volume",
+    "session",
+]
+margin_edge = 6
+margin_ends = 6
+start = [
+    "workspaces",
+    "network_rx",
+    "network_tx",
+    "cpu",
+    "ram",
+]
+widget_spacing = 14
+
+[calendar]
+enabled = true
+
+[calendar.account.personal_google]
+color = "primary"
+name = "Google Calendar"
+type = "google"
+
+[control_center]
+hidden_tabs = [
+    "weather",
+    "screen-time",
+]
+sidebar = "full"
+sidebar_section = "full"
+
+[hooks]
+session_locked = "lock-keyring"
+
+[idle]
+behavior_order = [
+    "lock",
+    "Screen Off (On Battery)",
+]
+pre_action_fade_seconds = 5
+
+[idle.behavior."Screen Off (On Battery)"]
+action = "command"
+command = "sh -c 'if [ $(cat /sys/class/power_supply/AC*/online 2>/dev/null | grep -c 1) -eq 0 ]; then niri msg action power-off-monitors; fi'"
+enabled = true
+timeout = 660.0
+
+[idle.behavior.lock]
+action = "lock"
+enabled = true
+timeout = 600.0
+
+[lockscreen]
+blurred_desktop = true
+
+[lockscreen_widgets]
+enabled = true
+schema_version = 2
+widget_order = [
+    "lockscreen-widget-0000000000000001",
+    "lockscreen-login-box@DP-3",
+    "lockscreen-widget-0000000000000002",
+]
+
+[lockscreen_widgets.grid]
+cell_size = 16
+major_interval = 4
+visible = true
+
+[lockscreen_widgets.widget."lockscreen-login-box@DP-3"]
+box_height = 128.0
+box_width = 810.0
+cx = 1720.0
+cy = 800.0
+output = "DP-3"
+placement_height = 1440.0
+placement_width = 3440.0
+rotation = 0.0
+type = "login_box"
+
+[lockscreen_widgets.widget."lockscreen-login-box@DP-3".settings]
+background_color = "surface_variant"
+background_opacity = 0.88
+background_radius = 12.0
+center_password_text = false
+input_opacity = 1.0
+input_radius = 6.0
+layout = "regular"
+show_caps_lock = true
+show_keyboard_layout = true
+show_login_button = false
+show_media = false
+show_session_buttons = true
+show_unlock_hint = false
+show_weather = false
+
+[lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+box_height = 240.0
+box_width = 800.0
+cx = 1720.0
+cy = 648.0
+output = "DP-3"
+placement_height = 1440.0
+placement_width = 3440.0
+rotation = 0.0
+type = "clock"
+
+[lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
+background = false
+center_text = true
+format = "{:%H:%M:%S}"
+
+[lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
+box_height = 0.0
+box_width = 0.0
+cx = 1720.0
+cy = 544.0
+output = "DP-3"
+placement_height = 1440.0
+placement_width = 3440.0
+rotation = 0.0
+type = "clock"
+
+[lockscreen_widgets.widget.lockscreen-widget-0000000000000002.settings]
+background = false
+color = "on_surface"
+format = "{:%A, %B %d}"
+
+[nightlight]
+enabled = true
+force = false
+temperature_night = 4000
+
+[notification]
+background_opacity = 0.7499999832361937
+border = false
+position = "top_center"
+
+[osd]
+border = false
+
+[plugins]
+auto_update = "none"
+enabled = ["noctalia/notes"]
+
+[shell]
+button_borders = false
+card_borders = false
+font_family = "JetBrainsMono NF"
+input_borders = false
+lang = "en"
+password_style = "random"
+polkit_agent = true
+popup_borders = false
+
+[shell.panel]
+borders = false
+control_center_placement = "floating"
+open_near_click_control_center = true
+open_near_click_session = true
+transparency_mode = "soft"
+
+[shell.screen_corners]
+enabled = true
+
+[theme]
+custom_palette = "Cream"
+source = "custom"
+
+[widget.audio_visualizer]
+bands = 128
+show_when_idle = true
+width = 400
+
+[widget.audio_visualizer_1]
+bands = 64
+interactive = false
+show_when_idle = false
+type = "audio_visualizer"
+width = 215
+
+[widget.audio_visualizer_2]
+bands = 64
+interactive = false
+show_when_idle = false
+type = "audio_visualizer"
+width = 215
+
+[widget.clock]
+anchor = true
+format = "{:%A, %B %d - %H:%M:%S}"
+
+[widget.cpu]
+label_min_width = 32
+visualization = "graph"
+
+[widget.network]
+show_label = false
+
+[widget.network_rx]
+label_min_width = 48
+network_speed_compact = true
+network_speed_unit = "mb"
+visualization = "graph"
+
+[widget.network_tx]
+label_min_width = 48
+network_speed_compact = true
+visualization = "graph"
+
+[widget.ram]
+visualization = "graph"
+
+[widget.tray]
+hidden = ["vicinae"]
+
+[widget.workspaces]
+show_labels = false

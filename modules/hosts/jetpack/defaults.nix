@@ -1,6 +1,6 @@
 {
   den.aspects.jetpack.nixos = {
-    hardware.bluetooth.enable = true;
+    programs.dconf.enable = true;
     hardware.enableRedistributableFirmware = true;
     boot.initrd.availableKernelModules = [
       "nvme"

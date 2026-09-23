@@ -12,7 +12,7 @@
         ...
       }:
       {
-        options.create = lib.mkOption {
+        options.den.create = lib.mkOption {
           description = "Files and folders to create for this user";
           type =
             with lib.types;
@@ -53,7 +53,7 @@
                 '';
             in
             lib.hm.dag.entryAfter [ "writeBoundary" ] (
-              lib.concatStringsSep "\n" (lib.mapAttrsToList writeFileScript config.create)
+              lib.concatStringsSep "\n" (lib.mapAttrsToList writeFileScript config.den.create)
             );
         };
       };

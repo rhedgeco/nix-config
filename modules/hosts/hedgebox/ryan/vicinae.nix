@@ -1,5 +1,5 @@
 {
-  den.aspects.jetpack.provides.ryan.homeManager = {
+  den.aspects.hedgebox.provides.ryan.homeManager = {
     den.vicinae = {
       opacity = 0.7;
       favorites = [
