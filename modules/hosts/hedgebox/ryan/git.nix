@@ -7,12 +7,6 @@
       pinentry.package = pkgs.pinentry-gnome3;
     };
 
-    # set up ssh
-    programs.ssh = {
-      enable = true;
-      enableDefaultConfig = false;
-    };
-
     # include git and git-lfs
     home.packages = with pkgs; [
       git
