@@ -11,11 +11,13 @@
     home.packages = with pkgs; [
       git
       git-lfs
+      gh
     ];
 
     # persist `.ssh` `.gnupg` directories
     persist.dirs = [
       ".config/git"
+      ".config/gh"
       {
         directory = ".ssh";
         mode = "0700";
