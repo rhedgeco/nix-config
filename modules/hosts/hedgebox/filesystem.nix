@@ -12,6 +12,13 @@ in
       fileSystems = [ "/btrfs" ];
     };
 
+    # Enable udisks2 for disk management and automount backend
+    services.udisks2.enable = true;
+    # Enable gvfs for virtual filesystem support (helps file managers like Nautilus/PCManFM)
+    services.gvfs.enable = true;
+    # Optional: devmon for automatic mounting/unmounting daemon
+    services.devmon.enable = true;
+
     fileSystems = {
       "/" = {
         device = btrfsDisk;
