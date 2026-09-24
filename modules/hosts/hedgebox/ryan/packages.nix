@@ -71,6 +71,7 @@
         [
           rpm
           bmaptool
+          file
           linuxHeaders
           glibc.dev
           gst_all_1.gstreamer
