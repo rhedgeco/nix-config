@@ -1,5 +1,9 @@
 {
   den.aspects.hedgebox.nixos = { pkgs, ... }: {
+    systemd.tmpfiles.rules = [
+      "L+ /bin/bash - - - - /run/current-system/sw/bin/bash"
+    ];
+
     programs.nix-ld.enable = true;
     programs.nix-ld.libraries = with pkgs; [
       # core C/C++ runtime — almost always required
