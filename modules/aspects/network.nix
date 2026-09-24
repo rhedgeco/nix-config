@@ -3,8 +3,12 @@
     # any user that needs to use the network needs to be in this group
     user.extraGroups = [ "networkmanager" ];
 
-    nixos = {
+    nixos = { pkgs, ... }: {
       networking.networkmanager.enable = true;
+
+      environment.systemPackages = [
+        pkgs.networkmanagerapplet
+      ];
 
       networking.nameservers = [
         # cloudflare
