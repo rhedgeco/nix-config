@@ -50,7 +50,8 @@
       ];
 
       den.create.".bazelrc" = ''
-        build --action_env=PATH
+        build --action_env=PATH=/run/current-system/sw/bin:/run/wrappers/bin:/home/ryan/.nix-profile/bin:/usr/bin:/bin
+        build --host_action_env=PATH=/run/current-system/sw/bin:/run/wrappers/bin:/home/ryan/.nix-profile/bin:/usr/bin:/bin
       '';
 
       den.create.".cargo/config.toml" = "
