@@ -11,6 +11,7 @@ binds {
     Mod+P { spawn "noctalia" "msg" "panel-toggle" "session"; }
     Mod+N { spawn "noctalia" "msg" "panel-toggle" "noctalia/notes:panel"; }
     Mod+L { spawn "noctalia" "msg" "session" "lock"; }
+    Mod+A { spawn "noctalia" "msg" "annotate"; }
 
     // Volume controls
     XF86AudioRaiseVolume allow-when-locked=true {
