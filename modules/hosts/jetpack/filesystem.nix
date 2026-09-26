@@ -3,6 +3,9 @@ let
 in
 {
   den.aspects.jetpack.nixos = { utils, ... }: {
+    # enable envfs to route /bin/* calls to the correct binary
+    services.envfs.enable = true;
+
     # set docker to use the btrfs filesystem as its storage driver
     virtualisation.docker.storageDriver = "btrfs";
 
