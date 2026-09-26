@@ -39,6 +39,7 @@
       video-trimmer
       obs-studio
       typst
+      gthumb
     ];
 
     gtk = {
