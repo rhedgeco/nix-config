@@ -17,8 +17,6 @@
     services.hardware.bolt.enable = true;
     services.upower.enable = true;
 
-    # set the hardware clock to local time to play nicely with windows
-    time.hardwareClockInLocalTime = true;
     time.timeZone = "America/Los_Angeles";
 
     persist.dirs = [

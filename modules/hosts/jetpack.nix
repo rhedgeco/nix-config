@@ -5,6 +5,7 @@
       persist = "/persist";
       includes = [
         den.aspects.grub
+        (den.aspects.windows-togo "Windows ToGo" "09F9-0507")
         (den.aspects.autologin "ryan" "niri-session")
         den.aspects.bluetooth
         den.aspects.steam
