@@ -6,8 +6,16 @@
     nixos = { pkgs, ... }: {
       networking.networkmanager.enable = true;
 
+      # extract just the nm-connection-editor from the applet package
+      # we just need this for more advanced configuration on the system
+      # desktop shells often provide their own simple wifi connection interface
+      # if one needs to use the applet from the package, they can add it explicitly
       environment.systemPackages = [
-        pkgs.networkmanagerapplet
+        (pkgs.runCommand "nm-connection-editor-only" { } ''
+          mkdir -p $out/bin $out/share/applications
+          ln -s ${pkgs.networkmanagerapplet}/bin/nm-connection-editor $out/bin/nm-connection-editor
+          ln -s ${pkgs.networkmanagerapplet}/share/applications/nm-connection-editor.desktop $out/share/applications/
+        '')
       ];
 
       networking.nameservers = [
