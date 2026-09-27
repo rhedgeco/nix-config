@@ -1,8 +1,11 @@
 {
-  den.aspects.windows-togo = name: uuid: {
+  den.aspects.windows-boot = name: uuid: {
     nixos = {
       # set the hardware clock to local time to play nicely with windows
       time.hardwareClockInLocalTime = true;
+
+      # register this uuid so the custom grub prober skips it
+      den.grub.skipUUID = [ uuid ];
 
       # only define the grub entry when the windows togo drive is plugged in
       boot.loader.grub.extraConfig = ''
