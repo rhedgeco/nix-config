@@ -16,7 +16,14 @@
 
       config = {
         # include the niri package in the environment
-        home.packages = [ pkgs.niri ];
+        home.packages = with pkgs; [
+          niri
+
+          # niri does not have a built in x server
+          # xwayland-satellite fills this gap
+          # it hosts an xserver and simulates wayland clients
+          xwayland-satellite
+        ];
 
         # generate all the config files
         den.create =

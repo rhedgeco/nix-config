@@ -7,6 +7,7 @@
         den.aspects.grub
         (den.aspects.autologin "ryan" "niri-session")
         den.aspects.bluetooth
+        den.aspects.pipewire
       ];
 
       users.ryan = {
@@ -15,14 +16,12 @@
         password = "ryan";
         includes = [
           den.aspects.keyring
-          den.aspects.niri
+          den.aspects.glade
           den.aspects.network
           den.aspects.fishy
           den.aspects.docker
           den.aspects.rust
           den.aspects.spotify
-          den.aspects.vicinae
-          den.aspects.noctalia
           den.aspects.color-picker
           den.aspects.firefox
           den.aspects.yoink
