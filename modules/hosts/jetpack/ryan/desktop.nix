@@ -40,6 +40,7 @@
       obs-studio
       typst
       gthumb
+      showtime
     ];
 
     gtk = {
