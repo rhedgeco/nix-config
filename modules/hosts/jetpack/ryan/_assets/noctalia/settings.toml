@@ -61,6 +61,8 @@ box_width = 1584.0
 cx = 800.0
 cy = 963.0
 output = "eDP-1"
+placement_height = 1067.0
+placement_width = 1600.0
 rotation = 0.0
 type = "audio_visualizer"
 
@@ -149,8 +151,8 @@ box_width = 810.0
 cx = 800.0
 cy = 533.5
 output = "eDP-1"
-placement_height = 0.0
-placement_width = 0.0
+placement_height = 1067.0
+placement_width = 1600.0
 rotation = 0.0
 type = "login_box"
 
@@ -176,8 +178,8 @@ box_width = 608.0
 cx = 800.0
 cy = 357.5
 output = "eDP-1"
-placement_height = 0.0
-placement_width = 0.0
+placement_height = 1067.0
+placement_width = 1600.0
 rotation = 0.0
 type = "clock"
 
@@ -193,8 +195,8 @@ box_width = 1584.0
 cx = 800.0
 cy = 955.0
 output = "eDP-1"
-placement_height = 0.0
-placement_width = 0.0
+placement_height = 1067.0
+placement_width = 1600.0
 rotation = 0.0
 type = "audio_visualizer"
 
@@ -210,8 +212,8 @@ box_width = 336.0
 cx = 800.0
 cy = 733.5
 output = "eDP-1"
-placement_height = 0.0
-placement_width = 0.0
+placement_height = 1067.0
+placement_width = 1600.0
 rotation = 0.0
 type = "media_player"
 
@@ -225,8 +227,8 @@ box_width = 224.0
 cx = 1093.0
 cy = 733.5
 output = "eDP-1"
-placement_height = 0.0
-placement_width = 0.0
+placement_height = 1067.0
+placement_width = 1600.0
 rotation = 0.0
 type = "sysmon"
 
@@ -240,8 +242,8 @@ box_width = 224.0
 cx = 507.0
 cy = 733.5
 output = "eDP-1"
-placement_height = 0.0
-placement_width = 0.0
+placement_height = 1067.0
+placement_width = 1600.0
 rotation = 0.0
 type = "volume"
 
@@ -251,8 +253,8 @@ box_width = 432.0
 cx = 800.0
 cy = 285.5
 output = "eDP-1"
-placement_height = 0.0
-placement_width = 0.0
+placement_height = 1067.0
+placement_width = 1600.0
 rotation = 0.0
 type = "clock"
 
@@ -352,7 +354,7 @@ type = "volume"
 
 [nightlight]
 enabled = true
-force = true
+force = false
 temperature_night = 3000
 
 [notification]
