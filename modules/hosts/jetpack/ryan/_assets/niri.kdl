@@ -1,0 +1,24 @@
+// --- STARTUP ---
+spawn-sh-at-startup "discord --start-minimized"
+
+// --- KEYBINDS ---
+binds {
+    Mod+D { spawn "discord"; }
+    Mod+E { spawn "zeditor"; }
+}
+
+// --- OUTPUTS ---
+// internal laptop screen
+output "eDP-1" {
+  scale 1.800000
+}
+// home super-ultrawide monitor
+output "Samsung Electric Company C49RG9x H1AK500000" {
+  mode "5120x1440@119.970"
+}
+
+// --- WINDOW RULES ---
+window-rule {
+    open-floating true
+    match app-id="discord"
+}

@@ -4,6 +4,8 @@
       den.aspects.niri # window manager
       den.aspects.noctalia # desktop shell
       den.aspects.vicinae # app launcher
+      den.aspects.keyring # gnome keyring
+      den.aspects.firefox # web browser
     ];
 
     homeManager = { pkgs, config, ... }: {
@@ -35,6 +37,7 @@
       den.vicinae = {
         opacity = 0.7;
         favorites = [
+          "applications:firefox"
           "applications:org.gnome.Nautilus"
         ];
       };
@@ -92,17 +95,8 @@
         };
       };
 
-      persist.dirs = [
-        # persist common user folders
-        "Downloads"
-        "Music"
-        "Pictures"
-        "Documents"
-        "Videos"
-      ];
-
-      # have niri spawn a video wallpaper at startup
-      den.niri.include."mpvpaper.kdl" =
+      # include all the niri assets
+      den.niri.includes =
         let
           wallpaperPath = ./_assets/glade/wallpaper/LazyRiver.mp4;
           mpvOptions = [
@@ -124,10 +118,38 @@
             -o "${lib.concatStringsSep " " mpvOptions}" \
             "*" ${wallpaperPath}
           '';
+
+          mpvKdl = {
+            "glade/wallpaper.kdl" = ''spawn-at-startup "${wallpaperScript}"'';
+          };
+
+          otherKdl = lib.mapAttrs' (name: _: {
+            name = "glade/${name}";
+            value = ./_assets/glade/niri/${name};
+          }) (builtins.readDir ./_assets/glade/niri);
         in
-        ''
-          spawn-at-startup "${wallpaperScript}"
-        '';
+        mpvKdl // otherKdl;
+
+      # include all the noctalia assets
+      den.noctalia = {
+        config = lib.mapAttrs' (name: _: {
+          inherit name;
+          value = ./_assets/glade/noctalia/config/${name};
+        }) (builtins.readDir ./_assets/glade/noctalia/config);
+        share = lib.mapAttrs' (name: _: {
+          inherit name;
+          value = ./_assets/glade/noctalia/share/${name};
+        }) (builtins.readDir ./_assets/glade/noctalia/share);
+      };
+
+      persist.dirs = [
+        # persist common user folders
+        "Downloads"
+        "Music"
+        "Pictures"
+        "Documents"
+        "Videos"
+      ];
     };
   };
 }

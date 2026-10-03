@@ -23,7 +23,6 @@
           den.aspects.rust
           den.aspects.spotify
           den.aspects.color-picker
-          den.aspects.firefox
           den.aspects.yoink
         ];
       };

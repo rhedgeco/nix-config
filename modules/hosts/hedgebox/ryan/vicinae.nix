@@ -1,8 +1,7 @@
 {
   den.aspects.hedgebox.provides.ryan.homeManager = {
     den.vicinae.favorites = [
-      "applications:dev.zed.Zed.desktop"
-      "applications:firefox"
+      "applications:dev.zed.Zed"
     ];
   };
 }

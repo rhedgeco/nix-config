@@ -1,0 +1,35 @@
+binds {
+    // basic utilities
+    Mod+Space { spawn "vicinae" "toggle"; }
+    Mod+T { spawn "alacritty"; }
+    Mod+W { spawn "firefox"; }
+
+    // system controls
+    Mod+V { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
+    Mod+P { spawn "noctalia" "msg" "panel-toggle" "session"; }
+    Mod+N { spawn "noctalia" "msg" "panel-toggle" "noctalia/notes:panel"; }
+    Mod+L { spawn "noctalia" "msg" "session" "lock"; }
+    Mod+A { spawn "noctalia" "msg" "annotate"; }
+
+    // Volume controls
+    XF86AudioRaiseVolume allow-when-locked=true {
+        spawn "noctalia" "msg" "volume-up";
+    }
+    XF86AudioLowerVolume allow-when-locked=true {
+        spawn "noctalia" "msg" "volume-down";
+    }
+    XF86AudioMute allow-when-locked=true {
+        spawn "noctalia" "msg" "volume-mute";
+    }
+    XF86AudioMicMute allow-when-locked=true {
+        spawn "noctalia" "msg" "mic-mute";
+    }
+
+    // Brightness controls
+    XF86MonBrightnessUp allow-when-locked=true {
+        spawn "noctalia" "msg" "brightness-up";
+    }
+    XF86MonBrightnessDown allow-when-locked=true {
+        spawn "noctalia" "msg" "brightness-down";
+    }
+}

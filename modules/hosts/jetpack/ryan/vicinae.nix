@@ -3,8 +3,7 @@
     den.vicinae.favorites = [
       "applications:steam"
       "applications:discord"
-      "applications:dev.zed.Zed.desktop"
-      "applications:firefox"
+      "applications:dev.zed.Zed"
     ];
   };
 }

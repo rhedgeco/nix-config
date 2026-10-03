@@ -1,4 +1,0 @@
-spawn-sh-at-startup "vicinae server"
-spawn-sh-at-startup "discord --start-minimized"
-spawn-at-startup "activate-linux"
-spawn-at-startup "noctalia"

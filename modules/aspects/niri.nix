@@ -2,7 +2,7 @@
   den.aspects.niri = {
     homeManager = { pkgs, config, ... }: {
       options.den.niri = {
-        include = lib.mkOption {
+        includes = lib.mkOption {
           description = "files to include in the niri config";
           type =
             with lib.types;
@@ -29,7 +29,7 @@
         den.create =
           let
             # get all the included config
-            includes = config.den.niri.include;
+            includes = config.den.niri.includes;
 
             # build default niri configuration
             defaultConfig = {
