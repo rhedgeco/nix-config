@@ -1,4 +1,4 @@
-config_version = 14
+config_version = 15
 
 [calendar.account.personal_google]
 color = "primary"
@@ -9,17 +9,17 @@ type = "google"
 enabled = true
 schema_version = 2
 widget_order = [
-  "lockscreen-login-box@eDP-1",
-  "lockscreen-login-box@DP-3",
-  "lockscreen-widget-0000000000000001",
-  "lockscreen-widget-0000000000000002",
-  "lockscreen-widget-0000000000000003",
-  "lockscreen-widget-0000000000000004",
-  "lockscreen-widget-0000000000000005",
-  "lockscreen-widget-0000000000000006",
-  "lockscreen-widget-0000000000000007",
-  "lockscreen-widget-0000000000000008",
-  "lockscreen-widget-0000000000000009",
+    "lockscreen-login-box@eDP-1",
+    "lockscreen-login-box@DP-3",
+    "lockscreen-widget-0000000000000001",
+    "lockscreen-widget-0000000000000002",
+    "lockscreen-widget-0000000000000003",
+    "lockscreen-widget-0000000000000004",
+    "lockscreen-widget-0000000000000005",
+    "lockscreen-widget-0000000000000006",
+    "lockscreen-widget-0000000000000007",
+    "lockscreen-widget-0000000000000008",
+    "lockscreen-widget-0000000000000009",
 ]
 
 [lockscreen_widgets.grid]
