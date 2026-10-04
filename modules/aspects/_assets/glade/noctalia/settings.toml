@@ -78,10 +78,6 @@ position = "top_center"
 [osd]
 border = false
 
-[plugins]
-auto_update = "none"
-enabled = ["noctalia/notes"]
-
 [shell]
 button_borders = false
 card_borders = false

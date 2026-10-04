@@ -130,17 +130,10 @@
         in
         mpvKdl // otherKdl;
 
-      # include all the noctalia assets
-      den.noctalia = {
-        config = lib.mapAttrs' (name: _: {
-          inherit name;
-          value = ./_assets/glade/noctalia/config/${name};
-        }) (builtins.readDir ./_assets/glade/noctalia/config);
-        share = lib.mapAttrs' (name: _: {
-          inherit name;
-          value = ./_assets/glade/noctalia/share/${name};
-        }) (builtins.readDir ./_assets/glade/noctalia/share);
-      };
+      # set up glade noctalia assets
+      den.noctalia.settings = ./_assets/glade/noctalia/settings.toml;
+      den.noctalia.palettes."Cream" = ./_assets/glade/noctalia/Cream.json;
+      den.noctalia.plugins."notes" = ./_assets/glade/noctalia/plugins/notes;
 
       persist.dirs = [
         # persist common user folders
