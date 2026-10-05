@@ -59,6 +59,9 @@ in
       };
 
       home.file = lib.mkMerge [
+        # link the `.setup-complete` file to silence welcome banner
+        { ".local/state/noctalia/.setup-complete".text = ""; }
+
         # link all the plugin files
         (lib.mapAttrs' (name: path: {
           name = ".local/share/noctalia/plugins/${name}";
@@ -72,9 +75,6 @@ in
         }) config.den.noctalia.palettes)
 
         {
-          # link the `.setup-complete` file to silence welcome banner
-          ".local/state/noctalia/.setup-complete".text = "";
-
           # generate and link the main settings.toml file
           ".config/noctalia/settings.toml".text = ''
             [include]
