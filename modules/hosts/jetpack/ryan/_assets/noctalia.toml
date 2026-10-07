@@ -256,3 +256,15 @@ placement_height = 1440.0
 placement_width = 5120.0
 rotation = 0.0
 type = "volume"
+
+[widget.cpu]
+show_value = false
+
+[widget.network_rx]
+show_value = false
+
+[widget.network_tx]
+show_value = false
+
+[widget.ram]
+show_value = false
