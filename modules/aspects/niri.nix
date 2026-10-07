@@ -1,16 +1,15 @@
-{ lib, ... }: {
+{ lib, ... }:
+let
+  settingsBuilder = with lib.types; coercedTo str (s: builtins.toFile "custom.kdl" s) path;
+in
+{
   den.aspects.niri = {
     homeManager = { pkgs, config, ... }: {
       options.den.niri = {
         includes = lib.mkOption {
           description = "files to include in the niri config";
-          type =
-            with lib.types;
-            attrsOf (oneOf [
-              path
-              str
-            ]);
-          default = { };
+          type = lib.types.listOf settingsBuilder;
+          default = [ ];
         };
       };
 
@@ -25,35 +24,21 @@
           xwayland-satellite
         ];
 
-        # generate all the config files
-        den.create =
-          let
-            # get all the included config
-            includes = config.den.niri.includes;
+        den.niri.includes = [
+          # include some default configuration with default priority
+          (pkgs.writeText "rhedgeco-default.kdl" ''
+            // rhedgeco's default niri configuration files
+            ${lib.concatMapStringsSep "\n" (path: ''include "${./_assets/niri/${path}}"'') (
+              builtins.attrNames (builtins.readDir ./_assets/niri)
+            )}
+          '')
+        ];
 
-            # build default niri configuration
-            defaultConfig = {
-              ".config/niri/default" = ./_assets/niri;
-            };
-
-            # convert the name into the niri config path
-            # and normalize the string content into store paths
-            userConfig = lib.mapAttrs' (name: content: {
-              name = ".config/niri/${name}";
-              value = if lib.isString content then pkgs.writeText name content else content;
-            }) includes;
-
-            # create the base niri config that links everything together
-            baseConfig.".config/niri/config.kdl" = pkgs.writeText "config.kdl" ''
-              // default niri config defined in den
-              include "default/include.kdl"
-
-              // user configuration
-              ${lib.concatMapAttrsStringSep "\n" (name: _: ''include "./${name}"'') includes}
-            '';
-          in
-          # merge the sets together to write all niri config
-          baseConfig // defaultConfig // userConfig;
+        home.file = {
+          ".config/niri/config.kdl".text = ''
+            ${lib.concatMapStringsSep "\n" (path: ''include "${path}"'') config.den.niri.includes}
+          '';
+        };
       };
     };
   };

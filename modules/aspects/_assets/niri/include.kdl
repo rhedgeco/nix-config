@@ -1,6 +1,0 @@
-// include all default files
-include "input.kdl"
-include "keybinds.kdl"
-include "layout.kdl"
-include "misc.kdl"
-include "windows.kdl"

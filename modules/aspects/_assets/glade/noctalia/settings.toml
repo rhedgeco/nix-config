@@ -64,6 +64,8 @@ timeout = 600.0
 
 [lockscreen]
 blurred_desktop = true
+transition = ["stripes"]
+transition_duration = 200
 
 [nightlight]
 enabled = true
