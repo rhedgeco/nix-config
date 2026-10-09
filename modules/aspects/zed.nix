@@ -29,7 +29,7 @@
 
       # use the dark modern theme by default
       home.file.".config/zed/themes/DarkModern.json".source = ./_assets/zed/DarkModern.json;
-      den.zed.settings.theme = "DarkModern";
+      den.zed.settings.theme = "Dark Modern";
 
       # write the zed settings to a file
       # keep this writable so the zed settings gui is usable
