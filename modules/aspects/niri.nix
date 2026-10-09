@@ -1,14 +1,11 @@
-{ lib, ... }:
-let
-  settingsBuilder = with lib.types; coercedTo str (s: builtins.toFile "custom.kdl" s) path;
-in
+{ lib, mylib, ... }:
 {
   den.aspects.niri = {
     homeManager = { pkgs, config, ... }: {
       options.den.niri = {
         includes = lib.mkOption {
           description = "files to include in the niri config";
-          type = lib.types.listOf settingsBuilder;
+          type = lib.types.listOf (mylib.types.intoPath "custom.kdl");
           default = [ ];
         };
       };

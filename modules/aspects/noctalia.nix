@@ -1,30 +1,25 @@
-{ lib, inputs, ... }:
-let
-  # types that coerce json and toml to attr sets
-  tomlBuilder = attrBuilder (s: fromTOML s);
-  jsonBuilder = attrBuilder (s: builtins.fromJSON s);
-  attrBuilder =
-    func:
-    lib.types.coercedTo lib.types.path (p: builtins.readFile p) (
-      lib.types.coercedTo lib.types.str func lib.types.attrs
-    );
-in
+{
+  lib,
+  mylib,
+  inputs,
+  ...
+}:
 {
   den.aspects.noctalia.homeManager = { pkgs, config, ... }: {
     options.den.noctalia = {
       includes = lib.mkOption {
         description = "Toml files to apply in order for noctalia settings";
-        type = lib.types.listOf tomlBuilder;
+        type = lib.types.listOf mylib.types.fromToml;
         default = [ ];
       };
       settings = lib.mkOption {
         description = "Base settings included at default priority";
-        type = tomlBuilder;
+        type = mylib.types.fromToml;
         default = { };
       };
       palettes = lib.mkOption {
         description = "Palettes to include with the noctalia install";
-        type = lib.types.attrsOf jsonBuilder;
+        type = lib.types.attrsOf mylib.types.fromJson;
         default = { };
       };
       plugins = lib.mkOption {
