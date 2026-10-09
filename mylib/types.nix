@@ -1,4 +1,4 @@
-lib: rec {
+{ lib, ... }: rec {
   # an explicit set of JSON values
   jsonValue = lib.types.nullOr (
     lib.types.oneOf [

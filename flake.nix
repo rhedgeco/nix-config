@@ -1,13 +1,5 @@
 {
-  outputs =
-    inputs@{ nixpkgs, import-tree, ... }:
-    (nixpkgs.lib.evalModules {
-      modules = [ (import-tree ./modules) ];
-      specialArgs = {
-        mylib = import ./mylib nixpkgs.lib;
-        inherit inputs;
-      };
-    }).config.flake;
+  outputs = inputs: (import ./mylib inputs).den.flake ./.;
 
   inputs = {
     den.url = "github:denful/den";
