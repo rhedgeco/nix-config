@@ -30,6 +30,7 @@
           den.aspects.dolphin
           den.aspects.bambu
           den.aspects.yoink
+          den.aspects.zed
         ];
       };
     };
