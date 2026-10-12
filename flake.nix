@@ -14,6 +14,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    yoink = {
+      url = "path:./inputs/yoink";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,9 +26,13 @@
       url = "github:noctalia-dev/noctalia/cachix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    yoink = {
-      url = "path:./inputs/yoink";
-      inputs.nixpkgs.follows = "nixpkgs";
+    noctalia-plugins-official = {
+      url = "github:noctalia-dev/official-plugins";
+      flake = false;
+    };
+    noctalia-plugins-community = {
+      url = "github:noctalia-dev/community-plugins";
+      flake = false;
     };
   };
 }

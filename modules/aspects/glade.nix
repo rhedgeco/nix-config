@@ -98,7 +98,15 @@
       # set up glade noctalia assets
       den.noctalia.settings = ./_assets/glade/noctalia/settings.toml;
       den.noctalia.palettes."Cream" = ./_assets/glade/noctalia/Cream.json;
-      den.noctalia.plugins."notes" = ./_assets/glade/noctalia/plugins/notes;
+
+      # include the notes and color picker plugin from noctalia repos
+      den.noctalia.plugins.official = [ "notes" ];
+      den.noctalia.plugins.community = [ "color_picker" ];
+
+      # include extra packages available to noctalia
+      den.noctalia.extraPackages = with pkgs; [
+        hyprpicker # required by color_picker plugin
+      ];
 
       den.niri.includes = [
         (pkgs.writeText "glade-default.kdl" ''

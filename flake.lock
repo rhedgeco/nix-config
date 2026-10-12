@@ -110,6 +110,38 @@
         "type": "github"
       }
     },
+    "noctalia-plugins-community": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791809442,
+        "narHash": "sha256-DVlvf1bjUia35aOo7M7LKQxTS+xTkF0OpqzJHK3qjWk=",
+        "owner": "noctalia-dev",
+        "repo": "community-plugins",
+        "rev": "093661f688847ffd7a47d3fdfa39c9b6f63a3a36",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "community-plugins",
+        "type": "github"
+      }
+    },
+    "noctalia-plugins-official": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791801475,
+        "narHash": "sha256-0LcRrw6iA30dva7ubY7y3aZpOkqfufGvCtWW1V33cnA=",
+        "owner": "noctalia-dev",
+        "repo": "official-plugins",
+        "rev": "9aec34181e46789b281263942092ac552f661d1a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "official-plugins",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "den": "den",
@@ -118,6 +150,8 @@
         "import-tree": "import-tree",
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
+        "noctalia-plugins-community": "noctalia-plugins-community",
+        "noctalia-plugins-official": "noctalia-plugins-official",
         "rust-overlay": "rust-overlay",
         "yoink": "yoink"
       }
