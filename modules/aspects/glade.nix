@@ -23,6 +23,19 @@
         showtime
       ];
 
+      # add a desktop entry for the noctalia color picker
+      xdg.desktopEntries."color-picker" = {
+        name = "Color Picker";
+        comment = "Color Picker noctalia panel";
+        icon = ./_assets/color-picker.png;
+        categories = [
+          "Utility"
+          "Core"
+        ];
+        terminal = false;
+        exec = "noctalia msg panel-toggle oldirtty/color_picker:panel";
+      };
+
       # use the bibata modern cursor
       home.pointerCursor = {
         enable = true;

@@ -26,7 +26,6 @@
           den.aspects.rust
           den.aspects.spotify
           den.aspects.discord
-          den.aspects.color-picker
           den.aspects.dolphin
           den.aspects.bambu
           den.aspects.yoink

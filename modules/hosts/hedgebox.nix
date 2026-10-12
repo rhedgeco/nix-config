@@ -22,7 +22,6 @@
           den.aspects.docker
           den.aspects.rust
           den.aspects.spotify
-          den.aspects.color-picker
           den.aspects.yoink
           den.aspects.zed
         ];
