@@ -61,6 +61,9 @@
         # only persist the calendar part of the cache
         # so calendar events persist without network
         ".cache/noctalia/calendar"
+
+        # persist the plugin state data
+        ".local/state/noctalia/plugins/data"
       ];
 
       # include the nix noctalia settings with default priority
