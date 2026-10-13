@@ -10,8 +10,8 @@ help:
     @just --list
 
 # updates the lockfile for this flake
-update input="":
-    nix flake update --flake '.?submodules=1' {{ input }}
+update *inputs:
+    nix flake update --flake '.?submodules=1' {{ inputs }}
     @echo -e "\033[1;32mUPDATE COMPLETE\033[0m"
 
 # checks every item in the flake for errors
