@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "abitoads": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791955803,
+        "narHash": "sha256-4f1+2Flo++8OP+avVv/bHxbMnfAFZmvDIfYMrw8B4Yk=",
+        "owner": "rhedgeco",
+        "repo": "abitoads",
+        "rev": "52a1d49134ad3560b4d3212d3f1ded38b5dc3d4b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rhedgeco",
+        "repo": "abitoads",
+        "type": "github"
+      }
+    },
     "den": {
       "locked": {
         "lastModified": 1791846277,
@@ -144,6 +164,7 @@
     },
     "root": {
       "inputs": {
+        "abitoads": "abitoads",
         "den": "den",
         "home-manager": "home-manager",
         "impermanence": "impermanence",

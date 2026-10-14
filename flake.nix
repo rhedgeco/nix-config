@@ -34,5 +34,9 @@
       url = "github:noctalia-dev/community-plugins";
       flake = false;
     };
+    abitoads = {
+      url = "github:rhedgeco/abitoads";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

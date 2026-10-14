@@ -1,4 +1,10 @@
-{ lib, den, ... }: {
+{
+  lib,
+  den,
+  inputs,
+  ...
+}:
+{
   den.aspects.glade = {
     includes = [
       den.aspects.niri # window manager
@@ -109,18 +115,36 @@
       };
 
       # set up glade noctalia assets
-      den.noctalia.settings = ./_assets/glade/noctalia/settings.toml;
+      den.noctalia.includes = [ ./_assets/glade/noctalia/settings.toml ];
       den.noctalia.palettes."Cream" = ./_assets/glade/noctalia/Cream.json;
 
+      # manually apply some noctalia settings
+      den.noctalia.settings = {
+        # default mpv wallpaper settings
+        plugin_settings."noctalia/mpvpaper" = {
+          mpv_options = "panscan=1.0 profile=fast";
+          video_directory = "${inputs.abitoads.packages.${pkgs.stdenv.hostPlatform.system}.all}";
+        };
+      };
+
       # include the notes and color picker plugin from noctalia repos
-      den.noctalia.plugins.official = [ "notes" ];
       den.noctalia.plugins.community = [ "color_picker" ];
+      den.noctalia.plugins.official = [
+        "mpvpaper"
+        "notes"
+      ];
 
       # include extra packages available to noctalia
       den.noctalia.extraPackages = with pkgs; [
-        hyprpicker # required by color_picker plugin
+        # required by color_picker plugin
+        hyprpicker
+
+        # required by mpvpaper plugin
+        mpvpaper
+        mpv
       ];
 
+      # write some default niri config specifically for glade
       den.niri.includes = [
         (pkgs.writeText "glade-default.kdl" ''
           // glade's default niri configuration files
@@ -128,34 +152,6 @@
             builtins.attrNames (builtins.readDir ./_assets/glade/niri)
           )}
         '')
-        (pkgs.writeText "glade-wallpaper.kdl" (
-          let
-            wallpaperPath = ./_assets/glade/wallpaper/LazyRiver.mp4;
-            mpvOptions = [
-              "aid=no" # no audio
-              "--loop-file=inf" # loop the video forever
-              "--hwdec=auto-safe" # pick best available hw decoder, fall back to software
-              "--video-sync=display-resample" # sync playback to display refresh
-              "--panscan=1.0" # crop to fill the screen
-              "--profile=fast" # lighter rendering, quality irrelevant for a wallpaper
-              "--cache=no" # no streaming cache needed for a local file
-              "--demuxer-max-bytes=64MiB" # cap forward demuxer buffer (prevents leak)
-              "--demuxer-max-back-bytes=32MiB" # cap back-buffer (prevents leak)
-            ];
-
-            wallpaperScript = pkgs.writeShellScript "launch-wallpaper" ''
-              # run under jemalloc to avoid glibc arena fragmentation over long sessions
-              export LD_PRELOAD="${pkgs.jemalloc}/lib/libjemalloc.so"
-              ${pkgs.mpvpaper}/bin/mpvpaper \
-              -o "${lib.concatStringsSep " " mpvOptions}" \
-              "*" ${wallpaperPath}
-            '';
-          in
-          ''
-            // spawns a custom video wallpaper defined by glade
-            spawn-at-startup "${wallpaperScript}"
-          ''
-        ))
       ];
 
       persist.dirs = [
@@ -165,6 +161,10 @@
         "Pictures"
         "Documents"
         "Videos"
+
+        # persist some plugin folders for glade
+        ".cache/noctalia/mpvpaper"
+        ".local/state/noctalia/mpvpaper"
       ];
     };
   };

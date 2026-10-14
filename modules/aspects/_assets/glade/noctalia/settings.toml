@@ -3,6 +3,7 @@ config_version = 15
 [bar.default]
 background_opacity = 0.5999999865889549
 center = [
+  "mpvpaper",
   "power_profile",
   "clock",
   "notifications",
@@ -111,6 +112,9 @@ format = "{:%A, %B %d - %H:%M:%S}"
 [widget.cpu]
 label_min_width = 32
 visualization = "graph"
+
+[widget.mpvpaper]
+type = "noctalia/mpvpaper:mpvpaper"
 
 [widget.network]
 show_label = false
