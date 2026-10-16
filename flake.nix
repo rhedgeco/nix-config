@@ -35,7 +35,7 @@
       flake = false;
     };
     abitoads = {
-      url = "github:rhedgeco/abitoads";
+      url = "github:rhedgeco/abitoads/release";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

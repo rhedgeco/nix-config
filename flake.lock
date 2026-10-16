@@ -7,15 +7,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1791955803,
-        "narHash": "sha256-4f1+2Flo++8OP+avVv/bHxbMnfAFZmvDIfYMrw8B4Yk=",
+        "lastModified": 1792111079,
+        "narHash": "sha256-sCqnnliud+EdJIB8Oa8eCyNOOZnN33+zo463E6Xx8iI=",
         "owner": "rhedgeco",
         "repo": "abitoads",
-        "rev": "52a1d49134ad3560b4d3212d3f1ded38b5dc3d4b",
+        "rev": "ed0c231075305e0c12ae1ec346a61aa839a2de67",
         "type": "github"
       },
       "original": {
         "owner": "rhedgeco",
+        "ref": "release",
         "repo": "abitoads",
         "type": "github"
       }

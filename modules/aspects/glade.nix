@@ -123,7 +123,7 @@
         # default mpv wallpaper settings
         plugin_settings."noctalia/mpvpaper" = {
           mpv_options = "panscan=1.0 profile=fast";
-          video_directory = "${inputs.abitoads.packages.${pkgs.stdenv.hostPlatform.system}.all}";
+          video_directory = "${(inputs.abitoads.fetch { inherit pkgs; }).all}";
         };
       };
 
