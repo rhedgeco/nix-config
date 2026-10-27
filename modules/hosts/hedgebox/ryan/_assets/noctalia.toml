@@ -4,9 +4,9 @@ config_version = 15
 enabled = true
 schema_version = 2
 widget_order = [
-  "lockscreen-widget-0000000000000001",
-  "lockscreen-login-box@DP-3",
-  "lockscreen-widget-0000000000000002",
+    "lockscreen-widget-0000000000000001",
+    "lockscreen-login-box@DP-3",
+    "lockscreen-widget-0000000000000002",
 ]
 
 [lockscreen_widgets.grid]
@@ -72,3 +72,15 @@ type = "clock"
 background = false
 color = "on_surface"
 format = "{:%A, %B %d}"
+
+[widget.cpu]
+show_value = false
+
+[widget.network_rx]
+show_value = false
+
+[widget.network_tx]
+show_value = false
+
+[widget.ram]
+show_value = false
