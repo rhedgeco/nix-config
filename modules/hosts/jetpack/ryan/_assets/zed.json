@@ -23,7 +23,9 @@
   },
   "buffer_font_size": 14,
   "file_types": {
-    "TOML": ["**/*.yoink"]
+    "TOML": [
+      "**/*.yoink"
+    ]
   },
   "format_on_save": "on",
   "git_panel": {
