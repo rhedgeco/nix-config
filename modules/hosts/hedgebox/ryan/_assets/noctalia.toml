@@ -1,5 +1,26 @@
 config_version = 15
 
+[idle]
+behavior_order = ["lock", "screen-dim", "Screen Off (On Battery)"]
+
+[idle.behavior."Screen Off (On Battery)"]
+action = "command"
+command = "sh -c 'if [ $(cat /sys/class/power_supply/AC*/online 2>/dev/null | grep -c 1) -eq 0 ]; then niri msg action power-off-monitors; fi'"
+enabled = false
+timeout = 600.0
+
+[idle.behavior.lock]
+action = "lock"
+enabled = true
+timeout = 600.0
+
+[idle.behavior.screen-dim]
+action = "command"
+command = "wl-gammactl -c 0.3"
+enabled = true
+resume_command = "pkill wl-gammactl"
+timeout = 600.0
+
 [lockscreen_widgets]
 enabled = true
 schema_version = 2
