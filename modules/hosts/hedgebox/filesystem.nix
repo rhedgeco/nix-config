@@ -87,10 +87,6 @@ in
 
     # Thank you BryceBeagle!
     # based on https://github.com/BryceBeagle/nixos-config/blob/5a0ca440118488d427410ce49a06c3aca376509f/modules/config/impermanence.nix#L57
-    # Super important until https://github.com/NixOS/nixpkgs/pull/435781 is default!
-    # Otherwise, no initrd service will be created
-    boot.initrd.systemd.enable = true;
-
     # create a systemd stage 1 service that backs up old root directories on boot
     # this will create a fresh root each time and will wipe backups older than 30 days
     boot.initrd.systemd.services.wipe-btrfs-root =
