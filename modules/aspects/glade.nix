@@ -136,6 +136,9 @@
 
       # include extra packages available to noctalia
       den.noctalia.extraPackages = with pkgs; [
+        # useful tools in hooks
+        wl-gammactl
+
         # required by color_picker plugin
         hyprpicker
 
