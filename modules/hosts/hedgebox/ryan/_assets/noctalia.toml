@@ -25,9 +25,9 @@ timeout = 600.0
 enabled = true
 schema_version = 2
 widget_order = [
-    "lockscreen-widget-0000000000000001",
-    "lockscreen-login-box@DP-3",
-    "lockscreen-widget-0000000000000002",
+  "lockscreen-widget-0000000000000001",
+  "lockscreen-login-box@DP-3",
+  "lockscreen-widget-0000000000000002",
 ]
 
 [lockscreen_widgets.grid]
@@ -47,7 +47,7 @@ rotation = 0.0
 type = "login_box"
 
 [lockscreen_widgets.widget."lockscreen-login-box@DP-3".settings]
-background_color = "surface_variant"
+background_color = "surface_container"
 background_opacity = 0.88
 background_radius = 12.0
 center_password_text = false

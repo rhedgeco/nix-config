@@ -21,7 +21,6 @@ enabled = true
 resume_command = "pkill wl-gammactl"
 timeout = 600.0
 
-
 [calendar.account.personal_google]
 color = "primary"
 name = "Google Calendar"
@@ -31,13 +30,13 @@ type = "google"
 enabled = true
 schema_version = 2
 widget_order = [
-    "lockscreen-login-box@eDP-1",
-    "lockscreen-login-box@DP-3",
-    "lockscreen-widget-0000000000000001",
-    "lockscreen-widget-0000000000000006",
-    "lockscreen-widget-0000000000000007",
-    "lockscreen-widget-0000000000000008",
-    "lockscreen-widget-0000000000000009",
+  "lockscreen-login-box@eDP-1",
+  "lockscreen-login-box@DP-3",
+  "lockscreen-widget-0000000000000001",
+  "lockscreen-widget-0000000000000006",
+  "lockscreen-widget-0000000000000007",
+  "lockscreen-widget-0000000000000008",
+  "lockscreen-widget-0000000000000009",
 ]
 
 [lockscreen_widgets.grid]
@@ -57,7 +56,7 @@ rotation = 0.0
 type = "login_box"
 
 [lockscreen_widgets.widget."lockscreen-login-box@DP-3".settings]
-background_color = "surface_variant"
+background_color = "surface_container"
 background_opacity = 0.88
 background_radius = 12.0
 center_password_text = false
@@ -84,7 +83,7 @@ rotation = 0.0
 type = "login_box"
 
 [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
-background_color = "surface_variant"
+background_color = "surface_container"
 background_opacity = 0.88
 background_radius = 12.0
 center_password_text = false
