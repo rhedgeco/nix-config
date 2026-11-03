@@ -17,6 +17,7 @@
         persist = true;
         password = "ryan";
         includes = [
+          den.aspects.local-bin
           den.aspects.keyring
           den.aspects.glade
           den.aspects.network
