@@ -23,7 +23,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     noctalia = {
-      url = "github:noctalia-dev/noctalia/cachix";
+      url = "github:rhedgeco/noctalia/libmpv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     noctalia-plugins-official = {

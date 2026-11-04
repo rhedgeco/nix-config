@@ -3,7 +3,6 @@ config_version = 15
 [bar.default]
 background_opacity = 0.5999999865889549
 center = [
-  "mpvpaper",
   "power_profile",
   "clock",
   "notifications",
@@ -65,8 +64,8 @@ timeout = 600.0
 
 [lockscreen]
 blurred_desktop = true
-transition = ["stripes"]
-transition_duration = 200
+transition = ["pixel"]
+transition_duration = 800
 
 [nightlight]
 enabled = true
@@ -102,8 +101,12 @@ transparency_mode = "soft"
 enabled = true
 
 [theme]
+builtin = "Noctalia"
+community_palette = "Oxocarbon"
 custom_palette = "Cream"
+mode = "dark"
 source = "custom"
+wallpaper_scheme = "m3-content"
 
 [widget.clock]
 anchor = true
@@ -112,9 +115,6 @@ format = "{:%A, %B %d - %H:%M:%S}"
 [widget.cpu]
 label_min_width = 32
 visualization = "graph"
-
-[widget.mpvpaper]
-type = "noctalia/mpvpaper:mpvpaper"
 
 [widget.network]
 show_label = false

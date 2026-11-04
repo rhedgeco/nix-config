@@ -117,16 +117,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1793668359,
-        "narHash": "sha256-k7xCM0gsyfNY5TqJZeUpUVxNyWNBs4CDh4pbDfx0SUw=",
-        "owner": "noctalia-dev",
+        "lastModified": 1793759289,
+        "narHash": "sha256-RH2bMzoQ4OdtjRyVbtA4Y07PJf2sC7zuo343JRiQPps=",
+        "owner": "rhedgeco",
         "repo": "noctalia",
-        "rev": "f747e238d5033babb8648c3d3f7c754a9cc859dc",
+        "rev": "d76ba747356732dd1b2fc356189a45e86091ec1d",
         "type": "github"
       },
       "original": {
-        "owner": "noctalia-dev",
-        "ref": "cachix",
+        "owner": "rhedgeco",
+        "ref": "libmpv",
         "repo": "noctalia",
         "type": "github"
       }

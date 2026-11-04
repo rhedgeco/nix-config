@@ -1,4 +1,9 @@
-config_version = 15
+config_version = 19
+
+[calendar.account.personal_google]
+color = "primary"
+name = "Google Calendar"
+type = "google"
 
 [idle]
 behavior_order = ["lock", "screen-dim", "Screen Off (On Battery)"]
@@ -20,6 +25,11 @@ command = "wl-gammactl -c 0.3"
 enabled = true
 resume_command = "pkill wl-gammactl"
 timeout = 600.0
+
+[lockscreen]
+blur_intensity = 0.0
+blurred_desktop = false
+tint_intensity = 0.0
 
 [lockscreen_widgets]
 enabled = true
@@ -58,6 +68,8 @@ show_caps_lock = true
 show_keyboard_layout = true
 show_login_button = false
 show_media = false
+show_media_controls = true
+show_password_reveal = true
 show_session_buttons = true
 show_unlock_hint = false
 show_weather = false
@@ -93,6 +105,10 @@ type = "clock"
 background = false
 color = "on_surface"
 format = "{:%A, %B %d}"
+
+[wallpaper]
+enabled = true
+video = "/home/ryan/abitoads/FrogPicnic.mp4"
 
 [widget.cpu]
 show_value = false

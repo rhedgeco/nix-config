@@ -118,21 +118,9 @@
       den.noctalia.includes = [ ./_assets/glade/noctalia/settings.toml ];
       den.noctalia.palettes."Cream" = ./_assets/glade/noctalia/Cream.json;
 
-      # manually apply some noctalia settings
-      den.noctalia.settings = {
-        # default mpv wallpaper settings
-        plugin_settings."noctalia/mpvpaper" = {
-          mpv_options = "panscan=1.0 profile=fast";
-          video_directory = "${(inputs.abitoads.fetch { inherit pkgs; }).all}";
-        };
-      };
-
       # include the notes and color picker plugin from noctalia repos
       den.noctalia.plugins.community = [ "color_picker" ];
-      den.noctalia.plugins.official = [
-        "mpvpaper"
-        "notes"
-      ];
+      den.noctalia.plugins.official = [ "notes" ];
 
       # include extra packages available to noctalia
       den.noctalia.extraPackages = with pkgs; [
@@ -142,10 +130,12 @@
         # required by color_picker plugin
         hyprpicker
 
-        # required by mpvpaper plugin
-        mpvpaper
-        mpv
+        # required by noctalia for libmpv
+        mpv-unwrapped
       ];
+
+      # include abitoads wallpaper set in user home
+      home.file."abitoads".source = (inputs.abitoads.fetch { inherit pkgs; }).all;
 
       # write some default niri config specifically for glade
       den.niri.includes = [
