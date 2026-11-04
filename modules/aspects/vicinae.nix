@@ -37,6 +37,10 @@
             # TODO: declaratively store vicinae extensions etc...
             ".local/share/vicinae"
             ".local/state/vicinae"
+
+            # persist the file index because its expensive to calculate
+            # this prevents indexing every time the computer turns on
+            ".cache/vicinae/file-indexer"
           ];
 
           den.create.".config/vicinae/nix-settings.json" =
