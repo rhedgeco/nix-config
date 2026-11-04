@@ -24,7 +24,7 @@ action = "command"
 command = "wl-gammactl -c 0.3"
 enabled = true
 resume_command = "pkill wl-gammactl"
-timeout = 600.0
+timeout = 1800.0
 
 [lockscreen]
 blur_intensity = 0.0
@@ -35,9 +35,9 @@ tint_intensity = 0.0
 enabled = true
 schema_version = 2
 widget_order = [
-  "lockscreen-widget-0000000000000001",
-  "lockscreen-login-box@DP-3",
-  "lockscreen-widget-0000000000000002",
+    "lockscreen-widget-0000000000000001",
+    "lockscreen-login-box@DP-3",
+    "lockscreen-widget-0000000000000002",
 ]
 
 [lockscreen_widgets.grid]
@@ -105,6 +105,41 @@ type = "clock"
 background = false
 color = "on_surface"
 format = "{:%A, %B %d}"
+
+[[shell.session.actions]]
+action = "lock"
+countdown_seconds = 0.0
+enabled = true
+shortcut = "1"
+variant = "default"
+
+[[shell.session.actions]]
+action = "logout"
+countdown_seconds = 0.0
+enabled = true
+shortcut = "2"
+variant = "default"
+
+[[shell.session.actions]]
+action = "lock_and_suspend"
+countdown_seconds = 0.0
+enabled = false
+shortcut = "3"
+variant = "default"
+
+[[shell.session.actions]]
+action = "reboot"
+countdown_seconds = 0.0
+enabled = true
+shortcut = "4"
+variant = "default"
+
+[[shell.session.actions]]
+action = "shutdown"
+countdown_seconds = 0.0
+enabled = true
+shortcut = "5"
+variant = "destructive"
 
 [wallpaper]
 enabled = true
