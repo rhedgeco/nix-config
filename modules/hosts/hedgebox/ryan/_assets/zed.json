@@ -23,9 +23,7 @@
   },
   "buffer_font_size": 14,
   "file_types": {
-    "TOML": [
-      "**/*.yoink"
-    ]
+    "TOML": ["**/*.yoink"]
   },
   "format_on_save": "on",
   "git_panel": {
@@ -45,7 +43,6 @@
   "project_panel": {
     "dock": "left"
   },
-  "theme": "Dark Modern",
   "title_bar": {
     "show_menus": true
   },
