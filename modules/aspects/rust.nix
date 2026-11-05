@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ lib, inputs, ... }: {
   den.aspects.rust = {
     homeManager = { pkgs, ... }: {
       nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
@@ -18,6 +18,12 @@
           ];
         })
       ];
+
+      # set up some lsp settings in zed
+      den.zed.settings.lsp = {
+        package-version-server.binary.path = lib.getExe pkgs.package-version-server;
+        crates-lsp.binary.path = lib.getExe pkgs.crates-lsp;
+      };
     };
   };
 }
