@@ -54,11 +54,19 @@
 
       # set up vicinae
       den.vicinae = {
-        opacity = 0.7;
-        favorites = [
-          "applications:firefox"
-          "applications:org.gnome.Nautilus"
+        # useful extenstions in glade
+        extensions.vicinae-store = [
+          "power-profile"
+          "systemd"
+          "niri"
         ];
+        settings = {
+          opacity = 0.7;
+          favorites = [
+            "applications:firefox"
+            "applications:org.gnome.Nautilus"
+          ];
+        };
       };
 
       # enable the xdg desktop portal

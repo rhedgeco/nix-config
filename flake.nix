@@ -34,6 +34,10 @@
       url = "github:noctalia-dev/community-plugins";
       flake = false;
     };
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     abitoads = {
       url = "github:rhedgeco/abitoads/release";
       inputs.nixpkgs.follows = "nixpkgs";
