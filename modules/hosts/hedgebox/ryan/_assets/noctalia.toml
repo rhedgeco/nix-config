@@ -35,9 +35,9 @@ tint_intensity = 0.0
 enabled = true
 schema_version = 2
 widget_order = [
-    "lockscreen-widget-0000000000000001",
-    "lockscreen-login-box@DP-3",
-    "lockscreen-widget-0000000000000002",
+  "lockscreen-widget-0000000000000001",
+  "lockscreen-login-box@DP-3",
+  "lockscreen-widget-0000000000000002",
 ]
 
 [lockscreen_widgets.grid]
@@ -121,24 +121,17 @@ shortcut = "2"
 variant = "default"
 
 [[shell.session.actions]]
-action = "lock_and_suspend"
-countdown_seconds = 0.0
-enabled = false
-shortcut = "3"
-variant = "default"
-
-[[shell.session.actions]]
 action = "reboot"
 countdown_seconds = 0.0
 enabled = true
-shortcut = "4"
+shortcut = "3"
 variant = "default"
 
 [[shell.session.actions]]
 action = "shutdown"
 countdown_seconds = 0.0
 enabled = true
-shortcut = "5"
+shortcut = "4"
 variant = "destructive"
 
 [wallpaper]
