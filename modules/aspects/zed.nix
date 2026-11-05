@@ -38,7 +38,7 @@
       (pkgs.formats.json { }).generate "settings.json"
         config.den.zed.settings;
 
-    # add zed to vicinae settings
+    # add zed to vicinae settings if used
     den.vicinae.settings.favorites = [
       "applications:dev.zed.Zed"
     ];
