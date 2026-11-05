@@ -36,6 +36,9 @@
           persist.dirs = [
             # TODO: declaratively store vicinae extensions etc...
             ".local/share/vicinae"
+
+            # persist the state directory
+            # holds some useless data, but prevents onboarding popup
             ".local/state/vicinae"
 
             # persist the file index because its expensive to calculate
