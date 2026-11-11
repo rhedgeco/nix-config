@@ -12,7 +12,7 @@
       enable = true;
       enableDefaultConfig = false;
       settings = {
-        "github-personal" = {
+        "github.com" = {
           hostname = "github.com";
           user = "git";
           identityFile = "~/.ssh/id_ed25519_personal";
