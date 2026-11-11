@@ -19,6 +19,7 @@ let
       ffmpeg
       nixfmt
       speedtest-cli
+      p7zip
     ];
 in
 {
