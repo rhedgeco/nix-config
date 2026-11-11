@@ -11,6 +11,7 @@
       den.aspects.noctalia # desktop shell
       den.aspects.vicinae # app launcher
       den.aspects.keyring # gnome keyring
+      den.aspects.nautilus # file browser
       den.aspects.firefox # web browser
     ];
 
@@ -19,7 +20,6 @@
       home.packages = with pkgs; [
         brightnessctl
         alacritty
-        nautilus
         gnome-calculator
         activate-linux
         video-trimmer
@@ -54,19 +54,13 @@
 
       # set up vicinae
       den.vicinae = {
+        settings.opacity = 0.7;
         # useful extenstions in glade
         extensions.vicinae-store = [
           "power-profile"
           "systemd"
           "niri"
         ];
-        settings = {
-          opacity = 0.7;
-          favorites = [
-            "applications:firefox"
-            "applications:org.gnome.Nautilus"
-          ];
-        };
       };
 
       # enable the xdg desktop portal
