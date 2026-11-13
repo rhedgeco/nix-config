@@ -25,6 +25,7 @@
           den.aspects.spotify
           den.aspects.yoink
           den.aspects.zed
+          den.aspects.minicom
         ];
       };
     };
