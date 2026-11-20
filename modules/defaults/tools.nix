@@ -20,6 +20,7 @@ let
       nixfmt
       speedtest-cli
       p7zip
+      openssl
     ];
 in
 {
