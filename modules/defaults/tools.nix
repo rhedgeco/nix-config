@@ -21,6 +21,7 @@ let
       speedtest-cli
       p7zip
       openssl
+      unzip
     ];
 in
 {
