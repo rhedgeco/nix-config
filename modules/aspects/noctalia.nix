@@ -9,17 +9,17 @@
   den.default.homeManager.options.den.noctalia = {
     includes = lib.mkOption {
       description = "Toml files to apply in order for noctalia settings";
-      type = lib.types.listOf mylib.types.fromToml;
+      type = lib.types.listOf mylib.types.recursiveFromToml;
       default = [ ];
     };
     settings = lib.mkOption {
       description = "Base settings included at default priority";
-      type = mylib.types.fromToml;
+      type = mylib.types.recursiveFromToml;
       default = { };
     };
     palettes = lib.mkOption {
       description = "Palettes to include with the noctalia install";
-      type = lib.types.attrsOf mylib.types.fromJson;
+      type = lib.types.attrsOf mylib.types.recursiveFromJson;
       default = { };
     };
     plugins.sources = lib.mkOption {

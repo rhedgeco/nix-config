@@ -4,7 +4,7 @@
   den.default.homeManager.options.den.niri = {
     includes = lib.mkOption {
       description = "files to include in the niri config";
-      type = lib.types.listOf (mylib.types.intoPath "custom.kdl");
+      type = lib.types.listOf (mylib.types.strIntoStore "custom.kdl");
       default = [ ];
     };
   };

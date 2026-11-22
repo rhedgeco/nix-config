@@ -9,12 +9,12 @@
   den.default.homeManager.options.den.vicinae = {
     imports = lib.mkOption {
       description = "Json files to import into vicinae settings";
-      type = lib.types.listOf mylib.types.fromToml;
+      type = lib.types.listOf mylib.types.recursiveFromToml;
       default = [ ];
     };
     settings = lib.mkOption {
       description = "Base settings included at default priority";
-      type = mylib.types.fromJson;
+      type = mylib.types.recursiveFromJson;
       default = { };
     };
     extensions.sources = lib.mkOption {

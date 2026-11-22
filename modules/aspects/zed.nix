@@ -3,7 +3,7 @@
   den.default.homeManager.options.den.zed = {
     settings = lib.mkOption {
       description = "Zed settings";
-      type = mylib.types.fromJson;
+      type = mylib.types.recursiveFromJson;
       default = { };
     };
   };

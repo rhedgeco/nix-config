@@ -1,28 +1,29 @@
 { lib, ... }: rec {
-  # an explicit set of JSON values
-  jsonValue = lib.types.nullOr (
-    lib.types.oneOf [
-      lib.types.bool
-      lib.types.int
-      lib.types.float
-      lib.types.str
-      (lib.types.listOf jsonValue)
-      attrsRec
-    ]
-  );
+  # json style recursive value type
+  recursiveType =
+    with lib.types;
+    nullOr (oneOf [
+      bool
+      int
+      float
+      str
+      recursiveList
+      recursiveAttrs
+    ]);
 
-  # a recursive attrset of JSON values
-  attrsRec = lib.types.attrsOf jsonValue;
+  # json style recursive collection types
+  recursiveList = lib.types.listOf recursiveType;
+  recursiveAttrs = lib.types.attrsOf recursiveType;
 
-  # coerces strings into attr sets
-  fromToml = fromStr (s: fromTOML s);
-  fromJson = fromStr (s: builtins.fromJSON s);
-  fromStr =
-    func:
-    lib.types.coercedTo lib.types.path (p: builtins.readFile p) (
-      lib.types.coercedTo lib.types.str func attrsRec
-    );
+  # helper for coercing strings and paths into attr sets
+  recursiveFromStr = func: with lib.types; coercedTo str func recursiveAttrs;
+  recursiveFromFile = func: with lib.types; coercedTo path builtins.readFile (recursiveFromStr func);
 
-  # coerces strings into store paths
-  intoPath = name: with lib.types; coercedTo str (s: builtins.toFile name s) path;
+  # accepts strings or paths and maps them into recursive structues
+  recursiveFromToml = recursiveFromFile fromTOML;
+  recursiveFromJson = recursiveFromFile builtins.fromJSON;
+
+  # coerces strings into paths
+  strIntoPath = name: with lib.types; coercedTo str (builtins.toFile name) path;
+  strIntoStore = name: with lib.types; either pathInStore (strIntoPath name);
 }
