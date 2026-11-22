@@ -17,8 +17,10 @@
         pavucontrol
         # add crosspipe package for custom audio routing
         crosspipe
-        # use carla as a audio plugin host
-        carla
+        # include pipewire jack package
+        # provides access to pw-jack utility
+        # to help launch jack dependent apps
+        pipewire.jack
       ];
 
       services.pipewire = {
@@ -26,10 +28,6 @@
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
-
-        # enables the `pipewire-jack` compatability
-        # allows apps that use `jack` to work with pipewire
-        jack.enable = true;
       };
     };
   };
