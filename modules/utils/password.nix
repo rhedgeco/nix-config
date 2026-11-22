@@ -17,6 +17,7 @@
   den.aspects.schema-password =
     { user, ... }:
     lib.optional (user.password != null) {
+      name = "schema-password/${user.name}";
       nixos.users.users.${user.name}.initialPassword = user.password;
     };
 

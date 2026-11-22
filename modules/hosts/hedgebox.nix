@@ -8,6 +8,8 @@
         (den.aspects.autologin "ryan" "niri-session")
         den.aspects.bluetooth
         den.aspects.pipewire
+        den.aspects.network
+        den.aspects.docker
       ];
 
       users.ryan = {

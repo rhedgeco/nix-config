@@ -10,6 +10,10 @@
         den.aspects.bluetooth
         den.aspects.pipewire
         den.aspects.steam
+        den.aspects.network
+        den.aspects.docker
+        den.aspects.embedded
+        den.aspects.dolphin
       ];
 
       users.ryan = {

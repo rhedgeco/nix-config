@@ -1,5 +1,6 @@
 {
   den.aspects.windows-boot = name: uuid: {
+    name = "windows-boot(${name}:${uuid})";
     nixos = {
       # set the hardware clock to local time to play nicely with windows
       time.hardwareClockInLocalTime = true;

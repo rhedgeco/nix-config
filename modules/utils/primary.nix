@@ -12,6 +12,8 @@
   den.aspects.schema-primary =
     { user, ... }:
     lib.optional (user.primary) {
+      name = "schema-primary/${user.name}";
+
       # include the primary user battery
       includes = [ den.batteries.primary-user ];
 
