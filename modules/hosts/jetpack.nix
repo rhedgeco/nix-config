@@ -21,7 +21,6 @@
         persist = true;
         password = "ryan";
         includes = [
-          den.aspects.ai-tools
           den.aspects.local-bin
           den.aspects.keyring
           den.aspects.glade
